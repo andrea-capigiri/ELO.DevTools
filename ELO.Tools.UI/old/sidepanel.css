@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 100%;
+}
+
+button {
+  padding: 8px 16px;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+#output {
+  margin-top: 16px;
+  padding: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+}

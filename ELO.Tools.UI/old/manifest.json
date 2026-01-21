@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "My Sidebar Extension",
+  "version": "1.0",
+  "permissions": ["sidePanel"],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "Open sidebar"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
