@@ -1,0 +1,8 @@
+﻿charset = utf-8
+indent_style = space
+indent_size = 4
+
+[*.cs]
+
+# CS1591: Manca il commento XML per il tipo o il membro visibile pubblicamente
+dotnet_diagnostic.CS1591.severity = silent
