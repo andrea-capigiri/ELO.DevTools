@@ -1,11 +1,1 @@
-.spacer {
-  flex: 1 1 auto;
-}
-
-a.active {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-main {
-  min-height: calc(100vh - 64px);
-}
+:host {}

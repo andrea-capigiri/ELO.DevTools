@@ -1,0 +1,195 @@
+.input-section {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.jwt-input {
+    width: 100%;
+    
+    textarea {
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    
+    button {
+        min-width: 120px;
+    }
+}
+
+.error-card {
+    margin: 16px;
+    background-color: #ffebe9;
+    border: 1px solid #ff8482;
+    color: #cf222e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    
+    mat-icon {
+        color: #cf222e;
+    }
+}
+
+.jwt-card {
+    margin: 16px;
+    
+    mat-card-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    
+    .json-container {
+        background: #f6f8fa;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        padding: 16px;
+        overflow-x: auto;
+        
+        pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #1f2328;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    }
+    
+    .signature-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        
+        .signature-text {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            word-wrap: break-word;
+            word-break: break-all;
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .signature-hint {
+            font-size: 12px;
+            color: #656d76;
+            font-style: italic;
+        }
+    }
+    
+    .time-info {
+        margin-top: 16px;
+        
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+        
+        .time-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: #f6f8fa;
+            border-radius: 6px;
+            border: 1px solid #d0d7de;
+            
+            mat-icon {
+                color: #656d76;
+                margin-top: 2px;
+            }
+            
+            strong {
+                color: #1f2328;
+                display: block;
+                margin-bottom: 4px;
+            }
+            
+            div {
+                color: #656d76;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.expired {
+    color: #cf222e !important;
+    font-weight: 600;
+}
+
+.valid {
+    color: #1a7f37 !important;
+    font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+    .error-card {
+        background-color: #4a2020;
+        border-color: #da3633;
+        color: #f85149;
+        
+        mat-icon {
+            color: #f85149;
+        }
+    }
+    
+    .jwt-card {
+        .json-container {
+            background: #0d1117;
+            border-color: #30363d;
+            
+            pre {
+                color: #c9d1d9;
+            }
+        }
+        
+        .signature-container {
+            .signature-text {
+                background: #0d1117;
+                border-color: #30363d;
+                color: #c9d1d9;
+            }
+            
+            .signature-hint {
+                color: #8b949e;
+            }
+        }
+        
+        .time-info {
+            .time-item {
+                background: #161b22;
+                border-color: #30363d;
+                
+                strong {
+                    color: #c9d1d9;
+                }
+                
+                div {
+                    color: #8b949e;
+                }
+            }
+        }
+    }
+}

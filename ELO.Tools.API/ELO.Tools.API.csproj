@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-ELO.ID-8656ad03-7a40-4bd3-94f5-a4f7abe13ab5</UserSecretsId>
+        <Version>1.0.0</Version>
+        <FileVersion>1.0.0</FileVersion>
+    </PropertyGroup>
+
+    <!--<PropertyGroup>
+        <NoWarn>$(NoWarn);NU1510</NoWarn>
+    </PropertyGroup>-->
+
+    <ItemGroup>
+        <Compile Remove="App_Logs\**" />
+        <Compile Remove="CefCache\**" />
+        <Content Remove="App_Logs\**" />
+        <Content Remove="CefCache\**" />
+        <EmbeddedResource Remove="App_Logs\**" />
+        <EmbeddedResource Remove="CefCache\**" />
+        <None Remove="App_Logs\**" />
+        <None Remove="CefCache\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\cs\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\de\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\es\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\fr\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\it\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\ja\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\ko\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\Microsoft.Build.Locator.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe.config" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\Microsoft.IO.Redist.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\Newtonsoft.Json.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\pl\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\pt-BR\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\ru\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\System.Buffers.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\System.Collections.Immutable.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\System.CommandLine.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\System.Memory.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\System.Numerics.Vectors.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\System.Runtime.CompilerServices.Unsafe.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\System.Threading.Tasks.Extensions.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\tr\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\zh-Hans\System.CommandLine.resources.dll" />
+      <Content Remove="C:\Users\andrea\.nuget\packages\microsoft.codeanalysis.workspaces.msbuild\4.14.0\contentFiles\any\any\BuildHost-net472\zh-Hant\System.CommandLine.resources.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Fido2" Version="4.0.0" />
+        <PackageReference Include="Fido2.AspNet" Version="4.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Identity.Web" Version="4.0.1" />
+        <PackageReference Include="NLog" Version="6.0.6" />
+        <PackageReference Include="NLog.Extensions.Logging" Version="6.1.0" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="6.1.0" />
+        <PackageReference Include="NSwag.AspNetCore" Version="14.6.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ELO.ID.Application\ELO.ID.Application.csproj" />
+        <ProjectReference Include="..\ELO.ID.Common\ELO.ID.Common.csproj" />
+        <ProjectReference Include="..\ELO.ID.Domain\ELO.ID.Domain.csproj" />
+        <ProjectReference Include="..\ELO.ID.Infrastructure\ELO.ID.Infrastructure.csproj" />
+        <ProjectReference Include="..\ELO.Utilities\ELO.Utilities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="App_Data\" />
+    </ItemGroup>
+
+</Project>

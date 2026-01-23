@@ -11,54 +11,54 @@ import { RouterModule } from '@angular/router';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
-  selector: 'app-base64-tool',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatToolbarModule,
-    RouterModule
-  ],
-  templateUrl: './base64-tool.component.html',
-  styleUrls: ['./base64-tool.component.scss']
+    selector: 'app-base64-tool',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatToolbarModule,
+        RouterModule
+    ],
+    templateUrl: './base64-tool.component.html',
+    styleUrls: ['./base64-tool.component.scss']
 })
 export class Base64ToolComponent {
-  inputText: string = '';
-  outputText: string = '';
-  mode: 'encode' | 'decode' = 'encode';
+    inputText: string = '';
+    outputText: string = '';
+    mode: 'encode' | 'decode' = 'encode';
 
-  constructor(private utilityService: UtilityService) {}
+    constructor(private utilityService: UtilityService) { }
 
-  onEncode(): void {
-    if (this.inputText.trim()) {
-      this.outputText = this.utilityService.base64Encode(this.inputText);
+    onEncode(): void {
+        if (this.inputText.trim()) {
+            this.outputText = this.utilityService.base64Encode(this.inputText);
+        }
     }
-  }
 
-  onDecode(): void {
-    if (this.inputText.trim()) {
-      this.outputText = this.utilityService.base64Decode(this.inputText);
+    onDecode(): void {
+        if (this.inputText.trim()) {
+            this.outputText = this.utilityService.base64Decode(this.inputText);
+        }
     }
-  }
 
-  onSwap(): void {
-    const temp = this.inputText;
-    this.inputText = this.outputText;
-    this.outputText = temp;
-    this.mode = this.mode === 'encode' ? 'decode' : 'encode';
-  }
+    onSwap(): void {
+        const temp = this.inputText;
+        this.inputText = this.outputText;
+        this.outputText = temp;
+        this.mode = this.mode === 'encode' ? 'decode' : 'encode';
+    }
 
-  onClear(): void {
-    this.inputText = '';
-    this.outputText = '';
-  }
+    onClear(): void {
+        this.inputText = '';
+        this.outputText = '';
+    }
 
-  onCopy(): void {
-    navigator.clipboard.writeText(this.outputText);
-  }
+    onCopy(): void {
+        navigator.clipboard.writeText(this.outputText);
+    }
 }

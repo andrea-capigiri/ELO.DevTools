@@ -1,36 +1,38 @@
+// GitHub Primer Design System
+/* @import "@primer/css/index.scss";
+@import '@primer/css/support/index.scss';
+@import '@primer/css/base/index.scss';
+@import '@primer/css/buttons/index.scss';
+*/
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+//@use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat.core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$elo-quink-primary: mat.define-palette(mat.$indigo-palette);
-$elo-quink-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+//@include mat.core();
+/* 
+// GitHub color palette for Angular Material
+$github-primary: mat.define-palette(mat.$blue-palette, 600);
+$github-accent: mat.define-palette(mat.$green-palette, 500);
 
 // The warn palette is optional (defaults to red).
-$elo-quink-warn: mat.define-palette(mat.$red-palette);
+$github-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$elo-quink-theme: mat.define-light-theme((color: (primary: $elo-quink-primary,
-                accent: $elo-quink-accent,
-                warn: $elo-quink-warn,
+$github-theme: mat.define-light-theme((color: (primary: $github-primary,
+                accent: $github-accent,
+                warn: $github-warn,
             ),
             typography: mat.define-typography-config(),
             density: 0));
 
 // Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($elo-quink-theme);
-
+@include mat.all-component-themes($github-theme);
+ */
 /* You can add global styles to this file, and also import other style files */
 
 * {
@@ -51,8 +53,20 @@ app-root {
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
+    color: #ffffffc9 !important;
 }
 
+router-outlet+*{
+    min-height: 100vh;
+}
+
+main {
+    flex:1;
+    margin: 0 auto;
+    width: 100%;
+    padding: 12px;
+    max-width: 600px;
+}
 
 .toolbar {
     display: flex;
@@ -87,70 +101,124 @@ label {
     }
 }
 
-/* TEMA CHIARO */
+/* GitHub Theme - Light Mode */
 @media (prefers-color-scheme: light) {
     body {
-        background-color: #F1F3F4;
+        background-color: #ffffff;
+        color: #1f2328;
     }
 
     main {
-        color: #737373;
+        color: #656d76;
     }
 
     .md {
-        background-color: #FFFFFF;
-        box-shadow: 0 12px 18px -2px rgba(0, 0, 0, 0.02);
+        background-color: #ffffff;
+        border: 1px solid #d0d7de;
+        box-shadow: 0 1px 3px rgba(16, 24, 40, 0.12), 0 1px 2px rgba(16, 24, 40, 0.24);
     }
 
     a,
     .md .md-row {
-        color: #484848;
+        color: #0969da;
     }
 
     .md .md-folder-exploded {
-        background-color: rgba(0, 0, 0, .02);
+        background-color: #f6f8fa;
+        border: 1px solid #d0d7de;
+    }
+
+    .toolbar {
+        background-color: #f6f8fa;
+        border-bottom: 1px solid #d0d7de;
+    }
+
+    button {
+        background-color: #f6f8fa;
+        color: #24292f;
+        border: 1px solid #d0d7de;
+    }
+
+    button:hover {
+        background-color: #f3f4f6;
     }
 }
 
-/* TEMA SCURO */
+/* GitHub Theme - Dark Mode */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #202124;
+        background-color: #0d1117;
+        color: #c9d1d9;
     }
 
     main {
-        color: #929292;
+        color: #8b949e;
     }
 
     .md {
-        background-color: #35363a;
-        box-shadow: 0 4px 10px -2px rgba(255, 255, 255, 0.02);
+        background-color: #161b22;
+        border: 1px solid #30363d;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 
     a,
     .md .md-row {
-        color: #D2D2D2;
+        color: #58a6ff;
     }
 
     .md .md-folder-exploded {
-        background-color: rgba(0, 0, 0, .02);
+        background-color: #0d1117;
+        border: 1px solid #21262d;
+    }
+
+    .toolbar {
+        background-color: #161b22;
+        border-bottom: 1px solid #30363d;
+    }
+
+    button {
+        background-color: #21262d;
+        color: #c9d1d9;
+        border: 1px solid #30363d;
+    }
+
+    button:hover {
+        background-color: #30363d;
     }
 }
 
-/* SCROLLBAR */
+/* GitHub Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
 }
 
-::-webkit-scrollbar-track {
-    background: #00000011;
+@media (prefers-color-scheme: light) {
+    ::-webkit-scrollbar-track {
+        background: #f6f8fa;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #d0d7de;
+        border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #afb8c1;
+    }
 }
 
-::-webkit-scrollbar-thumb {
-    background: #ffffffaf;
-}
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-track {
+        background: #0d1117;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #ffffffea;
+    ::-webkit-scrollbar-thumb {
+        background: #30363d;
+        border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #484f58;
+    }
 }

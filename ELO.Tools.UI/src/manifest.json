@@ -1,11 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "My Sidebar Extension",
+  "name": "ELO.DevTools",
   "version": "1.0",
   "permissions": [
-    "sidePanel",
-    "favicon",
-    "bookmarks"
+    "sidePanel"
   ],
   "side_panel": {
     "default_path": "index.html"
@@ -17,6 +15,9 @@
     "service_worker": "/assets/background.js"
   },
   "offline_enabled": true,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;"
+  },
   "web_accessible_resources": [
     {
       "resources": [
