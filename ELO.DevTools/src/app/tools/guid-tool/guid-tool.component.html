@@ -13,6 +13,13 @@
             </mat-card-header>
             <mat-card-content>
                 <div class="control-row">
+                    <label class="control-label">Version</label>
+                    <mat-radio-group [(ngModel)]="version">
+                        <mat-radio-button value="v7">UUID v7</mat-radio-button>
+                        <mat-radio-button value="v4">UUID v4</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="control-row">
                     <mat-form-field appearance="outline">
                         <mat-label>Format</mat-label>
                         <mat-select [(ngModel)]="format" (selectionChange)="onFormatChange()">

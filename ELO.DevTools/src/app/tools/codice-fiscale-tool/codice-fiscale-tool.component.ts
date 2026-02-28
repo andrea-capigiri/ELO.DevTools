@@ -9,7 +9,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CodiceFiscaleService } from '../../_shared/codice-fiscale.service';
 import {
@@ -34,9 +36,11 @@ import {
         MatToolbarModule,
         RouterModule,
         MatAutocompleteModule,
-        MatRadioModule,
+        MatDatepickerModule,
+        MatSelectModule,
         MatTooltipModule
     ],
+    providers: [provideNativeDateAdapter()],
     templateUrl: './codice-fiscale-tool.component.html',
     styleUrls: ['./codice-fiscale-tool.component.scss']
 })
@@ -46,7 +50,7 @@ export class CodiceFiscaleToolComponent {
     // Forward calculation
     cognome = '';
     nome = '';
-    dataNascita = '';
+    dataNascita: Date | null = null;
     sesso: Sesso = 'M';
     comuneControl = new FormControl('');
     selectedComune: Comune | null = null;
@@ -86,18 +90,13 @@ export class CodiceFiscaleToolComponent {
     }
 
     onCalcola(): void {
-        if (!this.isCalcoloValid || !this.selectedComune) return;
+        if (!this.isCalcoloValid || !this.selectedComune || !this.dataNascita) return;
         this.error = '';
         try {
-            const data = new Date(this.dataNascita);
-            if (isNaN(data.getTime())) {
-                this.error = 'Data di nascita non valida';
-                return;
-            }
             this.result = this.cfService.calcola({
                 cognome: this.cognome,
                 nome: this.nome,
-                dataNascita: data,
+                dataNascita: this.dataNascita,
                 sesso: this.sesso,
                 comune: this.selectedComune
             });
@@ -119,7 +118,7 @@ export class CodiceFiscaleToolComponent {
     onClearCalcolo(): void {
         this.cognome = '';
         this.nome = '';
-        this.dataNascita = '';
+        this.dataNascita = null;
         this.sesso = 'M';
         this.comuneControl.setValue('');
         this.selectedComune = null;

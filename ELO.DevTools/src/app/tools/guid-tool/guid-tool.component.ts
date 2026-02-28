@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatRadioModule } from '@angular/material/radio';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
@@ -26,7 +27,8 @@ import { UtilityService } from '../../_shared/utility.service';
     MatToolbarModule,
     RouterModule,
     MatSelectModule,
-    MatSliderModule
+    MatSliderModule,
+    MatRadioModule
   ],
   templateUrl: './guid-tool.component.html',
   styleUrls: ['./guid-tool.component.scss']
@@ -36,11 +38,12 @@ export class GuidToolComponent {
   guidHistory: string[] = [];
   generateCount: number = 1;
   format: 'uppercase' | 'lowercase' = 'uppercase';
+  version: 'v4' | 'v7' = 'v7';
 
   constructor(private utilityService: UtilityService) {}
 
   onGenerate(): void {
-    const newGuids = this.utilityService.generateMultipleGuids(this.generateCount);
+    const newGuids = this.utilityService.generateMultipleGuids(this.generateCount, this.version);
     newGuids.forEach(guid => {
       const formattedGuid = this.format === 'uppercase' ? guid.toUpperCase() : guid.toLowerCase();
       this.guidHistory.unshift(formattedGuid);

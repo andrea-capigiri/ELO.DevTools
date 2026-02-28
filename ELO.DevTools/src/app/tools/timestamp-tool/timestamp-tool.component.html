@@ -1,0 +1,213 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Timestamp Converter</span>
+</mat-toolbar>
+
+<div class="tool-container">
+    <div class="controls-section">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Modalità</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="control-row">
+                    <mat-radio-group [(ngModel)]="mode">
+                        <mat-radio-button value="toDate">Timestamp → Data</mat-radio-button>
+                        <mat-radio-button value="toTimestamp">Data → Timestamp</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        @if (mode === 'toDate') {
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Inserisci Timestamp</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Unix Timestamp</mat-label>
+                        <input matInput
+                               [(ngModel)]="timestampInput"
+                               (ngModelChange)="onTimestampInputChange()"
+                               placeholder="es. 1704067200 o 1704067200000"
+                               type="text"
+                               inputmode="numeric">
+                    </mat-form-field>
+
+                    @if (detectedUnit) {
+                        <div class="detected-unit">
+                            <mat-icon>info_outline</mat-icon>
+                            Rilevato: <strong>{{detectedUnit}}</strong>
+                        </div>
+                    }
+
+                    @if (inputError) {
+                        <div class="error-message">{{inputError}}</div>
+                    }
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" (click)="onCurrentTimestamp()">
+                        <mat-icon>schedule</mat-icon>
+                        Timestamp corrente
+                    </button>
+                    <button mat-button (click)="onClearToDate()" [disabled]="!timestampInput">
+                        Pulisci
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        }
+
+        @if (mode === 'toTimestamp') {
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Inserisci Data</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Data</mat-label>
+                        <input matInput
+                               [matDatepicker]="picker"
+                               [(ngModel)]="dateInputDate"
+                               (ngModelChange)="onDateInputChange()">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Ora</mat-label>
+                        <input matInput
+                               type="time"
+                               step="1"
+                               [(ngModel)]="timeInput"
+                               (ngModelChange)="onDateInputChange()">
+                        <mat-icon matIconSuffix>access_time</mat-icon>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" (click)="onCurrentTimestamp()">
+                        <mat-icon>schedule</mat-icon>
+                        Data corrente
+                    </button>
+                    <button mat-button (click)="onClearToTimestamp()" [disabled]="!dateInputDate">
+                        Pulisci
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        }
+    </div>
+
+    <div class="result-section">
+        @if (mode === 'toDate') {
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Risultati Conversione</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    @if (hasToDateResult) {
+                        <div class="data-grid">
+                            <div class="data-row">
+                                <span class="data-label">ISO 8601</span>
+                                <div class="data-value-row">
+                                    <span class="data-value mono">{{resultIso}}</span>
+                                    <button mat-icon-button (click)="onCopy(resultIso)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Formato Locale</span>
+                                <div class="data-value-row">
+                                    <span class="data-value">{{resultLocale}}</span>
+                                    <button mat-icon-button (click)="onCopy(resultLocale)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Formato Italiano</span>
+                                <div class="data-value-row">
+                                    <span class="data-value">{{resultItalian}}</span>
+                                    <button mat-icon-button (click)="onCopy(resultItalian)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Secondi (s)</span>
+                                <div class="data-value-row">
+                                    <span class="data-value mono">{{resultSeconds}}</span>
+                                    <button mat-icon-button (click)="onCopy(resultSeconds)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Millisecondi (ms)</span>
+                                <div class="data-value-row">
+                                    <span class="data-value mono">{{resultMilliseconds}}</span>
+                                    <button mat-icon-button (click)="onCopy(resultMilliseconds)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    } @else {
+                        <div class="empty-state">
+                            <mat-icon>schedule</mat-icon>
+                            <p>Inserisci un timestamp per vedere la conversione</p>
+                        </div>
+                    }
+                </mat-card-content>
+            </mat-card>
+        }
+
+        @if (mode === 'toTimestamp') {
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Risultati Conversione</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    @if (hasToTimestampResult) {
+                        <div class="data-grid">
+                            <div class="data-row">
+                                <span class="data-label">Timestamp (secondi)</span>
+                                <div class="data-value-row">
+                                    <span class="data-value mono">{{dateResultSeconds}}</span>
+                                    <button mat-icon-button (click)="onCopy(dateResultSeconds)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Timestamp (millisecondi)</span>
+                                <div class="data-value-row">
+                                    <span class="data-value mono">{{dateResultMilliseconds}}</span>
+                                    <button mat-icon-button (click)="onCopy(dateResultMilliseconds)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">ISO 8601</span>
+                                <div class="data-value-row">
+                                    <span class="data-value mono">{{dateResultIso}}</span>
+                                    <button mat-icon-button (click)="onCopy(dateResultIso)" matTooltip="Copia">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    } @else {
+                        <div class="empty-state">
+                            <mat-icon>calendar_today</mat-icon>
+                            <p>Seleziona una data per vedere la conversione</p>
+                        </div>
+                    }
+                </mat-card-content>
+            </mat-card>
+        }
+    </div>
+</div>

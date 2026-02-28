@@ -245,6 +245,26 @@ button[mat-icon-button] {
   box-shadow: var(--gh-shadow-medium) !important;
 }
 
+/* Radio Button */
+.mat-mdc-radio-button {
+  .mdc-label {
+    color: var(--gh-fg-default) !important;
+    font-family: var(--gh-font) !important;
+  }
+
+  .mdc-radio__outer-circle {
+    border-color: var(--gh-border-default) !important;
+  }
+
+  &.mat-mdc-radio-checked .mdc-radio__outer-circle {
+    border-color: var(--gh-accent-fg) !important;
+  }
+
+  &.mat-mdc-radio-checked .mdc-radio__inner-circle {
+    border-color: var(--gh-accent-fg) !important;
+  }
+}
+
 /* Divider */
 mat-divider {
   border-top-color: var(--gh-border-default) !important;

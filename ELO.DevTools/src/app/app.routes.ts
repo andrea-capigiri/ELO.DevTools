@@ -19,5 +19,10 @@ export const routes: Routes = [
         loadComponent: () => import('./tools/codice-fiscale-tool/codice-fiscale-tool.component')
             .then(m => m.CodiceFiscaleToolComponent)
     },
+    {
+        path: 'tools/timestamp',
+        loadComponent: () => import('./tools/timestamp-tool/timestamp-tool.component')
+            .then(m => m.TimestampToolComponent)
+    },
     { path: '**', redirectTo: '/home' }
 ];
