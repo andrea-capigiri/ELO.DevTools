@@ -14,5 +14,10 @@ export const routes: Routes = [
     { path: 'tools/url', component: UrlToolComponent },
     { path: 'tools/guid', component: GuidToolComponent },
     { path: 'tools/jwt', component: JwtToolComponent },
+    {
+        path: 'tools/codice-fiscale',
+        loadComponent: () => import('./tools/codice-fiscale-tool/codice-fiscale-tool.component')
+            .then(m => m.CodiceFiscaleToolComponent)
+    },
     { path: '**', redirectTo: '/home' }
 ];

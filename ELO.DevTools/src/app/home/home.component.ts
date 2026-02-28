@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-home',
     standalone: true,
     imports: [
-        CommonModule,
-        RouterModule
+        RouterModule,
+        MatIconModule
     ],
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
@@ -61,6 +61,12 @@ export class HomeComponent {
             description: 'Visualizza i claim all\'interno di un token JWT',
             icon: 'schedule',
             route: '/tools/jwt'
+        },
+        {
+            title: 'Codice Fiscale',
+            description: 'Calcola e verifica il codice fiscale italiano',
+            icon: 'badge',
+            route: '/tools/codice-fiscale'
         }
     ];
 }

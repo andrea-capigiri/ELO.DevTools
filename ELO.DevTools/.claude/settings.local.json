@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(npm run build-chrome)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(list\\(d.get\\(''exports'', {}\\).keys\\(\\)\\)[:30], indent=2\\)\\)\")",
+      "Bash(node -e \"const p = require\\(''/x/ELO.DevTools/ELO.DevTools.BrowserExtension/node_modules/@angular/material/package.json''\\); const exports = Object.keys\\(p.exports || {}\\); console.log\\(exports.filter\\(k => k.includes\\(''button''\\) || k === ''.''\\).slice\\(0, 20\\).join\\(''\\\\n''\\)\\);\")",
+      "Bash(node -e \"const p = require\\(''X:\\\\\\\\ELO.DevTools\\\\\\\\ELO.DevTools.BrowserExtension\\\\\\\\node_modules\\\\\\\\@angular\\\\\\\\material\\\\\\\\package.json''\\); const exports = Object.keys\\(p.exports || {}\\); console.log\\(exports.filter\\(k => k.includes\\(''button''\\) || k === ''.''\\).join\\(''\\\\n''\\)\\);\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/@angular/material/package.json''\\); const exp = Object.keys\\(p.exports || {}\\); console.log\\(exp.slice\\(0,30\\).join\\(''\\\\n''\\)\\);\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/@angular/material/package.json''\\); console.log\\(JSON.stringify\\(p.exports[''./button''], null, 2\\)\\);\")"
+    ]
+  }
+}

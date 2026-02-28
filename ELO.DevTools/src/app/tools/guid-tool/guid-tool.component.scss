@@ -42,16 +42,16 @@
       align-items: center;
       justify-content: space-between;
       padding: 8px 0;
-      border-bottom: 1px solid #eee;
-      
+      border-bottom: 1px solid var(--gh-border-muted);
+
       &:last-child {
         border-bottom: none;
       }
-      
+
       .guid-text {
-        font-family: 'Courier New', monospace;
-        font-size: 14px;
-        color: #333;
+        font-family: var(--gh-font-mono);
+        font-size: 13px;
+        color: var(--gh-fg-default);
         word-break: break-all;
         flex: 1;
         margin-right: 12px;

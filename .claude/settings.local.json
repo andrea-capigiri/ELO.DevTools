@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -d \"x:/ELO.DevTools/ELO.DevTools/node_modules\"/*)"
+    ]
+  }
+}

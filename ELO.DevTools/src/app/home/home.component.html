@@ -1,14 +1,21 @@
 <div class="home-container">
-    <header class="header">
-        <h1>ELO.DevTools</h1>
-        <p>Strumenti utili per sviluppatori</p>
+    <header class="home-header">
+        <h1 class="home-title">ELO DevTools</h1>
+        <p class="home-subtitle">Strumenti utili per sviluppatori</p>
     </header>
 
-    <div class="tools-grid">
-        <ng-container *ngFor="let tool of tools">
-            <div class="btn" routerLink="{{tool.route}}">
-                {{tool.title}}
-            </div>
-        </ng-container>
+    <div class="tools-list">
+        @for (tool of tools; track tool.route) {
+            <a class="tool-card" [routerLink]="tool.route">
+                <div class="tool-icon">
+                    <mat-icon>{{tool.icon}}</mat-icon>
+                </div>
+                <div class="tool-info">
+                    <div class="tool-title">{{tool.title}}</div>
+                    <div class="tool-desc">{{tool.description}}</div>
+                </div>
+                <mat-icon class="tool-arrow">chevron_right</mat-icon>
+            </a>
+        }
     </div>
 </div>
