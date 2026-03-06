@@ -2,7 +2,7 @@
     <header class="home-header">
         <div class="header-row">
             <div>
-                <h1 class="home-title">ELO DevTools</h1>
+                <h1 class="home-title">{{'app.title' | translate}}</h1>
                 <p class="home-subtitle">Strumenti per sviluppatori</p>
             </div>
             <a class="settings-btn" routerLink="/settings">
@@ -18,8 +18,8 @@
                     <mat-icon>{{tool.icon}}</mat-icon>
                 </div>
                 <div class="tool-info">
-                    <div class="tool-title">{{tool.title}}</div>
-                    <div class="tool-desc">{{tool.description}}</div>
+                    <div class="tool-title">{{tool.titleKey | translate}}</div>
+                    <div class="tool-desc">{{tool.descriptionKey | translate}}</div>
                 </div>
                 <mat-icon class="tool-arrow">chevron_right</mat-icon>
             </a>

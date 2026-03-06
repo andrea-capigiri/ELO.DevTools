@@ -322,6 +322,8 @@ button[mat-icon-button] {
   border: 1px solid var(--gh-border-default) !important;
   border-radius: var(--gh-radius) !important;
   overflow: hidden;
+  width: 100%;
+  display: flex;
 }
 
 .mat-button-toggle {
@@ -331,6 +333,7 @@ button[mat-icon-button] {
   font-size: 13px !important;
   font-weight: 500 !important;
   border-left: 1px solid var(--gh-border-default) !important;
+  flex: 1;
 
   &:first-child {
     border-left: none !important;
@@ -339,6 +342,9 @@ button[mat-icon-button] {
   .mat-button-toggle-label-content {
     line-height: 36px !important;
     padding: 0 14px !important;
+    display: flex;
+    justify-content: center;
+    flex: 1;
   }
 
   &:hover:not(.mat-button-toggle-checked) {
@@ -389,6 +395,11 @@ mat-divider {
 }
 
 /* ========== SCROLLBAR ========== */
+
+/* Utility Classes */
+.full-width {
+    width: 100%;
+}
 
 ::-webkit-scrollbar {
   width: 8px;

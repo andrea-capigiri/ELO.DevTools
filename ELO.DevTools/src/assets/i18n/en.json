@@ -1,0 +1,38 @@
+{
+    "app": {
+        "title": "ELO DevTools"
+    },
+    "settings": {
+        "title": "Settings",
+        "enabledTools": "Enabled Tools",
+        "chooseTools": "Choose which tools to show on the home page.",
+        "enableAll": "Enable All",
+        "disableAll": "Disable All",
+        "resetDefaults": "Reset Defaults",
+        "language": "Language",
+        "english": "English",
+        "italian": "Italian"
+    },
+    "tool": {
+        "base64": "Base64 Encoder/Decoder",
+        "base64.desc": "Encode and decode strings in Base64",
+        "base64-file": "Base64 File Encoder/Decoder",
+        "base64-file.desc": "Encode and decode files to/from Base64",
+        "url": "URL Encoder/Decoder",
+        "url.desc": "Encode and decode URL parameters",
+        "guid": "UUID Generator",
+        "guid.desc": "Generate unique UUIDs",
+        "hash": "Hash Generator",
+        "hash.desc": "Generate MD5, SHA1, SHA256 hashes",
+        "timestamp": "Timestamp Converter",
+        "timestamp.desc": "Convert timestamps to dates and vice versa",
+        "jwt": "JWT Inspector",
+        "jwt.desc": "Decode and view claims inside a JWT token",
+        "flex-preview": "Flex Layout Preview",
+        "flex-preview.desc": "Bootstrap Flex layout preview with ready-to-use classes",
+        "codice-fiscale": "Italian Tax Code",
+        "codice-fiscale.desc": "Calculate and verify Italian fiscal code (Codice Fiscale)",
+        "generatore-dati": "Italian Data Generator",
+        "generatore-dati.desc": "Generate individuals, businesses and companies data compliant with Italian standards"
+    }
+}

@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface ToolSetting {
     id: string;
-    title: string;
+    titleKey: string;
     icon: string;
     enabled: boolean;
 }
@@ -11,16 +11,16 @@ export interface ToolSetting {
 const STORAGE_KEY = 'elo-devtools-settings';
 
 const DEFAULT_TOOLS: ToolSetting[] = [
-    { id: 'base64', title: 'Base64 Encoder/Decoder', icon: 'code', enabled: true },
-    { id: 'base64-file', title: 'Base64 File Encoder/Decoder', icon: 'insert_drive_file', enabled: true },
-    { id: 'url', title: 'URL Encoder/Decoder', icon: 'link', enabled: true },
-    { id: 'guid', title: 'UUID Generator', icon: 'fingerprint', enabled: true },
-    { id: 'hash', title: 'Hash Generator', icon: 'security', enabled: true },
-    { id: 'timestamp', title: 'Timestamp Converter', icon: 'schedule', enabled: true },
-    { id: 'jwt', title: 'JWT Inspector', icon: 'schedule', enabled: true },
-    { id: 'flex-preview', title: 'Flex Layout Preview', icon: 'dashboard', enabled: true },
-    { id: 'codice-fiscale', title: 'Codice Fiscale', icon: 'badge', enabled: false },
-    { id: 'generatore-dati', title: 'Generatore Dati', icon: 'group_add', enabled: false },
+    { id: 'base64', titleKey: 'tool.base64', icon: 'code', enabled: true },
+    { id: 'base64-file', titleKey: 'tool.base64-file', icon: 'insert_drive_file', enabled: true },
+    { id: 'url', titleKey: 'tool.url', icon: 'link', enabled: true },
+    { id: 'guid', titleKey: 'tool.guid', icon: 'fingerprint', enabled: true },
+    { id: 'hash', titleKey: 'tool.hash', icon: 'security', enabled: true },
+    { id: 'timestamp', titleKey: 'tool.timestamp', icon: 'schedule', enabled: true },
+    { id: 'jwt', titleKey: 'tool.jwt', icon: 'schedule', enabled: true },
+    { id: 'flex-preview', titleKey: 'tool.flex-preview', icon: 'dashboard', enabled: true },
+    { id: 'codice-fiscale', titleKey: 'tool.codice-fiscale', icon: 'badge', enabled: false },
+    { id: 'generatore-dati', titleKey: 'tool.generatore-dati', icon: 'group_add', enabled: false },
 ];
 
 @Injectable({ providedIn: 'root' })
@@ -74,6 +74,11 @@ export class SettingsService {
 
     getTools(): ToolSetting[] {
         return this.toolsSubject.value;
+    }
+
+    getToolTitleKey(toolId: string): string {
+        const tool = this.toolsSubject.value.find(t => t.id === toolId);
+        return tool ? tool.titleKey : '';
     }
 
     isEnabled(toolId: string): boolean {

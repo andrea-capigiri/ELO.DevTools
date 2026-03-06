@@ -1,0 +1,38 @@
+{
+    "app": {
+        "title": "ELO DevTools"
+    },
+    "settings": {
+        "title": "Impostazioni",
+        "enabledTools": "Strumenti Attivati",
+        "chooseTools": "Scegli quali strumenti mostrare nella pagina home.",
+        "enableAll": "Attiva Tutti",
+        "disableAll": "Disattiva Tutti",
+        "resetDefaults": "Ripristina Predefiniti",
+        "language": "Lingua",
+        "english": "Inglese",
+        "italian": "Italiano"
+    },
+    "tool": {
+        "base64": "Codificatore/Decodificatore Base64",
+        "base64.desc": "Codifica e decodifica stringhe in Base64",
+        "base64-file": "Codificatore/Decodificatore File Base64",
+        "base64-file.desc": "Codifica e decodifica file in Base64",
+        "url": "Codificatore/Decodificatore URL",
+        "url.desc": "Codifica e decodifica parametri URL",
+        "guid": "Generatore UUID",
+        "guid.desc": "Genera UUID univoci",
+        "hash": "Generatore Hash",
+        "hash.desc": "Genera hash MD5, SHA1, SHA256",
+        "timestamp": "Convertitore Timestamp",
+        "timestamp.desc": "Converte timestamp in date e viceversa",
+        "jwt": "Ispezionatore JWT",
+        "jwt.desc": "Visualizza i claim all'interno di un token JWT",
+        "flex-preview": "Anteprima Layout Flex",
+        "flex-preview.desc": "Anteprima layout Bootstrap Flex con classi pronte",
+        "codice-fiscale": "Codice Fiscale",
+        "codice-fiscale.desc": "Calcola e verifica il codice fiscale italiano",
+        "generatore-dati": "Generatore Dati",
+        "generatore-dati.desc": "Genera persone fisiche, imprese individuali e società"
+    }
+}

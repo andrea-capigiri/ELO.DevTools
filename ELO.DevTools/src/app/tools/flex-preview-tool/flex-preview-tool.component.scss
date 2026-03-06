@@ -31,12 +31,17 @@
 }
 
 // Preview
-.preview-area {
-    min-height: 200px;
-    border: 2px dashed var(--gh-border-default);
-    border-radius: var(--gh-radius);
-    padding: 16px;
-    background-color: var(--gh-canvas-subtle);
+.preview-area-card {
+    overflow: hidden;
+
+    .preview-area {
+        min-height: 200px;
+        max-height: 100vw;
+        border: 2px dashed var(--gh-border-default);
+        border-radius: var(--gh-radius);
+        padding: 16px;
+        background-color: var(--gh-canvas-subtle);
+    }
 }
 
 .preview-box {

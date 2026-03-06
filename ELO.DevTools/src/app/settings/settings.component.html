@@ -2,22 +2,35 @@
     <button mat-icon-button routerLink="/">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <span>Settings</span>
+    <span>{{'settings.title' | translate}}</span>
 </mat-toolbar>
 
 <div class="settings-container">
+    <mat-card class="mb-2">
+        <mat-card-content>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{'settings.language' | translate}}</mat-label>
+                <mat-select [value]="currentLanguage" (selectionChange)="onLanguageChange($event.value)" class="full-width">
+                    @for (lang of languages; track lang.value) {
+                        <mat-option [value]="lang.value">{{lang.label}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Enabled Tools</mat-card-title>
+            <mat-card-title>{{'settings.enabledTools' | translate}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p class="settings-hint">Choose which tools to show in the home page.</p>
+            <p class="settings-hint">{{'settings.chooseTools' | translate}}</p>
             <div class="tool-toggles">
                 @for (tool of tools; track tool.id) {
                     <div class="tool-toggle-row">
                         <div class="tool-toggle-info">
                             <mat-icon class="tool-toggle-icon">{{tool.icon}}</mat-icon>
-                            <span class="tool-toggle-title">{{tool.title}}</span>
+                            <span class="tool-toggle-title">{{tool.titleKey | translate}}</span>
                         </div>
                         <mat-slide-toggle
                             [checked]="tool.enabled"
@@ -28,9 +41,9 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button (click)="onEnableAll()">Enable All</button>
-            <button mat-button (click)="onDisableAll()">Disable All</button>
-            <button mat-button (click)="onResetDefaults()">Reset Defaults</button>
+            <button mat-button (click)="onEnableAll()">{{'settings.enableAll' | translate}}</button>
+            <button mat-button (click)="onDisableAll()">{{'settings.disableAll' | translate}}</button>
+            <button mat-button (click)="onResetDefaults()">{{'settings.resetDefaults' | translate}}</button>
         </mat-card-actions>
     </mat-card>
 </div>
