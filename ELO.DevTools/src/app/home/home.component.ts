@@ -63,6 +63,13 @@ const ALL_TOOLS: ToolCard[] = [
         route: '/tools/jwt'
     },
     {
+        id: 'flex-preview',
+        title: 'Flex Layout Preview',
+        description: 'Anteprima layout Bootstrap Flex con classi pronte',
+        icon: 'dashboard',
+        route: '/tools/flex-preview'
+    },
+    {
         id: 'codice-fiscale',
         title: 'Codice Fiscale',
         description: 'Calcola e verifica il codice fiscale italiano',

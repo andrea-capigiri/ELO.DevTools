@@ -18,6 +18,7 @@ const DEFAULT_TOOLS: ToolSetting[] = [
     { id: 'hash', title: 'Hash Generator', icon: 'security', enabled: true },
     { id: 'timestamp', title: 'Timestamp Converter', icon: 'schedule', enabled: true },
     { id: 'jwt', title: 'JWT Inspector', icon: 'schedule', enabled: true },
+    { id: 'flex-preview', title: 'Flex Layout Preview', icon: 'dashboard', enabled: true },
     { id: 'codice-fiscale', title: 'Codice Fiscale', icon: 'badge', enabled: false },
     { id: 'generatore-dati', title: 'Generatore Dati', icon: 'group_add', enabled: false },
 ];

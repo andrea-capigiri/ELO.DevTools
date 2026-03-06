@@ -35,6 +35,11 @@ export const routes: Routes = [
             .then(m => m.HashToolComponent)
     },
     {
+        path: 'tools/flex-preview',
+        loadComponent: () => import('./tools/flex-preview-tool/flex-preview-tool.component')
+            .then(m => m.FlexPreviewToolComponent)
+    },
+    {
         path: 'settings',
         loadComponent: () => import('./settings/settings.component')
             .then(m => m.SettingsComponent)
