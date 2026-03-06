@@ -3,7 +3,8 @@
   "name": "ELO.DevTools",
   "version": "1.0",
   "permissions": [
-    "sidePanel"
+    "sidePanel",
+    "storage"
   ],
   "side_panel": {
     "default_path": "index.html"

@@ -34,5 +34,10 @@ export const routes: Routes = [
         loadComponent: () => import('./tools/hash-tool/hash-tool.component')
             .then(m => m.HashToolComponent)
     },
+    {
+        path: 'settings',
+        loadComponent: () => import('./settings/settings.component')
+            .then(m => m.SettingsComponent)
+    },
     { path: '**', redirectTo: '/home' }
 ];

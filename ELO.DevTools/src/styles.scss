@@ -369,6 +369,25 @@ mat-divider {
   border-radius: var(--gh-radius) !important;
 }
 
+/* Slide Toggle */
+.mat-mdc-slide-toggle {
+  .mdc-switch__track::before {
+    background-color: var(--gh-border-default) !important;
+  }
+
+  .mdc-switch__track::after {
+    background-color: var(--gh-accent-emphasis) !important;
+  }
+
+  .mdc-switch__handle::after {
+    background-color: var(--gh-canvas-default) !important;
+  }
+
+  &.mat-mdc-slide-toggle-checked .mdc-switch__handle::after {
+    background-color: #fff !important;
+  }
+}
+
 /* ========== SCROLLBAR ========== */
 
 ::-webkit-scrollbar {
