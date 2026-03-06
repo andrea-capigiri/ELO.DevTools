@@ -1,82 +1,55 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button routerLink="/">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  <span>URL Encoder/Decoder</span>
+    <button mat-icon-button routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>URL Encoder/Decoder</span>
 </mat-toolbar>
 
 <div class="tool-container">
-  <div class="mode-selector">
-    <button mat-button 
-            [color]="mode === 'encode' ? 'primary' : 'basic'"
-            (click)="mode = 'encode'">
-      Encode
-    </button>
-    <button mat-button 
-            [color]="mode === 'decode' ? 'primary' : 'basic'"
-            (click)="mode = 'decode'">
-      Decode
-    </button>
-  </div>
-
-  <div class="io-container">
-    <mat-card class="input-card">
-      <mat-card-header>
-        <mat-card-title>{{mode === 'encode' ? 'Input Text' : 'URL Encoded Input'}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea matInput
-                    placeholder="Enter text or URL here..."
-                    [(ngModel)]="inputText"
-                    rows="8"></textarea>
-        </mat-form-field>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button 
-                color="primary"
-                (click)="mode === 'encode' ? onEncode() : onDecode()"
-                [disabled]="!inputText.trim()">
-          {{mode === 'encode' ? 'Encode' : 'Decode'}}
-        </button>
-        <button mat-button 
-                (click)="onClear()"
-                [disabled]="!inputText.trim()">
-          Clear
-        </button>
-      </mat-card-actions>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Input</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="outline" class="full-width">
+                <textarea matInput
+                          placeholder="Enter text or URL here..."
+                          [(ngModel)]="inputText"
+                          rows="8"></textarea>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onEncode()" [disabled]="!inputText.trim()">
+                <mat-icon>link</mat-icon>
+                Encode
+            </button>
+            <button mat-raised-button color="primary" (click)="onDecode()" [disabled]="!inputText.trim()">
+                <mat-icon>link_off</mat-icon>
+                Decode
+            </button>
+            <button mat-button (click)="onClear()" [disabled]="!inputText.trim() && !outputText.trim()">
+                Clear
+            </button>
+        </mat-card-actions>
     </mat-card>
 
-    <div class="actions-middle">
-      <button mat-icon-button 
-              color="primary"
-              (click)="onSwap()"
-              [disabled]="!outputText.trim()">
-        <mat-icon>swap_horiz</mat-icon>
-      </button>
-    </div>
-
-    <mat-card class="output-card">
-      <mat-card-header>
-        <mat-card-title>{{mode === 'encode' ? 'URL Encoded Output' : 'Decoded Text'}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea matInput
-                    [readonly]="true"
-                    [value]="outputText"
-                    rows="8"></textarea>
-        </mat-form-field>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button 
-                color="primary"
-                (click)="onCopy()"
-                [disabled]="!outputText.trim()">
-          <mat-icon>content_copy</mat-icon>
-          Copy
-        </button>
-      </mat-card-actions>
+    <mat-card *ngIf="outputText">
+        <mat-card-header>
+            <mat-card-title>Output</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="outline" class="full-width">
+                <textarea matInput
+                          [readonly]="true"
+                          [value]="outputText"
+                          rows="8"></textarea>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button color="primary" (click)="onCopy()">
+                <mat-icon>content_copy</mat-icon>
+                Copy
+            </button>
+        </mat-card-actions>
     </mat-card>
-  </div>
 </div>

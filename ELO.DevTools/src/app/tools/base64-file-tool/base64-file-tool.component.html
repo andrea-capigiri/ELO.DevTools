@@ -1,202 +1,168 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button routerLink="/">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  <span>Base64 File Encoder/Decoder</span>
+    <button mat-icon-button routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Base64 File Encoder/Decoder</span>
 </mat-toolbar>
 
 <div class="tool-container">
-
-  <div class="io-container">
-    <!-- Encode Mode -->
-    <div *ngIf="mode === 'encode'" class="encode-mode">
-      <mat-card class="input-card">
-        <mat-card-header>
-          <mat-card-title>Select File to Encode</mat-card-title>
-        </mat-card-header>
+    <!-- Mode toggle at top -->
+    <mat-card>
         <mat-card-content>
-          <div class="file-drop-zone" 
-               [class.drag-over]="dragOver"
-               (dragover)="onDragOver($event)"
-               (dragleave)="onDragLeave($event)"
-               (drop)="onDrop($event)">
-            <input type="file" 
-                   id="file-input"
-                   (change)="onFileSelected($event)"
-                   class="file-input">
-            <div class="drop-zone-content" *ngIf="!selectedFile">
-              <mat-icon>cloud_upload</mat-icon>
-              <p>Drag and drop a file here or click to browse</p>
+            <div class="mode-row">
+                <mat-button-toggle-group [(ngModel)]="mode" (change)="onClear()">
+                    <mat-button-toggle value="encode">Encode</mat-button-toggle>
+                    <mat-button-toggle value="decode">Decode</mat-button-toggle>
+                </mat-button-toggle-group>
             </div>
-            <div class="selected-file" *ngIf="selectedFile">
-              <mat-icon>insert_drive_file</mat-icon>
-              <span>{{selectedFile.name}}</span>
-              <span class="file-size">({{selectedFile.size | number}} bytes)</span>
-            </div>
-          </div>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button 
-                  color="primary"
-                  (click)="onEncodeFile()"
-                  [disabled]="!selectedFile || isProcessing">
-            <mat-icon *ngIf="isProcessing" class="spinner">
-              <mat-spinner diameter="20"></mat-spinner>
-            </mat-icon>
-            {{isProcessing ? 'Encoding...' : 'Encode File'}}
-          </button>
-          <button mat-button 
-                  (click)="onClear()"
-                  [disabled]="!selectedFile && !base64Output">
-            Clear
-          </button>
-        </mat-card-actions>
-      </mat-card>
+    </mat-card>
 
-      <div class="mode-selector">
-        <button mat-button 
-                [color]="mode === 'encode' ? 'primary' : 'basic'"
-                (click)="mode = 'encode'">
-        Encode
-        </button>
-        <button mat-button 
-                (click)="mode = 'decode'">
-                <!--
-                [color]="mode === 'decode' ? 'primary' : 'basic'"-->
-        Decode
-        </button>
-      </div>
-      
-      <div class="actions-middle">
-        <button mat-icon-button 
-                color="primary"
-                (click)="onSwap()"
-                [disabled]="!base64Output">
-          <mat-icon>swap_horiz</mat-icon>
-        </button>
-      </div>
+    <!-- ENCODE MODE -->
+    <ng-container *ngIf="mode === 'encode'">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>File</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="file-drop-zone"
+                     [class.drag-over]="dragOver"
+                     (dragover)="onDragOver($event)"
+                     (dragleave)="onDragLeave($event)"
+                     (drop)="onDrop($event)">
+                    <input type="file"
+                           id="file-input"
+                           (change)="onFileSelected($event)"
+                           class="file-input">
+                    <div class="drop-zone-content" *ngIf="!selectedFile">
+                        <mat-icon>cloud_upload</mat-icon>
+                        <p>Drag and drop a file here or click to browse</p>
+                    </div>
+                    <div class="selected-file" *ngIf="selectedFile">
+                        <mat-icon>insert_drive_file</mat-icon>
+                        <span>{{selectedFile.name}}</span>
+                        <span class="file-size">({{selectedFile.size | number}} bytes)</span>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary"
+                        (click)="onEncodeFile()"
+                        [disabled]="!selectedFile || isProcessing">
+                    <mat-icon>lock</mat-icon>
+                    {{isProcessing ? 'Encoding...' : 'Encode'}}
+                </button>
+                <button mat-button (click)="onClear()"
+                        [disabled]="!selectedFile && !base64Output">
+                    Clear
+                </button>
+            </mat-card-actions>
+        </mat-card>
 
-      <mat-card class="output-card">
-        <mat-card-header>
-          <mat-card-title>Base64 Output</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-form-field appearance="outline" class="full-width">
-            <textarea matInput
-                      [readonly]="true"
-                      [value]="base64Output"
-                      rows="12"
-                      placeholder="Encoded base64 will appear here..."></textarea>
-          </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button 
-                  color="primary"
-                  (click)="onCopy()"
-                  [disabled]="!base64Output">
-            <mat-icon>content_copy</mat-icon>
-            Copy
-          </button>
-          <button mat-button 
-                  color="accent"
-                  (click)="downloadBase64AsFile()"
-                  [disabled]="!base64Output">
-            <mat-icon>download</mat-icon>
-            Download
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+        <mat-card *ngIf="base64Output">
+            <mat-card-header>
+                <mat-card-title>Base64 Output</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="full-width">
+                    <textarea matInput
+                              [readonly]="true"
+                              [value]="base64Output"
+                              rows="10"></textarea>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="onCopyBase64()">
+                    <mat-icon>content_copy</mat-icon>
+                    Copy
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-container>
 
-    <!-- Decode Mode -->
-    <div *ngIf="mode === 'decode'" class="decode-mode">
-      <mat-card class="input-card">
-        <mat-card-header>
-          <mat-card-title>Base64 Input</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-form-field appearance="outline" class="full-width">
-            <textarea matInput
-                      placeholder="Paste base64 string here..."
-                      [(ngModel)]="base64Output"
-                      rows="12"></textarea>
-          </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button 
-                  color="primary"
-                  (click)="onDecodeBase64()"
-                  [disabled]="!base64Output.trim() || isProcessing">
-            <mat-icon *ngIf="isProcessing" class="spinner">
-              <mat-spinner diameter="20"></mat-spinner>
-            </mat-icon>
-            {{isProcessing ? 'Decoding...' : 'Decode'}}
-          </button>
-          <button mat-button 
-                  (click)="onClear()"
-                  [disabled]="!base64Output.trim() && !decodedContent">
-            Clear
-          </button>
-        </mat-card-actions>
-      </mat-card>
+    <!-- DECODE MODE -->
+    <ng-container *ngIf="mode === 'decode'">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Base64 Input</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="full-width">
+                    <textarea matInput
+                              placeholder="Paste base64 string here..."
+                              [(ngModel)]="base64Input"
+                              rows="10"></textarea>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary"
+                        (click)="onDecodeBase64()"
+                        [disabled]="!base64Input.trim() || isProcessing">
+                    <mat-icon>lock_open</mat-icon>
+                    {{isProcessing ? 'Decoding...' : 'Decode'}}
+                </button>
+                <button mat-button (click)="onClear()"
+                        [disabled]="!base64Input.trim() && !decodedContent">
+                    Clear
+                </button>
+            </mat-card-actions>
+        </mat-card>
 
-      <div class="mode-selector">
-        <button mat-button 
-                (click)="mode = 'encode'">
-                <!--
-                [color]="mode === 'encode' ? 'primary' : 'basic'"-->
-        Encode
-        </button>
-        <button mat-button 
-                [color]="mode === 'decode' ? 'primary' : 'basic'"
-                (click)="mode = 'decode'">
-        Decode
-        </button>
-      </div>
-      
-      <div class="actions-middle">
-        <button mat-icon-button 
-                color="primary"
-                (click)="onSwap()"
-                [disabled]="!decodedContent">
-          <mat-icon>swap_horiz</mat-icon>
-        </button>
-      </div>
+        <mat-card *ngIf="decodedContent">
+            <mat-card-header>
+                <mat-card-title>Decoded Output</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="decoded-info">
+                    <span><strong>Detected type:</strong> {{decodedFileType}}</span>
+                    <span><strong>Size:</strong> {{decodedSize | number}} bytes</span>
+                </div>
 
-      <mat-card class="output-card">
-        <mat-card-header>
-          <mat-card-title>Decoded File</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="decoded-info" *ngIf="decodedContent">
-            <p><strong>Type:</strong> {{decodedFileType}}</p>
-            <p><strong>Size:</strong> {{decodedContent.length | number}} characters</p>
-          </div>
-          <mat-form-field appearance="outline" class="full-width">
-            <textarea matInput
-                      [readonly]="true"
-                      [value]="decodedContent"
-                      rows="12"
-                      placeholder="Decoded content will appear here..."></textarea>
-          </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button 
-                  color="primary"
-                  (click)="onCopy()"
-                  [disabled]="!decodedContent">
-            <mat-icon>content_copy</mat-icon>
-            Copy
-          </button>
-          <button mat-button 
-                  color="accent"
-                  (click)="downloadDecodedFile()"
-                  [disabled]="!decodedContent">
-            <mat-icon>download</mat-icon>
-            Download
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </div>
+                <!-- Preview for images -->
+                <div class="image-preview" *ngIf="isImage">
+                    <img [src]="decodedDataUrl" alt="Preview">
+                </div>
+
+                <!-- Preview for text -->
+                <mat-form-field appearance="outline" class="full-width" *ngIf="isText">
+                    <textarea matInput
+                              [readonly]="true"
+                              [value]="decodedContent"
+                              rows="10"></textarea>
+                </mat-form-field>
+
+                <div class="download-section">
+                    <label class="setting-label">Download</label>
+                    <div class="download-row">
+                        <mat-form-field appearance="outline" class="filename-field">
+                            <mat-label>File name</mat-label>
+                            <input matInput [(ngModel)]="downloadFilename">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="format-field" *ngIf="!isCustomExtension">
+                            <mat-label>Format</mat-label>
+                            <mat-select [(ngModel)]="downloadExtension">
+                                <mat-option *ngFor="let ext of availableExtensions" [value]="ext">
+                                    .{{ext}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="format-field" *ngIf="isCustomExtension">
+                            <mat-label>Extension</mat-label>
+                            <input matInput [(ngModel)]="downloadExtension" placeholder="e.g. pdf, zip...">
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" (click)="downloadDecodedFile()">
+                            <mat-icon>download</mat-icon>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="onCopyDecoded()" *ngIf="isText">
+                    <mat-icon>content_copy</mat-icon>
+                    Copy Text
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-container>
 </div>

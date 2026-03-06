@@ -30,9 +30,8 @@ import { UtilityService } from '../../_shared/utility.service';
 export class Base64ToolComponent {
     inputText: string = '';
     outputText: string = '';
-    mode: 'encode' | 'decode' = 'encode';
 
-    constructor(private utilityService: UtilityService) { }
+    constructor(private utilityService: UtilityService) {}
 
     onEncode(): void {
         if (this.inputText.trim()) {
@@ -44,13 +43,6 @@ export class Base64ToolComponent {
         if (this.inputText.trim()) {
             this.outputText = this.utilityService.base64Decode(this.inputText);
         }
-    }
-
-    onSwap(): void {
-        const temp = this.inputText;
-        this.inputText = this.outputText;
-        this.outputText = temp;
-        this.mode = this.mode === 'encode' ? 'decode' : 'encode';
     }
 
     onClear(): void {

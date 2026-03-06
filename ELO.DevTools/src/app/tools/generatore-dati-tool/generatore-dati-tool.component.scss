@@ -1,0 +1,243 @@
+.tool-container {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tipo-toggle {
+    width: 100%;
+
+    mat-button-toggle {
+        flex: 1;
+    }
+}
+
+.result-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+// CF in evidenza
+.cf-highlight {
+    text-align: center;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border-default);
+    border-radius: var(--gh-radius);
+
+    .cf-label {
+        display: block;
+        font-size: 11px;
+        color: var(--gh-fg-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
+
+    .cf-value {
+        display: block;
+        font-family: var(--gh-font-mono);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--gh-fg-default);
+    }
+
+    &.clickable {
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease;
+
+        &:hover {
+            background: var(--gh-border-muted);
+            border-color: var(--gh-border-default);
+        }
+
+        &:active {
+            background: var(--gh-border-default);
+        }
+    }
+}
+
+// Grid layouts
+.data-grid {
+    display: grid;
+    gap: 0;
+
+    &.one-col {
+        grid-template-columns: 1fr;
+    }
+
+    &.two-col {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    &.three-col {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .data-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--gh-border-muted);
+
+        &:nth-last-child(-n+1) {
+            border-bottom: none;
+        }
+    }
+
+    // Remove bottom border from the last row of cells
+    &.two-col .data-cell:nth-last-child(-n+2) {
+        border-bottom: none;
+    }
+
+    &.three-col .data-cell:nth-last-child(-n+3) {
+        border-bottom: none;
+    }
+
+    .data-label {
+        font-size: 11px;
+        color: var(--gh-fg-muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .data-value {
+        font-size: 14px;
+        color: var(--gh-fg-default);
+        font-weight: 600;
+        word-break: break-word;
+
+        &.mono {
+            font-family: var(--gh-font-mono);
+            letter-spacing: 1px;
+        }
+
+        &.clickable {
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 2px 4px;
+            margin: -2px -4px;
+            transition: background 0.15s ease;
+
+            &:hover {
+                background: var(--gh-canvas-subtle);
+            }
+
+            &:active {
+                background: var(--gh-border-muted);
+            }
+        }
+    }
+}
+
+// Separator between adjacent grids inside same card
+.data-grid + .data-grid {
+    border-top: 1px solid var(--gh-border-muted);
+}
+
+.actions-bar {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding: 8px 0;
+}
+
+// Storico
+.history-card {
+    .history-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--gh-border-muted);
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background 0.15s ease;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background: var(--gh-canvas-subtle);
+        }
+
+        &.active {
+            background: var(--gh-canvas-subtle);
+            border-left: 3px solid var(--gh-accent-fg);
+        }
+
+        .history-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .history-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gh-fg-default);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--gh-canvas-subtle);
+            border: 1px solid var(--gh-border-default);
+            color: var(--gh-fg-muted);
+            white-space: nowrap;
+        }
+
+        .history-time {
+            font-size: 12px;
+            color: var(--gh-fg-muted);
+            white-space: nowrap;
+            margin-left: 12px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-container {
+        padding: 16px;
+    }
+
+    .cf-highlight .cf-value {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .data-grid {
+        &.two-col,
+        &.three-col {
+            grid-template-columns: 1fr;
+        }
+
+        .data-cell {
+            border-bottom: 1px solid var(--gh-border-muted);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}

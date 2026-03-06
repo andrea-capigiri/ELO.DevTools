@@ -97,6 +97,51 @@ a {
 
 /* ========== ANGULAR MATERIAL OVERRIDES ========== */
 
+/* Global font override for all Material / MDC components */
+.mat-mdc-card,
+.mat-mdc-card-content,
+.mat-mdc-card-title,
+.mat-mdc-card-subtitle,
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-icon-button,
+.mat-mdc-outlined-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab,
+.mat-mdc-form-field,
+.mat-mdc-floating-label,
+.mat-mdc-input-element,
+.mat-mdc-select,
+.mat-mdc-select-value-text,
+.mat-mdc-option,
+.mat-mdc-radio-button,
+.mat-mdc-checkbox,
+.mat-mdc-slide-toggle,
+.mat-mdc-slider,
+.mat-mdc-tab,
+.mat-mdc-tab-link,
+.mat-mdc-chip,
+.mat-mdc-tooltip,
+.mat-mdc-snack-bar-container,
+.mat-mdc-dialog-container,
+.mat-mdc-menu-panel,
+.mat-mdc-menu-item,
+.mat-mdc-list-item,
+.mat-mdc-autocomplete-panel,
+.mat-button-toggle,
+.mat-button-toggle-label-content,
+.mdc-button__label,
+.mdc-floating-label,
+.mdc-text-field,
+.mdc-label,
+.mdc-list-item__primary-text,
+.mdc-tab__text-label,
+.mdc-dialog__title,
+.mdc-dialog__content,
+.mdc-snackbar__label {
+  font-family: var(--gh-font) !important;
+}
+
 /* Toolbar */
 mat-toolbar {
   background-color: var(--gh-canvas-subtle) !important;
@@ -140,6 +185,13 @@ mat-card-subtitle {
 
 mat-card-content {
   color: var(--gh-fg-default) !important;
+}
+
+mat-card-actions,
+.mat-mdc-card-actions {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 24px !important;
 }
 
 /* Raised / Primary Button */
@@ -263,6 +315,46 @@ button[mat-icon-button] {
   &.mat-mdc-radio-checked .mdc-radio__inner-circle {
     border-color: var(--gh-accent-fg) !important;
   }
+}
+
+/* Button Toggle Group */
+.mat-button-toggle-group {
+  border: 1px solid var(--gh-border-default) !important;
+  border-radius: var(--gh-radius) !important;
+  overflow: hidden;
+}
+
+.mat-button-toggle {
+  background-color: var(--gh-canvas-default) !important;
+  color: var(--gh-fg-muted) !important;
+  font-family: var(--gh-font) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  border-left: 1px solid var(--gh-border-default) !important;
+
+  &:first-child {
+    border-left: none !important;
+  }
+
+  .mat-button-toggle-label-content {
+    line-height: 36px !important;
+    padding: 0 14px !important;
+  }
+
+  &:hover:not(.mat-button-toggle-checked) {
+    background-color: var(--gh-canvas-subtle) !important;
+  }
+
+  &.mat-button-toggle-checked {
+    background-color: var(--gh-canvas-subtle) !important;
+    color: var(--gh-fg-default) !important;
+    font-weight: 600 !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  line-height: 36px !important;
 }
 
 /* Divider */

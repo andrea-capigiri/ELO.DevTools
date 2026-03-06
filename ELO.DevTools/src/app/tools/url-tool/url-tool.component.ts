@@ -11,54 +11,46 @@ import { RouterModule } from '@angular/router';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
-  selector: 'app-url-tool',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatToolbarModule,
-    RouterModule
-  ],
-  templateUrl: './url-tool.component.html',
-  styleUrls: ['./url-tool.component.scss']
+    selector: 'app-url-tool',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatToolbarModule,
+        RouterModule
+    ],
+    templateUrl: './url-tool.component.html',
+    styleUrls: ['./url-tool.component.scss']
 })
 export class UrlToolComponent {
-  inputText: string = '';
-  outputText: string = '';
-  mode: 'encode' | 'decode' = 'encode';
+    inputText: string = '';
+    outputText: string = '';
 
-  constructor(private utilityService: UtilityService) {}
+    constructor(private utilityService: UtilityService) {}
 
-  onEncode(): void {
-    if (this.inputText.trim()) {
-      this.outputText = this.utilityService.urlEncode(this.inputText);
+    onEncode(): void {
+        if (this.inputText.trim()) {
+            this.outputText = this.utilityService.urlEncode(this.inputText);
+        }
     }
-  }
 
-  onDecode(): void {
-    if (this.inputText.trim()) {
-      this.outputText = this.utilityService.urlDecode(this.inputText);
+    onDecode(): void {
+        if (this.inputText.trim()) {
+            this.outputText = this.utilityService.urlDecode(this.inputText);
+        }
     }
-  }
 
-  onSwap(): void {
-    const temp = this.inputText;
-    this.inputText = this.outputText;
-    this.outputText = temp;
-    this.mode = this.mode === 'encode' ? 'decode' : 'encode';
-  }
+    onClear(): void {
+        this.inputText = '';
+        this.outputText = '';
+    }
 
-  onClear(): void {
-    this.inputText = '';
-    this.outputText = '';
-  }
-
-  onCopy(): void {
-    navigator.clipboard.writeText(this.outputText);
-  }
+    onCopy(): void {
+        navigator.clipboard.writeText(this.outputText);
+    }
 }

@@ -8,9 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
@@ -26,9 +24,7 @@ import { UtilityService } from '../../_shared/utility.service';
     MatCardModule,
     MatToolbarModule,
     RouterModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatRadioModule
+    MatButtonToggleModule
   ],
   templateUrl: './guid-tool.component.html',
   styleUrls: ['./guid-tool.component.scss']
@@ -36,24 +32,16 @@ import { UtilityService } from '../../_shared/utility.service';
 export class GuidToolComponent {
   currentGuid: string = '';
   guidHistory: string[] = [];
-  generateCount: number = 1;
   format: 'uppercase' | 'lowercase' = 'uppercase';
   version: 'v4' | 'v7' = 'v7';
 
   constructor(private utilityService: UtilityService) {}
 
   onGenerate(): void {
-    const newGuids = this.utilityService.generateMultipleGuids(this.generateCount, this.version);
-    newGuids.forEach(guid => {
-      const formattedGuid = this.format === 'uppercase' ? guid.toUpperCase() : guid.toLowerCase();
-      this.guidHistory.unshift(formattedGuid);
-    });
-    
-    if (newGuids.length > 0) {
-      this.currentGuid = this.format === 'uppercase' ? newGuids[0].toUpperCase() : newGuids[0].toLowerCase();
-    }
-    
-    // Keep only last 50 generated GUIDs
+    const guid = this.utilityService.generateMultipleGuids(1, this.version)[0];
+    this.currentGuid = this.format === 'uppercase' ? guid.toUpperCase() : guid.toLowerCase();
+    this.guidHistory.unshift(this.currentGuid);
+
     if (this.guidHistory.length > 50) {
       this.guidHistory = this.guidHistory.slice(0, 50);
     }
@@ -85,7 +73,4 @@ export class GuidToolComponent {
     );
   }
 
-  formatLabel(value: number): string {
-    return `${value}`;
-  }
 }

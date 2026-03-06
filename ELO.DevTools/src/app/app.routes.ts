@@ -24,5 +24,15 @@ export const routes: Routes = [
         loadComponent: () => import('./tools/timestamp-tool/timestamp-tool.component')
             .then(m => m.TimestampToolComponent)
     },
+    {
+        path: 'tools/generatore-dati',
+        loadComponent: () => import('./tools/generatore-dati-tool/generatore-dati-tool.component')
+            .then(m => m.GeneratoreDatiToolComponent)
+    },
+    {
+        path: 'tools/hash',
+        loadComponent: () => import('./tools/hash-tool/hash-tool.component')
+            .then(m => m.HashToolComponent)
+    },
     { path: '**', redirectTo: '/home' }
 ];

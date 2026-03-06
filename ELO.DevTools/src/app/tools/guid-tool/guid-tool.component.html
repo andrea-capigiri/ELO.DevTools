@@ -2,84 +2,76 @@
     <button mat-icon-button routerLink="/">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <span>GUID Generator</span>
+    <span>UUID Generator</span>
 </mat-toolbar>
 
 <div class="tool-container">
-    <div class="controls-section">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Generator Settings</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="control-row">
-                    <label class="control-label">Version</label>
-                    <mat-radio-group [(ngModel)]="version">
-                        <mat-radio-button value="v7">UUID v7</mat-radio-button>
-                        <mat-radio-button value="v4">UUID v4</mat-radio-button>
-                    </mat-radio-group>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Settings</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="settings-row">
+                <div class="setting">
+                    <label class="setting-label">Version</label>
+                    <mat-button-toggle-group [(ngModel)]="version" class="setting-toggle">
+                        <mat-button-toggle value="v7">UUID v7</mat-button-toggle>
+                        <mat-button-toggle value="v4">UUID v4</mat-button-toggle>
+                    </mat-button-toggle-group>
                 </div>
-                <div class="control-row">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Format</mat-label>
-                        <mat-select [(ngModel)]="format" (selectionChange)="onFormatChange()">
-                            <mat-option value="uppercase">UPPERCASE</mat-option>
-                            <mat-option value="lowercase">lowercase</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <div class="setting">
+                    <label class="setting-label">Format</label>
+                    <mat-button-toggle-group [(ngModel)]="format" (change)="onFormatChange()" class="setting-toggle">
+                        <mat-button-toggle value="uppercase">UPPERCASE</mat-button-toggle>
+                        <mat-button-toggle value="lowercase">lowercase</mat-button-toggle>
+                    </mat-button-toggle-group>
                 </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="onGenerate()">
-                    <mat-icon>refresh</mat-icon>
-                    Generate
-                </button>
-                <button mat-button (click)="onClear()" [disabled]="!guidHistory.length">
-                    Clear All
-                </button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onGenerate()">
+                <mat-icon>refresh</mat-icon>
+                Generate
+            </button>
+            <button mat-button (click)="onClear()" [disabled]="!guidHistory.length">
+                Clear
+            </button>
+        </mat-card-actions>
+    </mat-card>
 
-    <div class="result-section">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Current GUID</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="outline" class="full-width">
-                    <input matInput [readonly]="true" [value]="currentGuid"
-                        placeholder="Click Generate to create a GUID">
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button color="primary" (click)="onCopy(currentGuid)" [disabled]="!currentGuid">
-                    <mat-icon>content_copy</mat-icon>
-                    Copy
-                </button>
-            </mat-card-actions>
-        </mat-card>
+    <mat-card *ngIf="currentGuid">
+        <mat-card-header>
+            <mat-card-title>Current GUID</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="current-guid">{{currentGuid}}</div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button color="primary" (click)="onCopy(currentGuid)">
+                <mat-icon>content_copy</mat-icon>
+                Copy
+            </button>
+        </mat-card-actions>
+    </mat-card>
 
-        <mat-card class="history-card" *ngIf="guidHistory.length > 0">
-            <mat-card-header>
-                <mat-card-title>History ({{guidHistory.length}})</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="guid-list">
-                    <div class="guid-item" *ngFor="let guid of guidHistory; let i = index">
-                        <span class="guid-text">{{guid}}</span>
-                        <button mat-icon-button color="primary" (click)="onCopy(guid)">
-                            <mat-icon>content_copy</mat-icon>
-                        </button>
-                    </div>
+    <mat-card *ngIf="guidHistory.length > 1">
+        <mat-card-header>
+            <mat-card-title>History ({{guidHistory.length}})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="guid-list">
+                <div class="guid-item" *ngFor="let guid of guidHistory; let i = index"
+                     (click)="onCopy(guid)">
+                    <span class="guid-text">{{guid}}</span>
+                    <mat-icon class="copy-icon">content_copy</mat-icon>
                 </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button color="primary" (click)="onCopyAll()">
-                    <mat-icon>content_copy</mat-icon>
-                    Copy All
-                </button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button color="primary" (click)="onCopyAll()">
+                <mat-icon>content_copy</mat-icon>
+                Copy All
+            </button>
+        </mat-card-actions>
+    </mat-card>
 </div>

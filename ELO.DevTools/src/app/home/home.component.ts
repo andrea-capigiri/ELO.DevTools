@@ -33,16 +33,10 @@ export class HomeComponent {
             route: '/tools/url'
         },
         {
-            title: 'GUID Generator',
-            description: 'Genera GUID univoci',
+            title: 'UUID Generator',
+            description: 'Genera UUID univoci',
             icon: 'fingerprint',
             route: '/tools/guid'
-        },
-        {
-            title: 'JSON Formatter',
-            description: 'Formatta e valida JSON',
-            icon: 'data_object',
-            route: '/tools/json'
         },
         {
             title: 'Hash Generator',
@@ -67,6 +61,12 @@ export class HomeComponent {
             description: 'Calcola e verifica il codice fiscale italiano',
             icon: 'badge',
             route: '/tools/codice-fiscale'
+        },
+        {
+            title: 'Generatore Dati',
+            description: 'Genera persone fisiche, imprese individuali e società',
+            icon: 'group_add',
+            route: '/tools/generatore-dati'
         }
     ];
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,8 +7,29 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+const MIME_EXTENSIONS: Record<string, string[]> = {
+    'image/png': ['png'],
+    'image/jpeg': ['jpg', 'jpeg'],
+    'image/gif': ['gif'],
+    'image/svg+xml': ['svg'],
+    'image/webp': ['webp'],
+    'image/bmp': ['bmp'],
+    'image/x-icon': ['ico'],
+    'application/pdf': ['pdf'],
+    'application/json': ['json', 'txt'],
+    'application/xml': ['xml', 'txt'],
+    'text/plain': ['txt', 'csv', 'log'],
+    'text/html': ['html', 'txt'],
+    'text/css': ['css', 'txt'],
+    'text/javascript': ['js', 'txt'],
+    'application/zip': ['zip'],
+    'application/gzip': ['gz'],
+    'application/octet-stream': ['bin', 'dat', 'txt'],
+};
 
 @Component({
     selector: 'app-base64-file-tool',
@@ -22,21 +43,49 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatIconModule,
         MatCardModule,
         MatToolbarModule,
-        RouterModule,
-        MatProgressSpinnerModule
+        MatButtonToggleModule,
+        MatSelectModule,
+        RouterModule
     ],
     templateUrl: './base64-file-tool.component.html',
     styleUrls: ['./base64-file-tool.component.scss']
 })
 export class Base64FileToolComponent {
-    selectedFile: File | null = null;
-    base64Output: string = '';
-    decodedFileName: string = '';
-    decodedFileType: string = '';
-    decodedContent: string = '';
     mode: 'encode' | 'decode' = 'encode';
-    isProcessing: boolean = false;
-    dragOver: boolean = false;
+    isProcessing = false;
+    dragOver = false;
+
+    constructor(private cdr: ChangeDetectorRef) {}
+
+    // Encode
+    selectedFile: File | null = null;
+    base64Output = '';
+
+    // Decode
+    base64Input = '';
+    decodedContent = '';
+    decodedDataUrl = '';
+    decodedFileType = '';
+    decodedSize = 0;
+    downloadFilename = 'decoded-file';
+    downloadExtension = 'bin';
+    availableExtensions: string[] = ['bin', 'txt'];
+
+    get isImage(): boolean {
+        return this.decodedFileType.startsWith('image/');
+    }
+
+    get isText(): boolean {
+        return this.decodedFileType.startsWith('text/') ||
+            this.decodedFileType === 'application/json' ||
+            this.decodedFileType === 'application/xml';
+    }
+
+    get isCustomExtension(): boolean {
+        return this.decodedFileType === 'application/octet-stream';
+    }
+
+    // --- Encode ---
 
     onFileSelected(event: Event): void {
         const input = event.target as HTMLInputElement;
@@ -65,7 +114,6 @@ export class Base64FileToolComponent {
 
     async onEncodeFile(): Promise<void> {
         if (!this.selectedFile) return;
-
         this.isProcessing = true;
         try {
             this.base64Output = await this.fileToBase64(this.selectedFile);
@@ -73,98 +121,132 @@ export class Base64FileToolComponent {
             console.error('Error encoding file:', error);
         } finally {
             this.isProcessing = false;
+            this.cdr.detectChanges();
         }
     }
 
-    fileToBase64(file: File): Promise<string> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const result = reader.result as string;
-                resolve(result);
-            };
-            reader.onerror = error => reject(error);
-        });
+    onCopyBase64(): void {
+        navigator.clipboard.writeText(this.base64Output);
     }
 
-    async onDecodeBase64(): Promise<void> {
-        if (!this.base64Output.trim()) return;
+    // --- Decode ---
 
+    async onDecodeBase64(): Promise<void> {
+        if (!this.base64Input.trim()) return;
         this.isProcessing = true;
         try {
-            const response = await fetch(this.base64Output);
-            const blob = await response.blob();
+            const dataUrl = this.base64Input.trim();
+            let mimeType = 'application/octet-stream';
+            let rawBase64 = dataUrl;
 
-            this.decodedFileType = blob.type || 'application/octet-stream';
-            this.decodedContent = this.base64Output;
+            // Extract mime from data URL if present
+            const match = dataUrl.match(/^data:([^;,]+)/);
+            if (match) {
+                mimeType = match[1];
+                rawBase64 = dataUrl.includes(',') ? dataUrl.split(',')[1] : dataUrl;
+            }
+
+            const binary = atob(rawBase64);
+            this.decodedSize = binary.length;
+            this.decodedFileType = mimeType;
+            this.decodedDataUrl = dataUrl.startsWith('data:') ? dataUrl : `data:${mimeType};base64,${rawBase64}`;
+
+            // Set available extensions and auto-generate filename
+            this.availableExtensions = MIME_EXTENSIONS[mimeType] || ['bin', 'txt'];
+            this.downloadExtension = this.availableExtensions[0];
+            this.downloadFilename = this.guessFilename(mimeType);
+
+            if (this.isText) {
+                this.decodedContent = binary;
+            } else {
+                this.decodedContent = `[Binary data: ${this.decodedSize} bytes]`;
+            }
         } catch (error) {
             console.error('Error decoding base64:', error);
-            try {
-                const cleanBase64 = this.base64Output.includes(',')
-                    ? this.base64Output.split(',')[1]
-                    : this.base64Output;
-
-                const decoded = atob(cleanBase64);
-                this.decodedContent = decoded;
-                this.decodedFileType = 'text/plain';
-            } catch (decodeError) {
-                console.error('Invalid base64:', decodeError);
-            }
+            this.decodedContent = '';
+            this.decodedFileType = '';
         } finally {
             this.isProcessing = false;
+            this.cdr.detectChanges();
+        }
+    }
+
+    onCopyDecoded(): void {
+        if (this.isText && this.decodedContent) {
+            navigator.clipboard.writeText(this.decodedContent);
         }
     }
 
     downloadDecodedFile(): void {
-        if (!this.decodedContent) return;
+        if (!this.base64Input.trim()) return;
 
-        const link = document.createElement('a');
-        link.href = this.decodedContent;
-        link.download = this.decodedFileName || 'decoded-file';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const dataUrl = this.base64Input.trim();
+        let rawBase64 = dataUrl;
+        if (dataUrl.includes(',')) {
+            rawBase64 = dataUrl.split(',')[1];
+        }
+
+        const binary = atob(rawBase64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+        }
+
+        const blob = new Blob([bytes], { type: this.decodedFileType });
+        this.triggerDownload(blob, `${this.downloadFilename}.${this.downloadExtension}`);
     }
 
-    downloadBase64AsFile(): void {
-        if (!this.base64Output) return;
-
-        const blob = new Blob([this.base64Output], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'base64-output.txt';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    }
-
-    onSwap(): void {
-        const temp = this.base64Output;
-        this.base64Output = this.decodedContent;
-        this.decodedContent = temp;
-        this.mode = this.mode === 'encode' ? 'decode' : 'encode';
-    }
+    // --- Common ---
 
     onClear(): void {
         this.selectedFile = null;
         this.base64Output = '';
+        this.base64Input = '';
         this.decodedContent = '';
-        this.decodedFileName = '';
+        this.decodedDataUrl = '';
         this.decodedFileType = '';
+        this.decodedSize = 0;
+        this.downloadFilename = 'decoded-file';
+        this.downloadExtension = 'bin';
+        this.availableExtensions = ['bin', 'txt'];
         const fileInput = document.getElementById('file-input') as HTMLInputElement;
-        if (fileInput) {
-            fileInput.value = '';
-        }
+        if (fileInput) fileInput.value = '';
     }
 
-    onCopy(): void {
-        if (this.mode === 'encode' && this.base64Output) {
-            navigator.clipboard.writeText(this.base64Output);
-        } else if (this.decodedContent) {
-            navigator.clipboard.writeText(this.decodedContent);
-        }
+    private fileToBase64(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    private guessFilename(mimeType: string): string {
+        const typeMap: Record<string, string> = {
+            'image/png': 'image',
+            'image/jpeg': 'photo',
+            'image/gif': 'animation',
+            'image/svg+xml': 'vector',
+            'application/pdf': 'document',
+            'application/json': 'data',
+            'application/xml': 'data',
+            'text/plain': 'text',
+            'text/html': 'page',
+            'text/css': 'styles',
+            'text/javascript': 'script',
+        };
+        return typeMap[mimeType] || 'file';
+    }
+
+    private triggerDownload(blob: Blob, filename: string): void {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     }
 }

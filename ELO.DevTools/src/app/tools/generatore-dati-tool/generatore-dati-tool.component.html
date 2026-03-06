@@ -1,0 +1,276 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Generatore Dati</span>
+</mat-toolbar>
+
+<div class="tool-container">
+    <div class="controls-section">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Tipo di Generazione</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-button-toggle-group [(ngModel)]="tipo" (change)="onClear()" class="tipo-toggle">
+                    <mat-button-toggle value="persona_fisica">Persona Fisica</mat-button-toggle>
+                    <mat-button-toggle value="impresa_individuale">Impresa Individuale</mat-button-toggle>
+                    <mat-button-toggle value="impresa">Impresa</mat-button-toggle>
+                </mat-button-toggle-group>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="onGenera()">
+                    <mat-icon>auto_fix_high</mat-icon>
+                    Genera
+                </button>
+                <button mat-button (click)="onClear()" [disabled]="!risultato">
+                    Pulisci
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <div class="result-section" *ngIf="risultato">
+
+        <!-- PERSONA FISICA / IMPRESA INDIVIDUALE -->
+        <mat-card *ngIf="persona">
+            <mat-card-header>
+                <mat-card-title>Dati Anagrafici</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <!-- CF in evidenza -->
+                <div class="cf-highlight clickable" (click)="onCopy(persona.codiceFiscale)" matTooltip="Copia">
+                    <span class="cf-label">Codice Fiscale</span>
+                    <span class="cf-value">{{persona.codiceFiscale}}</span>
+                </div>
+
+                <div class="data-grid two-col">
+                    <div class="data-cell">
+                        <span class="data-label">Nome</span>
+                        <span class="data-value clickable" (click)="onCopy(persona.nome)" matTooltip="Copia">{{persona.nome}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Cognome</span>
+                        <span class="data-value clickable" (click)="onCopy(persona.cognome)" matTooltip="Copia">{{persona.cognome}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Sesso</span>
+                        <span class="data-value">{{persona.sesso === 'M' ? 'Maschio' : 'Femmina'}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Data di Nascita</span>
+                        <span class="data-value clickable" (click)="onCopy(formatDate(persona.dataNascita))" matTooltip="Copia">{{formatDate(persona.dataNascita)}}</span>
+                    </div>
+                </div>
+                <div class="data-grid one-col">
+                    <div class="data-cell">
+                        <span class="data-label">Luogo di Nascita</span>
+                        <span class="data-value clickable" (click)="onCopy(persona.luogoNascita + ' (' + persona.provinciaNascita + ')')" matTooltip="Copia">{{persona.luogoNascita}} ({{persona.provinciaNascita}})</span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- INDIRIZZO RESIDENZA -->
+        <mat-card *ngIf="persona">
+            <mat-card-header>
+                <mat-card-title>Indirizzo di Residenza</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="data-grid one-col">
+                    <div class="data-cell">
+                        <span class="data-label">Via</span>
+                        <span class="data-value clickable" (click)="onCopy(persona.indirizzo.via + ', ' + persona.indirizzo.civico)" matTooltip="Copia">{{persona.indirizzo.via}}, {{persona.indirizzo.civico}}</span>
+                    </div>
+                </div>
+                <div class="data-grid two-col">
+                    <div class="data-cell">
+                        <span class="data-label">CAP</span>
+                        <span class="data-value mono clickable" (click)="onCopy(persona.indirizzo.cap)" matTooltip="Copia">{{persona.indirizzo.cap}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Comune</span>
+                        <span class="data-value clickable" (click)="onCopy(persona.indirizzo.comune)" matTooltip="Copia">{{persona.indirizzo.comune}} ({{persona.indirizzo.provincia}})</span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- IMPRESA INDIVIDUALE -->
+        <mat-card *ngIf="impresaIndividuale">
+            <mat-card-header>
+                <mat-card-title>Dati Impresa Individuale</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="data-grid two-col">
+                    <div class="data-cell">
+                        <span class="data-label">Partita IVA</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.partitaIva)" matTooltip="Copia">{{impresaIndividuale.partitaIva}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">REA</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.cciaa + '-' + impresaIndividuale.rea)" matTooltip="Copia">{{impresaIndividuale.cciaa}}-{{impresaIndividuale.rea}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Forma Giuridica</span>
+                        <span class="data-value">{{impresaIndividuale.formaGiuridica.descrizione}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Data Iscrizione</span>
+                        <span class="data-value clickable" (click)="onCopy(formatDate(impresaIndividuale.dataIscrizione))" matTooltip="Copia">{{formatDate(impresaIndividuale.dataIscrizione)}}</span>
+                    </div>
+                </div>
+                <div class="data-grid one-col">
+                    <div class="data-cell">
+                        <span class="data-label">ATECO</span>
+                        <span class="data-value clickable" (click)="onCopy(impresaIndividuale.ateco.codice)" matTooltip="Copia">{{impresaIndividuale.ateco.codice}} - {{impresaIndividuale.ateco.descrizione}}</span>
+                    </div>
+                </div>
+                <div class="data-grid three-col">
+                    <div class="data-cell">
+                        <span class="data-label">NACE</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.ateco.nace)" matTooltip="Copia">{{impresaIndividuale.ateco.nace}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">SAE</span>
+                        <span class="data-value clickable" (click)="onCopy(impresaIndividuale.sae.codice)" matTooltip="Copia">{{impresaIndividuale.sae.codice}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">RAE</span>
+                        <span class="data-value clickable" (click)="onCopy(impresaIndividuale.rae.codice)" matTooltip="Copia">{{impresaIndividuale.rae.codice}}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- IMPRESA: Dati Societari -->
+        <mat-card *ngIf="impresa">
+            <mat-card-header>
+                <mat-card-title>Dati Societari</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="data-grid one-col">
+                    <div class="data-cell">
+                        <span class="data-label">Ragione Sociale</span>
+                        <span class="data-value clickable" (click)="onCopy(impresa.ragioneSociale)" matTooltip="Copia">{{impresa.ragioneSociale}}</span>
+                    </div>
+                </div>
+                <div class="data-grid two-col">
+                    <div class="data-cell">
+                        <span class="data-label">Partita IVA</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresa.partitaIva)" matTooltip="Copia">{{impresa.partitaIva}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Codice Fiscale</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresa.codiceFiscale)" matTooltip="Copia">{{impresa.codiceFiscale}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">REA</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresa.cciaa + '-' + impresa.rea)" matTooltip="Copia">{{impresa.cciaa}}-{{impresa.rea}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Forma Giuridica</span>
+                        <span class="data-value">{{impresa.formaGiuridica.descrizione}} ({{impresa.formaGiuridica.sigla}})</span>
+                    </div>
+                </div>
+                <div class="data-grid one-col">
+                    <div class="data-cell">
+                        <span class="data-label">ATECO</span>
+                        <span class="data-value clickable" (click)="onCopy(impresa.ateco.codice)" matTooltip="Copia">{{impresa.ateco.codice}} - {{impresa.ateco.descrizione}}</span>
+                    </div>
+                </div>
+                <div class="data-grid three-col">
+                    <div class="data-cell">
+                        <span class="data-label">NACE</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresa.ateco.nace)" matTooltip="Copia">{{impresa.ateco.nace}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">SAE</span>
+                        <span class="data-value clickable" (click)="onCopy(impresa.sae.codice)" matTooltip="Copia">{{impresa.sae.codice}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">RAE</span>
+                        <span class="data-value clickable" (click)="onCopy(impresa.rae.codice)" matTooltip="Copia">{{impresa.rae.codice}}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- IMPRESA: Sede Legale -->
+        <mat-card *ngIf="impresa">
+            <mat-card-header>
+                <mat-card-title>Sede Legale</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="data-grid one-col">
+                    <div class="data-cell">
+                        <span class="data-label">Via</span>
+                        <span class="data-value clickable" (click)="onCopy(impresa.sedeLegale.via + ', ' + impresa.sedeLegale.civico)" matTooltip="Copia">{{impresa.sedeLegale.via}}, {{impresa.sedeLegale.civico}}</span>
+                    </div>
+                </div>
+                <div class="data-grid two-col">
+                    <div class="data-cell">
+                        <span class="data-label">CAP</span>
+                        <span class="data-value mono clickable" (click)="onCopy(impresa.sedeLegale.cap)" matTooltip="Copia">{{impresa.sedeLegale.cap}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Comune</span>
+                        <span class="data-value clickable" (click)="onCopy(impresa.sedeLegale.comune)" matTooltip="Copia">{{impresa.sedeLegale.comune}} ({{impresa.sedeLegale.provincia}})</span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- IMPRESA: Dati aggiuntivi -->
+        <mat-card *ngIf="impresa">
+            <mat-card-header>
+                <mat-card-title>Dati Aggiuntivi</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="data-grid two-col">
+                    <div class="data-cell">
+                        <span class="data-label">Data Costituzione</span>
+                        <span class="data-value clickable" (click)="onCopy(formatDate(impresa.dataCostituzione))" matTooltip="Copia">{{formatDate(impresa.dataCostituzione)}}</span>
+                    </div>
+                    <div class="data-cell">
+                        <span class="data-label">Capitale Sociale</span>
+                        <span class="data-value clickable" (click)="onCopy(formatCurrency(impresa.capitalesociale))" matTooltip="Copia">{{formatCurrency(impresa.capitalesociale)}}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- Copy All -->
+        <div class="actions-bar">
+            <button mat-raised-button color="primary" (click)="onCopyAll()">
+                <mat-icon>content_copy</mat-icon>
+                Copia Tutto
+            </button>
+            <button mat-raised-button color="primary" (click)="onGenera()">
+                <mat-icon>auto_fix_high</mat-icon>
+                Rigenera
+            </button>
+        </div>
+    </div>
+
+    <!-- STORICO -->
+    <mat-card *ngIf="storico.length > 1" class="history-card">
+        <mat-card-header>
+            <mat-card-title>Storico ({{storico.length}})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="history-list">
+                <div class="history-item"
+                     *ngFor="let entry of storico; let i = index"
+                     [class.active]="entry.dato === risultato"
+                     (click)="onCaricaStorico(entry)">
+                    <div class="history-main">
+                        <span class="history-label">{{entry.etichetta}}</span>
+                        <span class="history-badge">{{tipoLabel(entry.tipo)}}</span>
+                    </div>
+                    <span class="history-time">{{formatDate(entry.timestamp)}}</span>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
