@@ -427,6 +427,7 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# CUSTOM
-.angular
+# CUSTOM IGNORES
 dist
+.angular
+.claude

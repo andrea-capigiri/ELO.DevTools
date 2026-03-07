@@ -1,14 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "ELO.DevTools",
+  "name": "ELO DevTools - Tools for developers",
+  "short_name": "ELO DevTools",
+  "description": "ELO DevTools is a collection of tools for developers.",
   "version": "1.0.0",
   "icons": {
-    "16": "./assets/images/icon-192.png",
-    "48": "./assets/images/icon-192.png",
-    "128": "./assets/images/icon-512.png",
-    "192": "./assets/images/icon-192.png",
-    "512": "./assets/images/icon-512.png"
+    "16": "assets/images/icon-192.png",
+    "48": "assets/images/icon-192.png",
+    "128": "assets/images/icon-512.png",
+    "192": "assets/images/icon-192.png",
+    "512": "assets/images/icon-512.png"
   },
+  "offline_enabled": true,
   "permissions": [
     "sidePanel",
     "storage"
@@ -20,9 +23,8 @@
     "default_title": "Open sidebar"
   },
   "background": {
-    "service_worker": "/assets/background.js"
+    "service_worker": "assets/background.js"
   },
-  "offline_enabled": true,
   "content_security_policy": {
     "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self';"
   },

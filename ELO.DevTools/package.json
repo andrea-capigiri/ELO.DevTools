@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "elo-dev-tools",
+  "name": "elo",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
