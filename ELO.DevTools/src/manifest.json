@@ -1,7 +1,14 @@
 {
   "manifest_version": 3,
   "name": "ELO.DevTools",
-  "version": "1.0",
+  "version": "1.0.0",
+  "icons": {
+    "16": "./assets/images/icon-192.png",
+    "48": "./assets/images/icon-192.png",
+    "128": "./assets/images/icon-512.png",
+    "192": "./assets/images/icon-192.png",
+    "512": "./assets/images/icon-512.png"
+  },
   "permissions": [
     "sidePanel",
     "storage"
