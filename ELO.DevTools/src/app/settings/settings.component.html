@@ -1,49 +1,42 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>{{'settings.title' | translate}}</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">{{'settings.title' | translate}}</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="settings-container">
-    <mat-card class="mb-2">
-        <mat-card-content>
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>{{'settings.language' | translate}}</mat-label>
-                <mat-select [value]="currentLanguage" (selectionChange)="onLanguageChange($event.value)" class="full-width">
-                    @for (lang of languages; track lang.value) {
-                        <mat-option [value]="lang.value">{{lang.label}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-        </mat-card-content>
-    </mat-card>
+    <p-card styleClass="mb-2">
+        <p-floatlabel variant="on">
+            <p-select [options]="languages" [(ngModel)]="currentLanguage" optionLabel="label" optionValue="value" (onChange)="onLanguageChange($event.value)" styleClass="w-full" inputId="langSelect"></p-select>
+            <label for="langSelect">{{'settings.language' | translate}}</label>
+        </p-floatlabel>
+    </p-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>{{'settings.enabledTools' | translate}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <p class="settings-hint">{{'settings.chooseTools' | translate}}</p>
-            <div class="tool-toggles">
-                @for (tool of tools; track tool.id) {
-                    <div class="tool-toggle-row">
-                        <div class="tool-toggle-info">
-                            <mat-icon class="tool-toggle-icon">{{tool.icon}}</mat-icon>
-                            <span class="tool-toggle-title">{{tool.titleKey | translate}}</span>
-                        </div>
-                        <mat-slide-toggle
-                            [checked]="tool.enabled"
-                            (change)="onToggle(tool.id, $event.checked)">
-                        </mat-slide-toggle>
+    <p-card [header]="'settings.enabledTools' | translate">
+        <p class="settings-hint">{{'settings.chooseTools' | translate}}</p>
+        <div class="tool-toggles">
+            @for (tool of tools; track tool.id) {
+                <div class="tool-toggle-row">
+                    <div class="tool-toggle-info">
+                        <i class="material-icons tool-toggle-icon">{{tool.icon}}</i>
+                        <span class="tool-toggle-title">{{tool.titleKey | translate}}</span>
                     </div>
-                }
+                    <p-toggleswitch
+                        [(ngModel)]="tool.enabled"
+                        (onChange)="onToggle(tool.id, $event.checked)">
+                    </p-toggleswitch>
+                </div>
+            }
+        </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button [text]="true" label="{{'settings.enableAll' | translate}}" (onClick)="onEnableAll()"></p-button>
+                <p-button [text]="true" label="{{'settings.disableAll' | translate}}" (onClick)="onDisableAll()"></p-button>
+                <p-button [text]="true" label="{{'settings.resetDefaults' | translate}}" (onClick)="onResetDefaults()"></p-button>
             </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button (click)="onEnableAll()">{{'settings.enableAll' | translate}}</button>
-            <button mat-button (click)="onDisableAll()">{{'settings.disableAll' | translate}}</button>
-            <button mat-button (click)="onResetDefaults()">{{'settings.resetDefaults' | translate}}</button>
-        </mat-card-actions>
-    </mat-card>
+        </ng-template>
+    </p-card>
 </div>

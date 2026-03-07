@@ -1,121 +1,96 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Flex Layout Preview</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">Flex Layout Preview</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="tool-container">
     <!-- Controls -->
-    <mat-card>
-        <mat-card-content>
-            <div class="controls">
-                <div class="control-group">
-                    <label class="control-label">Direction</label>
-                    <mat-button-toggle-group [(ngModel)]="direction">
-                        @for (opt of directions; track opt.value) {
-                            <mat-button-toggle [value]="opt.value">{{opt.label}}</mat-button-toggle>
-                        }
-                    </mat-button-toggle-group>
-                </div>
+    <p-card>
+        <div class="controls">
+            <div class="control-group">
+                <label class="control-label">Direction</label>
+                <p-selectbutton [options]="directions" [(ngModel)]="direction" optionLabel="label" optionValue="value"></p-selectbutton>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label">Wrap</label>
-                    <mat-button-toggle-group [(ngModel)]="wrap">
-                        @for (opt of wraps; track opt.value) {
-                            <mat-button-toggle [value]="opt.value">{{opt.label}}</mat-button-toggle>
-                        }
-                    </mat-button-toggle-group>
-                </div>
+            <div class="control-group">
+                <label class="control-label">Wrap</label>
+                <p-selectbutton [options]="wraps" [(ngModel)]="wrap" optionLabel="label" optionValue="value"></p-selectbutton>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label">Justify Content</label>
-                    <mat-button-toggle-group [(ngModel)]="justify">
-                        @for (opt of justifyOptions; track opt.value) {
-                            <mat-button-toggle [value]="opt.value">{{opt.label}}</mat-button-toggle>
-                        }
-                    </mat-button-toggle-group>
-                </div>
+            <div class="control-group">
+                <label class="control-label">Justify Content</label>
+                <p-selectbutton [options]="justifyOptions" [(ngModel)]="justify" optionValue="value">
+                    <ng-template #item let-item>
+                        <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
+                    </ng-template>
+                </p-selectbutton>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label">Align Items</label>
-                    <mat-button-toggle-group [(ngModel)]="align">
-                        @for (opt of alignOptions; track opt.value) {
-                            <mat-button-toggle [value]="opt.value">{{opt.label}}</mat-button-toggle>
-                        }
-                    </mat-button-toggle-group>
-                </div>
+            <div class="control-group">
+                <label class="control-label">Align Items</label>
+                <p-selectbutton [options]="alignOptions" [(ngModel)]="align" optionValue="value">
+                    <ng-template #item let-item>
+                        <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
+                    </ng-template>
+                </p-selectbutton>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label">Gap</label>
-                    <mat-button-toggle-group [(ngModel)]="gap">
-                        @for (opt of gapOptions; track opt.value) {
-                            <mat-button-toggle [value]="opt.value">{{opt.label}}</mat-button-toggle>
-                        }
-                    </mat-button-toggle-group>
-                </div>
+            <div class="control-group">
+                <label class="control-label">Gap</label>
+                <p-selectbutton [options]="gapOptions" [(ngModel)]="gap" optionLabel="label" optionValue="value"></p-selectbutton>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label">Items ({{itemCount}})</label>
-                    <div class="item-count-controls">
-                        <button mat-icon-button (click)="removeItem()" [disabled]="itemCount <= 1">
-                            <mat-icon>remove</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="addItem()" [disabled]="itemCount >= 12">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                    </div>
+            <div class="control-group">
+                <label class="control-label">Items ({{itemCount}})</label>
+                <div class="item-count-controls">
+                    <p-button [text]="true" [rounded]="true" (onClick)="removeItem()" [disabled]="itemCount <= 1">
+                        <i class="material-icons">remove</i>
+                    </p-button>
+                    <p-button [text]="true" [rounded]="true" (onClick)="addItem()" [disabled]="itemCount >= 12">
+                        <i class="material-icons">add</i>
+                    </p-button>
                 </div>
             </div>
-        </mat-card-content>
-    </mat-card>
+        </div>
+    </p-card>
 
     <!-- Preview -->
-    <mat-card class="preview-area-card">
-        <mat-card-header>
-            <mat-card-title>Preview</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="preview-area" [ngStyle]="previewStyle">
-                @for (item of items; track item) {
-                    <div class="preview-box" [class.tall]="item % 3 === 0" [class.short]="item % 3 === 1">
-                        {{item}}
-                    </div>
-                }
-            </div>
-        </mat-card-content>
-    </mat-card>
+    <p-card header="Preview" class="preview-area-card">
+        <div class="preview-area" [ngStyle]="previewStyle">
+            @for (item of items; track item) {
+                <div class="preview-box" [class.tall]="item % 3 === 0" [class.short]="item % 3 === 1">
+                    {{item}}
+                </div>
+            }
+        </div>
+    </p-card>
 
     <!-- Output classes -->
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Bootstrap Classes</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="code-block">
-                <code>{{bootstrapClasses}}</code>
+    <p-card header="Bootstrap Classes">
+        <div class="code-block">
+            <code>{{bootstrapClasses}}</code>
+        </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button [text]="true" (onClick)="onCopy(bootstrapClasses)">
+                    <i class="material-icons">content_copy</i> Copy Classes
+                </p-button>
             </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button color="primary" (click)="onCopy(bootstrapClasses)">
-                <mat-icon>content_copy</mat-icon>
-                Copy Classes
-            </button>
-        </mat-card-actions>
-    </mat-card>
+        </ng-template>
+    </p-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>CSS</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <pre class="code-block"><code>{{cssCode}}</code></pre>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button color="primary" (click)="onCopy(cssCode)">
-                <mat-icon>content_copy</mat-icon>
-                Copy CSS
-            </button>
-        </mat-card-actions>
-    </mat-card>
+    <p-card header="CSS">
+        <pre class="code-block"><code>{{cssCode}}</code></pre>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button [text]="true" (onClick)="onCopy(cssCode)">
+                    <i class="material-icons">content_copy</i> Copy CSS
+                </p-button>
+            </div>
+        </ng-template>
+    </p-card>
 </div>

@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { Textarea } from 'primeng/textarea';
+import { SelectButton } from 'primeng/selectbutton';
 import { RouterModule } from '@angular/router';
 import { UtilityService } from '../../_shared/utility.service';
 
@@ -19,13 +17,11 @@ type HashAlgorithm = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
     imports: [
         CommonModule,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatToolbarModule,
-        MatButtonToggleModule,
+        Toolbar,
+        Card,
+        ButtonModule,
+        Textarea,
+        SelectButton,
         RouterModule
     ],
     templateUrl: './hash-tool.component.html',
@@ -35,6 +31,14 @@ export class HashToolComponent {
     inputText: string = '';
     algorithm: HashAlgorithm = 'sha256';
     results: { algorithm: string; hash: string }[] = [];
+
+    algorithmOptions = [
+        { label: 'MD5', value: 'md5' },
+        { label: 'SHA-1', value: 'sha1' },
+        { label: 'SHA-256', value: 'sha256' },
+        { label: 'SHA-384', value: 'sha384' },
+        { label: 'SHA-512', value: 'sha512' }
+    ];
 
     constructor(private utilityService: UtilityService) {}
 

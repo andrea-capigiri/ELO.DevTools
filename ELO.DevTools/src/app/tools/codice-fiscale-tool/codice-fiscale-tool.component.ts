@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { FloatLabel } from 'primeng/floatlabel';
+import { AutoComplete } from 'primeng/autocomplete';
+import { DatePicker } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
 import { CodiceFiscaleService } from '../../_shared/codice-fiscale.service';
 import {
     Comune,
@@ -27,20 +25,17 @@ import {
     imports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatToolbarModule,
         RouterModule,
-        MatAutocompleteModule,
-        MatDatepickerModule,
-        MatSelectModule,
-        MatTooltipModule
+        Toolbar,
+        Card,
+        ButtonModule,
+        InputText,
+        FloatLabel,
+        AutoComplete,
+        DatePicker,
+        SelectModule,
+        TooltipModule
     ],
-    providers: [provideNativeDateAdapter()],
     templateUrl: './codice-fiscale-tool.component.html',
     styleUrls: ['./codice-fiscale-tool.component.scss']
 })
@@ -52,7 +47,6 @@ export class CodiceFiscaleToolComponent {
     nome = '';
     dataNascita: Date | null = null;
     sesso: Sesso = 'M';
-    comuneControl = new FormControl('');
     selectedComune: Comune | null = null;
     filteredComuni: Comune[] = [];
     result: CodiceFiscaleResult | null = null;
@@ -62,26 +56,24 @@ export class CodiceFiscaleToolComponent {
     codiceFiscaleInput = '';
     inversoResult: CodiceFiscaleInversoResult | null = null;
 
+    sessoOptions = [
+        { label: 'Maschio', value: 'M' },
+        { label: 'Femmina', value: 'F' }
+    ];
+
     private readonly MESI = [
         'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
         'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
     ];
 
-    constructor(private cfService: CodiceFiscaleService) {
-        this.comuneControl.valueChanges.subscribe(value => {
-            if (typeof value === 'string') {
-                this.filteredComuni = this.cfService.cercaComune(value);
-                this.selectedComune = null;
-            }
-        });
+    constructor(private cfService: CodiceFiscaleService) {}
+
+    searchComune(event: { query: string }): void {
+        this.filteredComuni = this.cfService.cercaComune(event.query);
     }
 
-    displayComune(comune: Comune): string {
-        return comune ? `${comune.nome} (${comune.provincia})` : '';
-    }
-
-    onComuneSelected(event: { option: { value: Comune } }): void {
-        this.selectedComune = event.option.value;
+    onComuneSelected(event: any): void {
+        this.selectedComune = event.value || event;
     }
 
     get isCalcoloValid(): boolean {
@@ -120,7 +112,6 @@ export class CodiceFiscaleToolComponent {
         this.nome = '';
         this.dataNascita = null;
         this.sesso = 'M';
-        this.comuneControl.setValue('');
         this.selectedComune = null;
         this.result = null;
         this.error = '';

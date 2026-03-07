@@ -1,110 +1,114 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>JWT Inspector</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">JWT Inspector</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="input-section">
-    <mat-form-field appearance="outline" class="jwt-input">
-        <mat-label>Incolla qui il tuo JWT token</mat-label>
-        <textarea matInput 
-                  [(ngModel)]="inputText" 
+    <p-floatlabel variant="on" class="w-full jwt-input">
+        <textarea pTextarea
+                  [(ngModel)]="inputText"
                   placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                  rows="3"></textarea>
-        <mat-icon matSuffix matTooltip="Incolla token" (click)="pasteFromClipboard()">content_paste</mat-icon>
-    </mat-form-field>
-    
+                  rows="3"
+                  id="jwtInput"
+                  class="w-full"></textarea>
+        <label for="jwtInput">Incolla qui il tuo JWT token</label>
+    </p-floatlabel>
+    <p-button [text]="true" [rounded]="true" (onClick)="pasteFromClipboard()" pTooltip="Incolla token">
+        <i class="material-icons">content_paste</i>
+    </p-button>
+
     <div class="button-group">
-        <button mat-raised-button color="primary" (click)="onDecode()" [disabled]="!inputText.trim()">
-            <mat-icon>code</mat-icon>
-            Decodifica
-        </button>
-        <button mat-button (click)="onClear()">
-            <mat-icon>clear</mat-icon>
-            Pulisci
-        </button>
+        <p-button (onClick)="onDecode()" [disabled]="!inputText.trim()">
+            <i class="material-icons">code</i> Decodifica
+        </p-button>
+        <p-button [text]="true" (onClick)="onClear()">
+            <i class="material-icons">clear</i> Pulisci
+        </p-button>
     </div>
 </div>
 
-<mat-card *ngIf="error" class="error-card">
-    <mat-icon>error</mat-icon>
+<p-card *ngIf="error" class="error-card">
+    <i class="material-icons">error</i>
     <span>{{ error }}</span>
-</mat-card>
+</p-card>
 
-<mat-card *ngIf="decodedJwt" class="jwt-card">
-    <mat-card-header>
-        <mat-card-title>
-            <mat-icon>data_object</mat-icon>
-            Header
-        </mat-card-title>
-        <button mat-icon-button (click)="onCopy(formatJson(decodedJwt.header))" matTooltip="Copia header">
-            <mat-icon>content_copy</mat-icon>
-        </button>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="json-container">
-            <pre>{{ formatJson(decodedJwt.header) }}</pre>
+<p-card *ngIf="decodedJwt" class="jwt-card">
+    <ng-template #header>
+        <div class="card-header-row">
+            <div class="card-header-title">
+                <i class="material-icons">data_object</i>
+                Header
+            </div>
+            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.header))" pTooltip="Copia header">
+                <i class="material-icons">content_copy</i>
+            </p-button>
         </div>
-    </mat-card-content>
-</mat-card>
+    </ng-template>
+    <div class="json-container">
+        <pre>{{ formatJson(decodedJwt.header) }}</pre>
+    </div>
+</p-card>
 
-<mat-card *ngIf="decodedJwt" class="jwt-card">
-    <mat-card-header>
-        <mat-card-title>
-            <mat-icon>dataset</mat-icon>
-            Payload
-        </mat-card-title>
-        <button mat-icon-button (click)="onCopy(formatJson(decodedJwt.payload))" matTooltip="Copia payload">
-            <mat-icon>content_copy</mat-icon>
-        </button>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="json-container">
-            <pre>{{ formatJson(decodedJwt.payload) }}</pre>
+<p-card *ngIf="decodedJwt" class="jwt-card">
+    <ng-template #header>
+        <div class="card-header-row">
+            <div class="card-header-title">
+                <i class="material-icons">dataset</i>
+                Payload
+            </div>
+            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.payload))" pTooltip="Copia payload">
+                <i class="material-icons">content_copy</i>
+            </p-button>
         </div>
-        
-        <div class="time-info" *ngIf="decodedJwt.issuedAt || decodedJwt.expiresAt">
-            <mat-divider></mat-divider>
-            <div class="time-grid">
-                <div *ngIf="decodedJwt.issuedAt" class="time-item">
-                    <mat-icon>schedule</mat-icon>
-                    <div>
-                        <strong>Emesso il:</strong>
-                        <div>{{ decodedJwt.issuedAt | date:'medium' }}</div>
-                    </div>
+    </ng-template>
+    <div class="json-container">
+        <pre>{{ formatJson(decodedJwt.payload) }}</pre>
+    </div>
+
+    <div class="time-info" *ngIf="decodedJwt.issuedAt || decodedJwt.expiresAt">
+        <p-divider></p-divider>
+        <div class="time-grid">
+            <div *ngIf="decodedJwt.issuedAt" class="time-item">
+                <i class="material-icons">schedule</i>
+                <div>
+                    <strong>Emesso il:</strong>
+                    <div>{{ decodedJwt.issuedAt | date:'medium' }}</div>
                 </div>
-                <div *ngIf="decodedJwt.expiresAt" class="time-item">
-                    <mat-icon [color]="decodedJwt.isExpired ? 'warn' : 'primary'">
-                        {{ decodedJwt.isExpired ? 'error' : 'verified' }}
-                    </mat-icon>
-                    <div>
-                        <strong>Scade il:</strong>
-                        <div>{{ decodedJwt.expiresAt | date:'medium' }}</div>
-                        <span [class.expired]="decodedJwt.isExpired" [class.valid]="!decodedJwt.isExpired">
-                            {{ decodedJwt.isExpired ? 'SCADUTO' : 'VALIDO' }}
-                        </span>
-                    </div>
+            </div>
+            <div *ngIf="decodedJwt.expiresAt" class="time-item">
+                <i class="material-icons" [style.color]="decodedJwt.isExpired ? 'var(--gh-danger-fg)' : 'var(--gh-accent-fg)'">
+                    {{ decodedJwt.isExpired ? 'error' : 'verified' }}
+                </i>
+                <div>
+                    <strong>Scade il:</strong>
+                    <div>{{ decodedJwt.expiresAt | date:'medium' }}</div>
+                    <span [class.expired]="decodedJwt.isExpired" [class.valid]="!decodedJwt.isExpired">
+                        {{ decodedJwt.isExpired ? 'SCADUTO' : 'VALIDO' }}
+                    </span>
                 </div>
             </div>
         </div>
-    </mat-card-content>
-</mat-card>
+    </div>
+</p-card>
 
-<mat-card *ngIf="decodedJwt" class="jwt-card">
-    <mat-card-header>
-        <mat-card-title>
-            <mat-icon>fingerprint</mat-icon>
-            Signature
-        </mat-card-title>
-        <button mat-icon-button (click)="onCopy(decodedJwt.signature)" matTooltip="Copia signature">
-            <mat-icon>content_copy</mat-icon>
-        </button>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="signature-container">
-            <code class="signature-text">{{ decodedJwt.signature }}</code>
-            <span class="signature-hint">Signature verificata con le chiavi pubbliche del server</span>
+<p-card *ngIf="decodedJwt" class="jwt-card">
+    <ng-template #header>
+        <div class="card-header-row">
+            <div class="card-header-title">
+                <i class="material-icons">fingerprint</i>
+                Signature
+            </div>
+            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(decodedJwt.signature)" pTooltip="Copia signature">
+                <i class="material-icons">content_copy</i>
+            </p-button>
         </div>
-    </mat-card-content>
-</mat-card>
+    </ng-template>
+    <div class="signature-container">
+        <code class="signature-text">{{ decodedJwt.signature }}</code>
+        <span class="signature-hint">Signature verificata con le chiavi pubbliche del server</span>
+    </div>
+</p-card>

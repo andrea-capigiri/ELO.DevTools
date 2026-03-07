@@ -1,168 +1,134 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Base64 File Encoder/Decoder</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">Base64 File Encoder/Decoder</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="tool-container">
     <!-- Mode toggle at top -->
-    <mat-card>
-        <mat-card-content>
-            <div class="mode-row">
-                <mat-button-toggle-group [(ngModel)]="mode" (change)="onClear()">
-                    <mat-button-toggle value="encode">Encode</mat-button-toggle>
-                    <mat-button-toggle value="decode">Decode</mat-button-toggle>
-                </mat-button-toggle-group>
-            </div>
-        </mat-card-content>
-    </mat-card>
+    <p-card>
+        <div class="mode-row">
+            <p-selectbutton [options]="modeOptions" [(ngModel)]="mode" optionLabel="label" optionValue="value" (onChange)="onClear()"></p-selectbutton>
+        </div>
+    </p-card>
 
     <!-- ENCODE MODE -->
     <ng-container *ngIf="mode === 'encode'">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>File</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="file-drop-zone"
-                     [class.drag-over]="dragOver"
-                     (dragover)="onDragOver($event)"
-                     (dragleave)="onDragLeave($event)"
-                     (drop)="onDrop($event)">
-                    <input type="file"
-                           id="file-input"
-                           (change)="onFileSelected($event)"
-                           class="file-input">
-                    <div class="drop-zone-content" *ngIf="!selectedFile">
-                        <mat-icon>cloud_upload</mat-icon>
-                        <p>Drag and drop a file here or click to browse</p>
-                    </div>
-                    <div class="selected-file" *ngIf="selectedFile">
-                        <mat-icon>insert_drive_file</mat-icon>
-                        <span>{{selectedFile.name}}</span>
-                        <span class="file-size">({{selectedFile.size | number}} bytes)</span>
-                    </div>
+        <p-card header="File">
+            <div class="file-drop-zone"
+                 [class.drag-over]="dragOver"
+                 (dragover)="onDragOver($event)"
+                 (dragleave)="onDragLeave($event)"
+                 (drop)="onDrop($event)">
+                <input type="file"
+                       id="file-input"
+                       (change)="onFileSelected($event)"
+                       class="file-input">
+                <div class="drop-zone-content" *ngIf="!selectedFile">
+                    <i class="material-icons">cloud_upload</i>
+                    <p>Drag and drop a file here or click to browse</p>
                 </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary"
-                        (click)="onEncodeFile()"
-                        [disabled]="!selectedFile || isProcessing">
-                    <mat-icon>lock</mat-icon>
-                    {{isProcessing ? 'Encoding...' : 'Encode'}}
-                </button>
-                <button mat-button (click)="onClear()"
-                        [disabled]="!selectedFile && !base64Output">
-                    Clear
-                </button>
-            </mat-card-actions>
-        </mat-card>
+                <div class="selected-file" *ngIf="selectedFile">
+                    <i class="material-icons">insert_drive_file</i>
+                    <span>{{selectedFile.name}}</span>
+                    <span class="file-size">({{selectedFile.size | number}} bytes)</span>
+                </div>
+            </div>
+            <ng-template #footer>
+                <div class="card-footer">
+                    <p-button (onClick)="onEncodeFile()"
+                              [disabled]="!selectedFile || isProcessing">
+                        <i class="material-icons">lock</i>
+                        {{isProcessing ? 'Encoding...' : 'Encode'}}
+                    </p-button>
+                    <p-button [text]="true" (onClick)="onClear()" label="Clear"
+                              [disabled]="!selectedFile && !base64Output"></p-button>
+                </div>
+            </ng-template>
+        </p-card>
 
-        <mat-card *ngIf="base64Output">
-            <mat-card-header>
-                <mat-card-title>Base64 Output</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="outline" class="full-width">
-                    <textarea matInput
-                              [readonly]="true"
-                              [value]="base64Output"
-                              rows="10"></textarea>
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button color="primary" (click)="onCopyBase64()">
-                    <mat-icon>content_copy</mat-icon>
-                    Copy
-                </button>
-            </mat-card-actions>
-        </mat-card>
+        <p-card header="Base64 Output" *ngIf="base64Output">
+            <textarea pTextarea
+                      [readonly]="true"
+                      [value]="base64Output"
+                      rows="10"
+                      class="w-full"></textarea>
+            <ng-template #footer>
+                <div class="card-footer">
+                    <p-button [text]="true" (onClick)="onCopyBase64()">
+                        <i class="material-icons">content_copy</i> Copy
+                    </p-button>
+                </div>
+            </ng-template>
+        </p-card>
     </ng-container>
 
     <!-- DECODE MODE -->
     <ng-container *ngIf="mode === 'decode'">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Base64 Input</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="outline" class="full-width">
-                    <textarea matInput
-                              placeholder="Paste base64 string here..."
-                              [(ngModel)]="base64Input"
-                              rows="10"></textarea>
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary"
-                        (click)="onDecodeBase64()"
-                        [disabled]="!base64Input.trim() || isProcessing">
-                    <mat-icon>lock_open</mat-icon>
-                    {{isProcessing ? 'Decoding...' : 'Decode'}}
-                </button>
-                <button mat-button (click)="onClear()"
-                        [disabled]="!base64Input.trim() && !decodedContent">
-                    Clear
-                </button>
-            </mat-card-actions>
-        </mat-card>
-
-        <mat-card *ngIf="decodedContent">
-            <mat-card-header>
-                <mat-card-title>Decoded Output</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="decoded-info">
-                    <span><strong>Detected type:</strong> {{decodedFileType}}</span>
-                    <span><strong>Size:</strong> {{decodedSize | number}} bytes</span>
+        <p-card header="Base64 Input">
+            <textarea pTextarea
+                      placeholder="Paste base64 string here..."
+                      [(ngModel)]="base64Input"
+                      rows="10"
+                      class="w-full"></textarea>
+            <ng-template #footer>
+                <div class="card-footer">
+                    <p-button (onClick)="onDecodeBase64()"
+                              [disabled]="!base64Input.trim() || isProcessing">
+                        <i class="material-icons">lock_open</i>
+                        {{isProcessing ? 'Decoding...' : 'Decode'}}
+                    </p-button>
+                    <p-button [text]="true" (onClick)="onClear()" label="Clear"
+                              [disabled]="!base64Input.trim() && !decodedContent"></p-button>
                 </div>
+            </ng-template>
+        </p-card>
 
-                <!-- Preview for images -->
-                <div class="image-preview" *ngIf="isImage">
-                    <img [src]="decodedDataUrl" alt="Preview">
+        <p-card header="Decoded Output" *ngIf="decodedContent">
+            <div class="decoded-info">
+                <span><strong>Detected type:</strong> {{decodedFileType}}</span>
+                <span><strong>Size:</strong> {{decodedSize | number}} bytes</span>
+            </div>
+
+            <!-- Preview for images -->
+            <div class="image-preview" *ngIf="isImage">
+                <img [src]="decodedDataUrl" alt="Preview">
+            </div>
+
+            <!-- Preview for text -->
+            <textarea pTextarea *ngIf="isText"
+                      [readonly]="true"
+                      [value]="decodedContent"
+                      rows="10"
+                      class="w-full"></textarea>
+
+            <div class="download-section">
+                <label class="setting-label">Download</label>
+                <div class="download-row">
+                    <p-floatlabel variant="on" class="filename-field">
+                        <input pInputText [(ngModel)]="downloadFilename" id="downloadFilename" class="w-full">
+                        <label for="downloadFilename">File name</label>
+                    </p-floatlabel>
+                    <p-select *ngIf="!isCustomExtension" [options]="availableExtensions" [(ngModel)]="downloadExtension" class="format-field"></p-select>
+                    <p-floatlabel variant="on" class="format-field" *ngIf="isCustomExtension">
+                        <input pInputText [(ngModel)]="downloadExtension" id="downloadExtension" placeholder="e.g. pdf, zip..." class="w-full">
+                        <label for="downloadExtension">Extension</label>
+                    </p-floatlabel>
+                    <p-button (onClick)="downloadDecodedFile()">
+                        <i class="material-icons">download</i> Download
+                    </p-button>
                 </div>
-
-                <!-- Preview for text -->
-                <mat-form-field appearance="outline" class="full-width" *ngIf="isText">
-                    <textarea matInput
-                              [readonly]="true"
-                              [value]="decodedContent"
-                              rows="10"></textarea>
-                </mat-form-field>
-
-                <div class="download-section">
-                    <label class="setting-label">Download</label>
-                    <div class="download-row">
-                        <mat-form-field appearance="outline" class="filename-field">
-                            <mat-label>File name</mat-label>
-                            <input matInput [(ngModel)]="downloadFilename">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="format-field" *ngIf="!isCustomExtension">
-                            <mat-label>Format</mat-label>
-                            <mat-select [(ngModel)]="downloadExtension">
-                                <mat-option *ngFor="let ext of availableExtensions" [value]="ext">
-                                    .{{ext}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="format-field" *ngIf="isCustomExtension">
-                            <mat-label>Extension</mat-label>
-                            <input matInput [(ngModel)]="downloadExtension" placeholder="e.g. pdf, zip...">
-                        </mat-form-field>
-                        <button mat-raised-button color="primary" (click)="downloadDecodedFile()">
-                            <mat-icon>download</mat-icon>
-                            Download
-                        </button>
-                    </div>
+            </div>
+            <ng-template #footer>
+                <div class="card-footer">
+                    <p-button [text]="true" (onClick)="onCopyDecoded()" *ngIf="isText">
+                        <i class="material-icons">content_copy</i> Copy Text
+                    </p-button>
                 </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button color="primary" (click)="onCopyDecoded()" *ngIf="isText">
-                    <mat-icon>content_copy</mat-icon>
-                    Copy Text
-                </button>
-            </mat-card-actions>
-        </mat-card>
+            </ng-template>
+        </p-card>
     </ng-container>
 </div>

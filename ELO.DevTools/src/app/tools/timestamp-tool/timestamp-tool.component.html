@@ -1,213 +1,181 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Timestamp Converter</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">Timestamp Converter</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="tool-container">
     <div class="controls-section">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Modalità</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="control-row">
-                    <mat-radio-group [(ngModel)]="mode">
-                        <mat-radio-button value="toDate">Timestamp → Data</mat-radio-button>
-                        <mat-radio-button value="toTimestamp">Data → Timestamp</mat-radio-button>
-                    </mat-radio-group>
-                </div>
-            </mat-card-content>
-        </mat-card>
+        <p-selectbutton [options]="modeOptions" [(ngModel)]="mode" optionLabel="label" optionValue="value"></p-selectbutton>
 
         @if (mode === 'toDate') {
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Inserisci Timestamp</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Unix Timestamp</mat-label>
-                        <input matInput
-                               [(ngModel)]="timestampInput"
-                               (ngModelChange)="onTimestampInputChange()"
-                               placeholder="es. 1704067200 o 1704067200000"
-                               type="text"
-                               inputmode="numeric">
-                    </mat-form-field>
+            <p-card header="Inserisci Timestamp">
+                <p-floatlabel variant="on" class="w-full">
+                    <input pInputText
+                           [(ngModel)]="timestampInput"
+                           (ngModelChange)="onTimestampInputChange()"
+                           placeholder="es. 1704067200 o 1704067200000"
+                           type="text"
+                           inputmode="numeric"
+                           id="timestampInput"
+                           class="w-full">
+                    <label for="timestampInput">Unix Timestamp</label>
+                </p-floatlabel>
 
-                    @if (detectedUnit) {
-                        <div class="detected-unit">
-                            <mat-icon>info_outline</mat-icon>
-                            Rilevato: <strong>{{detectedUnit}}</strong>
-                        </div>
-                    }
+                @if (detectedUnit) {
+                    <div class="detected-unit">
+                        <i class="material-icons">info_outline</i>
+                        Rilevato: <strong>{{detectedUnit}}</strong>
+                    </div>
+                }
 
-                    @if (inputError) {
-                        <div class="error-message">{{inputError}}</div>
-                    }
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="onCurrentTimestamp()">
-                        <mat-icon>schedule</mat-icon>
-                        Timestamp corrente
-                    </button>
-                    <button mat-button (click)="onClearToDate()" [disabled]="!timestampInput">
-                        Pulisci
-                    </button>
-                </mat-card-actions>
-            </mat-card>
+                @if (inputError) {
+                    <div class="error-message">{{inputError}}</div>
+                }
+
+                <ng-template #footer>
+                    <div class="card-footer">
+                        <p-button (onClick)="onCurrentTimestamp()">
+                            <i class="material-icons">schedule</i> Timestamp corrente
+                        </p-button>
+                        <p-button [text]="true" (onClick)="onClearToDate()" [disabled]="!timestampInput" label="Pulisci"></p-button>
+                    </div>
+                </ng-template>
+            </p-card>
         }
 
         @if (mode === 'toTimestamp') {
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Inserisci Data</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Data</mat-label>
-                        <input matInput
-                               [matDatepicker]="picker"
-                               [(ngModel)]="dateInputDate"
-                               (ngModelChange)="onDateInputChange()">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
+            <p-card header="Inserisci Data">
+                <div class="date-time-row">
+                    <p-floatlabel variant="on" class="w-full">
+                        <p-datepicker [(ngModel)]="dateInputDate" (onSelect)="onDateInputChange()" [showIcon]="true" inputId="dateField" styleClass="w-full"></p-datepicker>
+                        <label for="dateField">Data</label>
+                    </p-floatlabel>
 
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Ora</mat-label>
-                        <input matInput
+                    <p-floatlabel variant="on" class="w-full">
+                        <input pInputText
                                type="time"
                                step="1"
                                [(ngModel)]="timeInput"
-                               (ngModelChange)="onDateInputChange()">
-                        <mat-icon matIconSuffix>access_time</mat-icon>
-                    </mat-form-field>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="onCurrentTimestamp()">
-                        <mat-icon>schedule</mat-icon>
-                        Data corrente
-                    </button>
-                    <button mat-button (click)="onClearToTimestamp()" [disabled]="!dateInputDate">
-                        Pulisci
-                    </button>
-                </mat-card-actions>
-            </mat-card>
+                               (ngModelChange)="onDateInputChange()"
+                               id="timeField"
+                               class="w-full">
+                        <label for="timeField">Ora</label>
+                    </p-floatlabel>
+                </div>
+
+                <ng-template #footer>
+                    <div class="card-footer">
+                        <p-button [text]="true" (onClick)="onCurrentTimestamp()" label="Data corrente"></p-button>
+                        <p-button [text]="true" (onClick)="onClearToTimestamp()" [disabled]="!dateInputDate" label="Pulisci"></p-button>
+                    </div>
+                </ng-template>
+            </p-card>
         }
     </div>
 
     <div class="result-section">
         @if (mode === 'toDate') {
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Risultati Conversione</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    @if (hasToDateResult) {
-                        <div class="data-grid">
-                            <div class="data-row">
-                                <span class="data-label">ISO 8601</span>
-                                <div class="data-value-row">
-                                    <span class="data-value mono">{{resultIso}}</span>
-                                    <button mat-icon-button (click)="onCopy(resultIso)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Formato Locale</span>
-                                <div class="data-value-row">
-                                    <span class="data-value">{{resultLocale}}</span>
-                                    <button mat-icon-button (click)="onCopy(resultLocale)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Formato Italiano</span>
-                                <div class="data-value-row">
-                                    <span class="data-value">{{resultItalian}}</span>
-                                    <button mat-icon-button (click)="onCopy(resultItalian)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Secondi (s)</span>
-                                <div class="data-value-row">
-                                    <span class="data-value mono">{{resultSeconds}}</span>
-                                    <button mat-icon-button (click)="onCopy(resultSeconds)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Millisecondi (ms)</span>
-                                <div class="data-value-row">
-                                    <span class="data-value mono">{{resultMilliseconds}}</span>
-                                    <button mat-icon-button (click)="onCopy(resultMilliseconds)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
+            <p-card header="Risultati Conversione">
+                @if (hasToDateResult) {
+                    <div class="data-grid">
+                        <div class="data-row">
+                            <span class="data-label">ISO 8601</span>
+                            <div class="data-value-row">
+                                <span class="data-value mono">{{resultIso}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultIso)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
                             </div>
                         </div>
-                    } @else {
-                        <div class="empty-state">
-                            <mat-icon>schedule</mat-icon>
-                            <p>Inserisci un timestamp per vedere la conversione</p>
+                        <div class="data-row">
+                            <span class="data-label">Formato Locale</span>
+                            <div class="data-value-row">
+                                <span class="data-value">{{resultLocale}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultLocale)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
+                            </div>
                         </div>
-                    }
-                </mat-card-content>
-            </mat-card>
+                        <div class="data-row">
+                            <span class="data-label">Formato Italiano</span>
+                            <div class="data-value-row">
+                                <span class="data-value">{{resultItalian}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultItalian)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
+                            </div>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Secondi (s)</span>
+                            <div class="data-value-row">
+                                <span class="data-value mono">{{resultSeconds}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultSeconds)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
+                            </div>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Millisecondi (ms)</span>
+                            <div class="data-value-row">
+                                <span class="data-value mono">{{resultMilliseconds}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultMilliseconds)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
+                            </div>
+                        </div>
+                    </div>
+                } @else {
+                    <div class="empty-state">
+                        <i class="material-icons">schedule</i>
+                        <p>Inserisci un timestamp per vedere la conversione</p>
+                    </div>
+                }
+            </p-card>
         }
 
         @if (mode === 'toTimestamp') {
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Risultati Conversione</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    @if (hasToTimestampResult) {
-                        <div class="data-grid">
-                            <div class="data-row">
-                                <span class="data-label">Timestamp (secondi)</span>
-                                <div class="data-value-row">
-                                    <span class="data-value mono">{{dateResultSeconds}}</span>
-                                    <button mat-icon-button (click)="onCopy(dateResultSeconds)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Timestamp (millisecondi)</span>
-                                <div class="data-value-row">
-                                    <span class="data-value mono">{{dateResultMilliseconds}}</span>
-                                    <button mat-icon-button (click)="onCopy(dateResultMilliseconds)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">ISO 8601</span>
-                                <div class="data-value-row">
-                                    <span class="data-value mono">{{dateResultIso}}</span>
-                                    <button mat-icon-button (click)="onCopy(dateResultIso)" matTooltip="Copia">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </div>
+            <p-card header="Risultati Conversione">
+                @if (hasToTimestampResult) {
+                    <div class="data-grid">
+                        <div class="data-row">
+                            <span class="data-label">Timestamp (secondi)</span>
+                            <div class="data-value-row">
+                                <span class="data-value mono">{{dateResultSeconds}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultSeconds)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
                             </div>
                         </div>
-                    } @else {
-                        <div class="empty-state">
-                            <mat-icon>calendar_today</mat-icon>
-                            <p>Seleziona una data per vedere la conversione</p>
+                        <div class="data-row">
+                            <span class="data-label">Timestamp (millisecondi)</span>
+                            <div class="data-value-row">
+                                <span class="data-value mono">{{dateResultMilliseconds}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultMilliseconds)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
+                            </div>
                         </div>
-                    }
-                </mat-card-content>
-            </mat-card>
+                        <div class="data-row">
+                            <span class="data-label">ISO 8601</span>
+                            <div class="data-value-row">
+                                <span class="data-value mono">{{dateResultIso}}</span>
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultIso)" pTooltip="Copia">
+                                    <i class="material-icons">content_copy</i>
+                                </p-button>
+                            </div>
+                        </div>
+                    </div>
+                } @else {
+                    <div class="empty-state">
+                        <i class="material-icons">calendar_today</i>
+                        <p>Seleziona una data per vedere la conversione</p>
+                    </div>
+                }
+            </p-card>
         }
     </div>
 </div>

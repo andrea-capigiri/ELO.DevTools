@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { Textarea } from 'primeng/textarea';
+import { FloatLabel } from 'primeng/floatlabel';
+import { TooltipModule } from 'primeng/tooltip';
+import { Divider } from 'primeng/divider';
 import { UtilityService } from '../../_shared/utility.service';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDividerModule } from '@angular/material/divider';
 
 interface JwtPayload {
     [key: string]: any;
@@ -31,15 +31,15 @@ interface DecodedJwt {
     imports: [
         CommonModule,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatToolbarModule,
         RouterModule,
-        MatTooltipModule,
-        MatDividerModule
+        Toolbar,
+        Card,
+        ButtonModule,
+        InputText,
+        Textarea,
+        FloatLabel,
+        TooltipModule,
+        Divider
     ],
     templateUrl: './jwt-tool.component.html',
     styleUrl: './jwt-tool.component.scss'
@@ -63,7 +63,7 @@ export class JwtToolComponent {
 
             const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
             const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-            
+
             this.decodedJwt = {
                 header,
                 payload,

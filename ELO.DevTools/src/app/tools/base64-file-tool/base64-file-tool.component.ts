@@ -1,14 +1,14 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSelectModule } from '@angular/material/select';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { Textarea } from 'primeng/textarea';
+import { FloatLabel } from 'primeng/floatlabel';
+import { SelectButton } from 'primeng/selectbutton';
+import { SelectModule } from 'primeng/select';
 import { RouterModule } from '@angular/router';
 
 const MIME_EXTENSIONS: Record<string, string[]> = {
@@ -37,14 +37,14 @@ const MIME_EXTENSIONS: Record<string, string[]> = {
     imports: [
         CommonModule,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatToolbarModule,
-        MatButtonToggleModule,
-        MatSelectModule,
+        Toolbar,
+        Card,
+        ButtonModule,
+        InputText,
+        Textarea,
+        FloatLabel,
+        SelectButton,
+        SelectModule,
         RouterModule
     ],
     templateUrl: './base64-file-tool.component.html',
@@ -54,6 +54,11 @@ export class Base64FileToolComponent {
     mode: 'encode' | 'decode' = 'encode';
     isProcessing = false;
     dragOver = false;
+
+    modeOptions = [
+        { label: 'Encode', value: 'encode' },
+        { label: 'Decode', value: 'decode' }
+    ];
 
     constructor(private cdr: ChangeDetectorRef) {}
 

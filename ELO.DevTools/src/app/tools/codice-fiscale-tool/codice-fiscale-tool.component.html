@@ -1,206 +1,175 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Codice Fiscale</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">Codice Fiscale</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="tool-container">
 
     <div class="mode-selector">
-        <button mat-button
+        <p-button [text]="true"
                 [class.active]="mode === 'calcolo'"
-                (click)="mode = 'calcolo'">
-            Calcolo
-        </button>
-        <button mat-button
+                (onClick)="mode = 'calcolo'"
+                label="Calcolo"></p-button>
+        <p-button [text]="true"
                 [class.active]="mode === 'inverso'"
-                (click)="mode = 'inverso'">
-            Calcolo Inverso
-        </button>
+                (onClick)="mode = 'inverso'"
+                label="Calcolo Inverso"></p-button>
     </div>
 
     <!-- CALCOLO -->
     @if (mode === 'calcolo') {
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Dati Personali</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Cognome</mat-label>
-                    <input matInput [(ngModel)]="cognome" placeholder="es. Rossi">
-                </mat-form-field>
+        <p-card header="Dati Personali">
+            <p-floatlabel variant="on" class="w-full">
+                <input pInputText [(ngModel)]="cognome" placeholder="es. Rossi" id="cognomeField" class="w-full">
+                <label for="cognomeField">Cognome</label>
+            </p-floatlabel>
 
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Nome</mat-label>
-                    <input matInput [(ngModel)]="nome" placeholder="es. Mario">
-                </mat-form-field>
+            <p-floatlabel variant="on" class="w-full">
+                <input pInputText [(ngModel)]="nome" placeholder="es. Mario" id="nomeField" class="w-full">
+                <label for="nomeField">Nome</label>
+            </p-floatlabel>
 
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Data di Nascita</mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="dataNascita">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+            <p-floatlabel variant="on" class="w-full">
+                <p-datepicker [(ngModel)]="dataNascita" [showIcon]="true" inputId="dataNascitaField" styleClass="w-full"></p-datepicker>
+                <label for="dataNascitaField">Data di Nascita</label>
+            </p-floatlabel>
 
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Sesso</mat-label>
-                    <mat-select [(ngModel)]="sesso">
-                        <mat-option value="M">Maschio</mat-option>
-                        <mat-option value="F">Femmina</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <p-floatlabel variant="on" class="w-full">
+                <p-select [options]="sessoOptions" [(ngModel)]="sesso" optionLabel="label" optionValue="value" inputId="sessoField" styleClass="w-full"></p-select>
+                <label for="sessoField">Sesso</label>
+            </p-floatlabel>
 
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Comune di Nascita</mat-label>
-                    <input matInput
-                           [formControl]="comuneControl"
-                           [matAutocomplete]="autoComune"
-                           placeholder="Inizia a digitare...">
-                    <mat-autocomplete #autoComune="matAutocomplete"
-                                      [displayWith]="displayComune"
-                                      (optionSelected)="onComuneSelected($event)">
-                        @for (comune of filteredComuni; track comune.codice) {
-                            <mat-option [value]="comune">
-                                {{comune.nome}} ({{comune.provincia}})
-                            </mat-option>
-                        }
-                    </mat-autocomplete>
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary"
-                        (click)="onCalcola()"
-                        [disabled]="!isCalcoloValid">
-                    <mat-icon>calculate</mat-icon>
-                    Calcola
-                </button>
-                <button mat-button (click)="onClearCalcolo()">Pulisci</button>
-            </mat-card-actions>
-        </mat-card>
+            <p-floatlabel variant="on" class="w-full">
+                <p-autocomplete [(ngModel)]="selectedComune" [suggestions]="filteredComuni" (completeMethod)="searchComune($event)" field="nome" [forceSelection]="true" (onSelect)="onComuneSelected($event)" inputId="comuneField" styleClass="w-full">
+                    <ng-template #item let-comune>
+                        {{comune.nome}} ({{comune.provincia}})
+                    </ng-template>
+                </p-autocomplete>
+                <label for="comuneField">Comune di Nascita</label>
+            </p-floatlabel>
+
+            <ng-template #footer>
+                <div class="card-footer">
+                    <p-button (onClick)="onCalcola()" [disabled]="!isCalcoloValid">
+                        <i class="material-icons">calculate</i> Calcola
+                    </p-button>
+                    <p-button [text]="true" (onClick)="onClearCalcolo()" label="Pulisci"></p-button>
+                </div>
+            </ng-template>
+        </p-card>
 
         @if (error) {
             <div class="error-message">{{error}}</div>
         }
 
         @if (result) {
-            <mat-card class="result-card">
-                <mat-card-header>
-                    <mat-card-title>Risultato</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <div class="cf-result">{{result.codiceFiscale}}</div>
-                    <div class="cf-breakdown">
-                        <span class="cf-part cognome" matTooltip="Cognome">{{result.dettagli.cognomeParte}}</span>
-                        <span class="cf-part nome" matTooltip="Nome">{{result.dettagli.nomeParte}}</span>
-                        <span class="cf-part anno" matTooltip="Anno">{{result.dettagli.annoParte}}</span>
-                        <span class="cf-part mese" matTooltip="Mese">{{result.dettagli.meseParte}}</span>
-                        <span class="cf-part giorno" matTooltip="Giorno">{{result.dettagli.giornoParte}}</span>
-                        <span class="cf-part comune" matTooltip="Comune">{{result.dettagli.comuneParte}}</span>
-                        <span class="cf-part controllo" matTooltip="Controllo">{{result.dettagli.controlloParte}}</span>
+            <p-card header="Risultato" class="result-card">
+                <div class="cf-result">{{result.codiceFiscale}}</div>
+                <div class="cf-breakdown">
+                    <span class="cf-part cognome" pTooltip="Cognome">{{result.dettagli.cognomeParte}}</span>
+                    <span class="cf-part nome" pTooltip="Nome">{{result.dettagli.nomeParte}}</span>
+                    <span class="cf-part anno" pTooltip="Anno">{{result.dettagli.annoParte}}</span>
+                    <span class="cf-part mese" pTooltip="Mese">{{result.dettagli.meseParte}}</span>
+                    <span class="cf-part giorno" pTooltip="Giorno">{{result.dettagli.giornoParte}}</span>
+                    <span class="cf-part comune" pTooltip="Comune">{{result.dettagli.comuneParte}}</span>
+                    <span class="cf-part controllo" pTooltip="Controllo">{{result.dettagli.controlloParte}}</span>
+                </div>
+                <div class="cf-legend">
+                    <span class="legend-item"><span class="dot cognome"></span> Cognome</span>
+                    <span class="legend-item"><span class="dot nome"></span> Nome</span>
+                    <span class="legend-item"><span class="dot anno"></span> Anno</span>
+                    <span class="legend-item"><span class="dot mese"></span> Mese</span>
+                    <span class="legend-item"><span class="dot giorno"></span> Giorno</span>
+                    <span class="legend-item"><span class="dot comune"></span> Comune</span>
+                    <span class="legend-item"><span class="dot controllo"></span> Controllo</span>
+                </div>
+                <ng-template #footer>
+                    <div class="card-footer">
+                        <p-button [text]="true" (onClick)="onCopy(result.codiceFiscale)">
+                            <i class="material-icons">content_copy</i> Copia
+                        </p-button>
                     </div>
-                    <div class="cf-legend">
-                        <span class="legend-item"><span class="dot cognome"></span> Cognome</span>
-                        <span class="legend-item"><span class="dot nome"></span> Nome</span>
-                        <span class="legend-item"><span class="dot anno"></span> Anno</span>
-                        <span class="legend-item"><span class="dot mese"></span> Mese</span>
-                        <span class="legend-item"><span class="dot giorno"></span> Giorno</span>
-                        <span class="legend-item"><span class="dot comune"></span> Comune</span>
-                        <span class="legend-item"><span class="dot controllo"></span> Controllo</span>
-                    </div>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-button color="primary"
-                            (click)="onCopy(result.codiceFiscale)">
-                        <mat-icon>content_copy</mat-icon>
-                        Copia
-                    </button>
-                </mat-card-actions>
-            </mat-card>
+                </ng-template>
+            </p-card>
         }
     }
 
     <!-- INVERSO -->
     @if (mode === 'inverso') {
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Codice Fiscale</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Codice Fiscale</mat-label>
-                    <input matInput
-                           [(ngModel)]="codiceFiscaleInput"
-                           placeholder="es. RSSMRA85M01H501Z"
-                           maxlength="16"
-                           style="text-transform: uppercase;">
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary"
-                        (click)="onInverso()"
-                        [disabled]="codiceFiscaleInput.trim().length !== 16">
-                    <mat-icon>search</mat-icon>
-                    Decodifica
-                </button>
-                <button mat-button (click)="onClearInverso()">Pulisci</button>
-            </mat-card-actions>
-        </mat-card>
+        <p-card header="Codice Fiscale">
+            <p-floatlabel variant="on" class="w-full">
+                <input pInputText
+                       [(ngModel)]="codiceFiscaleInput"
+                       placeholder="es. RSSMRA85M01H501Z"
+                       maxlength="16"
+                       style="text-transform: uppercase;"
+                       id="cfInversoField"
+                       class="w-full">
+                <label for="cfInversoField">Codice Fiscale</label>
+            </p-floatlabel>
+
+            <ng-template #footer>
+                <div class="card-footer">
+                    <p-button (onClick)="onInverso()" [disabled]="codiceFiscaleInput.trim().length !== 16">
+                        <i class="material-icons">search</i> Decodifica
+                    </p-button>
+                    <p-button [text]="true" (onClick)="onClearInverso()" label="Pulisci"></p-button>
+                </div>
+            </ng-template>
+        </p-card>
 
         @if (inversoResult) {
             @if (inversoResult.error) {
                 <div class="error-message">{{inversoResult.error}}</div>
             } @else {
-                <mat-card class="result-card">
-                    <mat-card-header>
-                        <mat-card-title>Dati Estratti</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        @if (!inversoResult.checkCharacterValid) {
-                            <div class="warning-message">
-                                <mat-icon>warning</mat-icon>
-                                Carattere di controllo non valido
-                            </div>
-                        }
-                        <div class="data-grid">
-                            <div class="data-row">
-                                <span class="data-label">Codice Cognome</span>
-                                <span class="data-value mono">{{inversoResult.cognomeCodice}}</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Codice Nome</span>
-                                <span class="data-value mono">{{inversoResult.nomeCodice}}</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Sesso</span>
-                                <span class="data-value">{{inversoResult.sesso === 'M' ? 'Maschio' : 'Femmina'}}</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Giorno di Nascita</span>
-                                <span class="data-value">{{inversoResult.giornoNascita}}</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Mese di Nascita</span>
-                                <span class="data-value">{{getMeseNome(inversoResult.meseNascita)}}</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Anno di Nascita</span>
-                                <span class="data-value mono">xx{{inversoResult.annoNascita}}</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">Comune di Nascita</span>
-                                <span class="data-value">
-                                    @if (inversoResult.comune) {
-                                        {{inversoResult.comune.nome}} ({{inversoResult.comune.provincia}})
-                                    } @else {
-                                        <span class="unknown">Codice: {{inversoResult.codiceCatastale}} — Non trovato</span>
-                                    }
-                                </span>
-                            </div>
+                <p-card header="Dati Estratti" class="result-card">
+                    @if (!inversoResult.checkCharacterValid) {
+                        <div class="warning-message">
+                            <i class="material-icons">warning</i>
+                            Carattere di controllo non valido
                         </div>
-                    </mat-card-content>
-                </mat-card>
+                    }
+                    <div class="data-grid">
+                        <div class="data-row">
+                            <span class="data-label">Codice Cognome</span>
+                            <span class="data-value mono">{{inversoResult.cognomeCodice}}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Codice Nome</span>
+                            <span class="data-value mono">{{inversoResult.nomeCodice}}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Sesso</span>
+                            <span class="data-value">{{inversoResult.sesso === 'M' ? 'Maschio' : 'Femmina'}}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Giorno di Nascita</span>
+                            <span class="data-value">{{inversoResult.giornoNascita}}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Mese di Nascita</span>
+                            <span class="data-value">{{getMeseNome(inversoResult.meseNascita)}}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Anno di Nascita</span>
+                            <span class="data-value mono">xx{{inversoResult.annoNascita}}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Comune di Nascita</span>
+                            <span class="data-value">
+                                @if (inversoResult.comune) {
+                                    {{inversoResult.comune.nome}} ({{inversoResult.comune.provincia}})
+                                } @else {
+                                    <span class="unknown">Codice: {{inversoResult.codiceCatastale}} — Non trovato</span>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </p-card>
             }
         }
     }

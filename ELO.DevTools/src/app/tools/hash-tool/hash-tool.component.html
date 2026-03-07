@@ -1,66 +1,50 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Hash Generator</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">Hash Generator</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="tool-container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Input</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-form-field appearance="outline" class="full-width">
-                <textarea matInput
-                          placeholder="Enter text to hash..."
-                          [(ngModel)]="inputText"
-                          rows="6"></textarea>
-            </mat-form-field>
-            <div class="algorithm-section">
-                <label class="setting-label">Algorithm</label>
-                <mat-button-toggle-group [(ngModel)]="algorithm">
-                    <mat-button-toggle value="md5">MD5</mat-button-toggle>
-                    <mat-button-toggle value="sha1">SHA-1</mat-button-toggle>
-                    <mat-button-toggle value="sha256">SHA-256</mat-button-toggle>
-                    <mat-button-toggle value="sha384">SHA-384</mat-button-toggle>
-                    <mat-button-toggle value="sha512">SHA-512</mat-button-toggle>
-                </mat-button-toggle-group>
+    <p-card header="Input">
+        <textarea pTextarea
+                  placeholder="Enter text to hash..."
+                  [(ngModel)]="inputText"
+                  rows="6"
+                  class="w-full"></textarea>
+        <div class="algorithm-section">
+            <label class="setting-label">Algorithm</label>
+            <p-selectbutton [options]="algorithmOptions" [(ngModel)]="algorithm" optionLabel="label" optionValue="value"></p-selectbutton>
+        </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button (onClick)="onGenerate()" [disabled]="!inputText.trim()">
+                    <i class="material-icons">tag</i> Hash
+                </p-button>
+                <p-button (onClick)="onGenerateAll()" [disabled]="!inputText.trim()">
+                    <i class="material-icons">layers</i> Hash All
+                </p-button>
+                <p-button [text]="true" (onClick)="onClear()" label="Clear" [disabled]="!inputText.trim() && !results.length"></p-button>
             </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="onGenerate()" [disabled]="!inputText.trim()">
-                <mat-icon>tag</mat-icon>
-                Hash
-            </button>
-            <button mat-raised-button color="primary" (click)="onGenerateAll()" [disabled]="!inputText.trim()">
-                <mat-icon>layers</mat-icon>
-                Hash All
-            </button>
-            <button mat-button (click)="onClear()" [disabled]="!inputText.trim() && !results.length">
-                Clear
-            </button>
-        </mat-card-actions>
-    </mat-card>
+        </ng-template>
+    </p-card>
 
-    <mat-card *ngIf="results.length">
-        <mat-card-header>
-            <mat-card-title>Output</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="hash-list">
-                <div class="hash-item" *ngFor="let r of results" (click)="onCopy(r.hash)">
-                    <span class="hash-algo">{{r.algorithm}}</span>
-                    <span class="hash-value">{{r.hash}}</span>
-                    <mat-icon class="copy-icon">content_copy</mat-icon>
-                </div>
+    <p-card header="Output" *ngIf="results.length">
+        <div class="hash-list">
+            <div class="hash-item" *ngFor="let r of results" (click)="onCopy(r.hash)">
+                <span class="hash-algo">{{r.algorithm}}</span>
+                <span class="hash-value">{{r.hash}}</span>
+                <i class="material-icons copy-icon">content_copy</i>
             </div>
-        </mat-card-content>
-        <mat-card-actions *ngIf="results.length > 1">
-            <button mat-button color="primary" (click)="onCopyAll()">
-                <mat-icon>content_copy</mat-icon>
-                Copy All
-            </button>
-        </mat-card-actions>
-    </mat-card>
+        </div>
+        <ng-template #footer *ngIf="results.length > 1">
+            <div class="card-footer">
+                <p-button [text]="true" (onClick)="onCopyAll()">
+                    <i class="material-icons">content_copy</i> Copy All
+                </p-button>
+            </div>
+        </ng-template>
+    </p-card>
 </div>

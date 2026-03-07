@@ -1,77 +1,59 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>UUID Generator</span>
-</mat-toolbar>
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">UUID Generator</span>
+    </ng-template>
+</p-toolbar>
 
 <div class="tool-container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Settings</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="settings-row">
-                <div class="setting">
-                    <label class="setting-label">Version</label>
-                    <mat-button-toggle-group [(ngModel)]="version" class="setting-toggle">
-                        <mat-button-toggle value="v7">UUID v7</mat-button-toggle>
-                        <mat-button-toggle value="v4">UUID v4</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </div>
-                <div class="setting">
-                    <label class="setting-label">Format</label>
-                    <mat-button-toggle-group [(ngModel)]="format" (change)="onFormatChange()" class="setting-toggle">
-                        <mat-button-toggle value="uppercase">UPPERCASE</mat-button-toggle>
-                        <mat-button-toggle value="lowercase">lowercase</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </div>
+    <p-card header="Settings">
+        <div class="settings-row">
+            <div class="setting">
+                <label class="setting-label">Version</label>
+                <p-selectbutton [options]="versionOptions" [(ngModel)]="version" optionLabel="label" optionValue="value"></p-selectbutton>
             </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="onGenerate()">
-                <mat-icon>refresh</mat-icon>
-                Generate
-            </button>
-            <button mat-button (click)="onClear()" [disabled]="!guidHistory.length">
-                Clear
-            </button>
-        </mat-card-actions>
-    </mat-card>
-
-    <mat-card *ngIf="currentGuid">
-        <mat-card-header>
-            <mat-card-title>Current GUID</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="current-guid">{{currentGuid}}</div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button color="primary" (click)="onCopy(currentGuid)">
-                <mat-icon>content_copy</mat-icon>
-                Copy
-            </button>
-        </mat-card-actions>
-    </mat-card>
-
-    <mat-card *ngIf="guidHistory.length > 1">
-        <mat-card-header>
-            <mat-card-title>History ({{guidHistory.length}})</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="guid-list">
-                <div class="guid-item" *ngFor="let guid of guidHistory; let i = index"
-                     (click)="onCopy(guid)">
-                    <span class="guid-text">{{guid}}</span>
-                    <mat-icon class="copy-icon">content_copy</mat-icon>
-                </div>
+            <div class="setting">
+                <label class="setting-label">Format</label>
+                <p-selectbutton [options]="formatOptions" [(ngModel)]="format" optionLabel="label" optionValue="value" (onChange)="onFormatChange()"></p-selectbutton>
             </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button color="primary" (click)="onCopyAll()">
-                <mat-icon>content_copy</mat-icon>
-                Copy All
-            </button>
-        </mat-card-actions>
-    </mat-card>
+        </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button (onClick)="onGenerate()">
+                    <i class="material-icons">refresh</i> Generate
+                </p-button>
+                <p-button [text]="true" (onClick)="onClear()" label="Clear" [disabled]="!guidHistory.length"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+
+    <p-card header="Current GUID" *ngIf="currentGuid">
+        <div class="current-guid">{{currentGuid}}</div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button [text]="true" (onClick)="onCopy(currentGuid)">
+                    <i class="material-icons">content_copy</i> Copy
+                </p-button>
+            </div>
+        </ng-template>
+    </p-card>
+
+    <p-card header="History ({{guidHistory.length}})" *ngIf="guidHistory.length > 1">
+        <div class="guid-list">
+            <div class="guid-item" *ngFor="let guid of guidHistory; let i = index"
+                 (click)="onCopy(guid)">
+                <span class="guid-text">{{guid}}</span>
+                <i class="material-icons copy-icon">content_copy</i>
+            </div>
+        </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button [text]="true" (onClick)="onCopyAll()">
+                    <i class="material-icons">content_copy</i> Copy All
+                </p-button>
+            </div>
+        </ng-template>
+    </p-card>
 </div>

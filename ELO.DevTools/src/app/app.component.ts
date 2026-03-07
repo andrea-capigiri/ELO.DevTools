@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { HomeComponent } from './home/home.component';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -12,9 +9,6 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
     imports: [
         CommonModule,
         HomeComponent,
-        MatIconModule,
-        MatButtonModule,
-        MatToolbarModule,
         RouterOutlet,
         RouterLink,
         RouterLinkActive

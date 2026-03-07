@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSliderModule } from '@angular/material/slider';
 import { RouterModule } from '@angular/router';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { SelectButton } from 'primeng/selectbutton';
+import { TooltipModule } from 'primeng/tooltip';
 
 interface FlexOption {
     label: string;
     value: string;
     bsClass: string;
+    icon?: string;
 }
 
 @Component({
@@ -21,13 +21,12 @@ interface FlexOption {
     imports: [
         CommonModule,
         FormsModule,
-        MatCardModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatSliderModule,
-        RouterModule
+        RouterModule,
+        Toolbar,
+        Card,
+        ButtonModule,
+        SelectButton,
+        TooltipModule
     ],
     templateUrl: './flex-preview-tool.component.html',
     styleUrls: ['./flex-preview-tool.component.scss']
@@ -47,20 +46,20 @@ export class FlexPreviewToolComponent {
     ];
 
     justifyOptions: FlexOption[] = [
-        { label: 'Start', value: 'flex-start', bsClass: 'justify-content-start' },
-        { label: 'End', value: 'flex-end', bsClass: 'justify-content-end' },
-        { label: 'Center', value: 'center', bsClass: 'justify-content-center' },
-        { label: 'Between', value: 'space-between', bsClass: 'justify-content-between' },
-        { label: 'Around', value: 'space-around', bsClass: 'justify-content-around' },
-        { label: 'Evenly', value: 'space-evenly', bsClass: 'justify-content-evenly' },
+        { label: 'Start', value: 'flex-start', bsClass: 'justify-content-start', icon: 'align_horizontal_left' },
+        { label: 'End', value: 'flex-end', bsClass: 'justify-content-end', icon: 'align_horizontal_right' },
+        { label: 'Center', value: 'center', bsClass: 'justify-content-center', icon: 'align_horizontal_center' },
+        { label: 'Between', value: 'space-between', bsClass: 'justify-content-between', icon: 'format_align_justify' },
+        { label: 'Around', value: 'space-around', bsClass: 'justify-content-around', icon: 'view_array' },
+        { label: 'Evenly', value: 'space-evenly', bsClass: 'justify-content-evenly', icon: 'view_column' },
     ];
 
     alignOptions: FlexOption[] = [
-        { label: 'Start', value: 'flex-start', bsClass: 'align-items-start' },
-        { label: 'End', value: 'flex-end', bsClass: 'align-items-end' },
-        { label: 'Center', value: 'center', bsClass: 'align-items-center' },
-        { label: 'Stretch', value: 'stretch', bsClass: 'align-items-stretch' },
-        { label: 'Baseline', value: 'baseline', bsClass: 'align-items-baseline' },
+        { label: 'Start', value: 'flex-start', bsClass: 'align-items-start', icon: 'align_vertical_top' },
+        { label: 'End', value: 'flex-end', bsClass: 'align-items-end', icon: 'align_vertical_bottom' },
+        { label: 'Center', value: 'center', bsClass: 'align-items-center', icon: 'align_vertical_center' },
+        { label: 'Stretch', value: 'stretch', bsClass: 'align-items-stretch', icon: 'unfold_more' },
+        { label: 'Baseline', value: 'baseline', bsClass: 'align-items-baseline', icon: 'format_size' },
     ];
 
     gapOptions: FlexOption[] = [

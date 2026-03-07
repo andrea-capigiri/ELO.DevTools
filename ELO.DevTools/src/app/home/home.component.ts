@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+
 import { SettingsService } from '../_shared/settings.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -91,7 +91,6 @@ const ALL_TOOLS: ToolCard[] = [
     standalone: true,
     imports: [
         RouterModule,
-        MatIconModule,
         TranslateModule
     ],
     templateUrl: './home.component.html',

@@ -1,13 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ToggleSwitch } from 'primeng/toggleswitch';
+import { SelectModule } from 'primeng/select';
+import { FloatLabel } from 'primeng/floatlabel';
 import { SettingsService, ToolSetting } from '../_shared/settings.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -19,13 +19,13 @@ export type Language = 'en' | 'it';
     standalone: true,
     imports: [
         CommonModule,
-        MatCardModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatSlideToggleModule,
-        MatSelectModule,
-        MatFormFieldModule,
+        FormsModule,
+        Toolbar,
+        Card,
+        ButtonModule,
+        ToggleSwitch,
+        SelectModule,
+        FloatLabel,
         RouterModule,
         TranslateModule
     ],

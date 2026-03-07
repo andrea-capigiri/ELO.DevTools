@@ -49,7 +49,7 @@
     align-items: center;
     gap: 12px;
 
-    mat-icon {
+    i.material-icons {
         font-size: 48px;
         width: 48px;
         height: 48px;
@@ -73,7 +73,7 @@
     font-size: 14px;
     color: var(--gh-fg-default);
 
-    mat-icon {
+    i.material-icons {
         color: var(--gh-accent-fg);
     }
 }

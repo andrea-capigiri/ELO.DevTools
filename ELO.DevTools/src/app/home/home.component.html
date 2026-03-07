@@ -6,7 +6,7 @@
                 <p class="home-subtitle">Strumenti per sviluppatori</p>
             </div>
             <a class="settings-btn" routerLink="/settings">
-                <mat-icon>settings</mat-icon>
+                <i class="material-icons">settings</i>
             </a>
         </div>
     </header>
@@ -15,13 +15,13 @@
         @for (tool of tools; track tool.route) {
             <a class="tool-card" [routerLink]="tool.route">
                 <div class="tool-icon">
-                    <mat-icon>{{tool.icon}}</mat-icon>
+                    <i class="material-icons">{{tool.icon}}</i>
                 </div>
                 <div class="tool-info">
                     <div class="tool-title">{{tool.titleKey | translate}}</div>
                     <div class="tool-desc">{{tool.descriptionKey | translate}}</div>
                 </div>
-                <mat-icon class="tool-arrow">chevron_right</mat-icon>
+                <i class="material-icons tool-arrow">chevron_right</i>
             </a>
         }
     </div>

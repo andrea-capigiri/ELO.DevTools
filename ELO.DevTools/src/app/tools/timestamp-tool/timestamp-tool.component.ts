@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { FloatLabel } from 'primeng/floatlabel';
+import { SelectButton } from 'primeng/selectbutton';
+import { TooltipModule } from 'primeng/tooltip';
+import { DatePicker } from 'primeng/datepicker';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
@@ -20,26 +18,28 @@ import { UtilityService } from '../../_shared/utility.service';
   imports: [
     CommonModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatToolbarModule,
     RouterModule,
-    MatRadioModule,
-    MatTooltipModule,
-    MatDatepickerModule
+    Toolbar,
+    Card,
+    ButtonModule,
+    InputText,
+    FloatLabel,
+    SelectButton,
+    TooltipModule,
+    DatePicker
   ],
-  providers: [provideNativeDateAdapter()],
   templateUrl: './timestamp-tool.component.html',
   styleUrls: ['./timestamp-tool.component.scss']
 })
 export class TimestampToolComponent {
 
   mode: 'toDate' | 'toTimestamp' = 'toDate';
+  modeOptions = [
+    { label: 'Timestamp → Data', value: 'toDate' },
+    { label: 'Data → Timestamp', value: 'toTimestamp' }
+  ];
 
-  // Timestamp → Date
+  // Timestamp -> Date
   timestampInput: string = '';
   detectedUnit: 'secondi' | 'millisecondi' | null = null;
   convertedDate: Date | null = null;
@@ -50,7 +50,7 @@ export class TimestampToolComponent {
   resultMilliseconds: string = '';
   inputError: string = '';
 
-  // Date → Timestamp
+  // Date -> Timestamp
   dateInputDate: Date | null = null;
   timeInput: string = '00:00:00';
   dateResultSeconds: string = '';

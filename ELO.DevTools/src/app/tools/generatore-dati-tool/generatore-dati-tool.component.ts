@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDividerModule } from '@angular/material/divider';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { SelectButton } from 'primeng/selectbutton';
+import { TooltipModule } from 'primeng/tooltip';
+import { Divider } from 'primeng/divider';
 import { GeneratoreDatiService } from '../../_shared/generatore-dati.service';
 import { TipoGenerazione, PersonaFisica, ImpresaIndividuale, Impresa } from '../../_shared/generatore-dati.models';
 
@@ -28,17 +24,13 @@ interface StoricoEntry {
     imports: [
         CommonModule,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatToolbarModule,
         RouterModule,
-        MatSelectModule,
-        MatButtonToggleModule,
-        MatTooltipModule,
-        MatDividerModule
+        Toolbar,
+        Card,
+        ButtonModule,
+        SelectButton,
+        TooltipModule,
+        Divider
     ],
     templateUrl: './generatore-dati-tool.component.html',
     styleUrls: ['./generatore-dati-tool.component.scss']
@@ -47,6 +39,12 @@ export class GeneratoreDatiToolComponent {
     tipo: TipoGenerazione = 'persona_fisica';
     risultato: PersonaFisica | ImpresaIndividuale | Impresa | null = null;
     storico: StoricoEntry[] = [];
+
+    tipoOptions = [
+        { label: 'Persona Fisica', value: 'persona_fisica' },
+        { label: 'Impresa Individuale', value: 'impresa_individuale' },
+        { label: 'Impresa', value: 'impresa' }
+    ];
 
     constructor(private generatore: GeneratoreDatiService) {}
 

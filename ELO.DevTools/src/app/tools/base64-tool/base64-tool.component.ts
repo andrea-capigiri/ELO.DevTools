@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { Toolbar } from 'primeng/toolbar';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { Textarea } from 'primeng/textarea';
+import { FloatLabel } from 'primeng/floatlabel';
 import { RouterModule } from '@angular/router';
 import { UtilityService } from '../../_shared/utility.service';
 
@@ -16,12 +16,12 @@ import { UtilityService } from '../../_shared/utility.service';
     imports: [
         CommonModule,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatToolbarModule,
+        Toolbar,
+        Card,
+        ButtonModule,
+        InputText,
+        Textarea,
+        FloatLabel,
         RouterModule
     ],
     templateUrl: './base64-tool.component.html',
