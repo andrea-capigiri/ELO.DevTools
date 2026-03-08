@@ -1,0 +1,100 @@
+<svg width="1280" height="800" viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @font-face {
+        font-family: 'Space Grotesk';
+        font-style: normal;
+        font-weight: 800;
+        src: url(data:font/woff2;charset=utf-8;base64,INSERISCI_IL_BASE64_QUI) format('woff2');
+      }
+    </style>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <mask id="cut-lines">
+      <rect x="-10" y="-10" width="100" height="100" fill="white" />
+      <circle cx="32" cy="18" r="3" fill="black" />
+      <circle cx="46" cy="32" r="3" fill="black" />
+      <circle cx="32" cy="46" r="3" fill="black" />
+      <circle cx="18" cy="32" r="3" fill="black" />
+      <circle cx="43.5" cy="20.5" r="3" fill="black" />
+      <circle cx="43.5" cy="43.5" r="3" fill="black" />
+      <circle cx="20.5" cy="43.5" r="3" fill="black" />
+      <circle cx="20.5" cy="20.5" r="3" fill="black" />
+    </mask>
+    <g id="dot-row" fill="#ffffff" opacity="0.15">
+      <circle cx="10" cy="10" r="1.5"/><circle cx="30" cy="10" r="1.5"/><circle cx="50" cy="10" r="1.5"/><circle cx="70" cy="10" r="1.5"/><circle cx="90" cy="10" r="1.5"/><circle cx="110" cy="10" r="1.5"/><circle cx="130" cy="10" r="1.5"/><circle cx="150" cy="10" r="1.5"/><circle cx="170" cy="10" r="1.5"/><circle cx="190" cy="10" r="1.5"/><circle cx="210" cy="10" r="1.5"/><circle cx="230" cy="10" r="1.5"/><circle cx="250" cy="10" r="1.5"/><circle cx="270" cy="10" r="1.5"/><circle cx="290" cy="10" r="1.5"/><circle cx="310" cy="10" r="1.5"/><circle cx="330" cy="10" r="1.5"/><circle cx="350" cy="10" r="1.5"/><circle cx="370" cy="10" r="1.5"/><circle cx="390" cy="10" r="1.5"/><circle cx="410" cy="10" r="1.5"/><circle cx="430" cy="10" r="1.5"/><circle cx="450" cy="10" r="1.5"/><circle cx="470" cy="10" r="1.5"/><circle cx="490" cy="10" r="1.5"/><circle cx="510" cy="10" r="1.5"/><circle cx="530" cy="10" r="1.5"/><circle cx="550" cy="10" r="1.5"/><circle cx="570" cy="10" r="1.5"/><circle cx="590" cy="10" r="1.5"/><circle cx="610" cy="10" r="1.5"/><circle cx="630" cy="10" r="1.5"/><circle cx="650" cy="10" r="1.5"/><circle cx="670" cy="10" r="1.5"/><circle cx="690" cy="10" r="1.5"/><circle cx="710" cy="10" r="1.5"/><circle cx="730" cy="10" r="1.5"/><circle cx="750" cy="10" r="1.5"/><circle cx="770" cy="10" r="1.5"/><circle cx="790" cy="10" r="1.5"/><circle cx="810" cy="10" r="1.5"/><circle cx="830" cy="10" r="1.5"/><circle cx="850" cy="10" r="1.5"/><circle cx="870" cy="10" r="1.5"/><circle cx="890" cy="10" r="1.5"/><circle cx="910" cy="10" r="1.5"/><circle cx="930" cy="10" r="1.5"/><circle cx="950" cy="10" r="1.5"/><circle cx="970" cy="10" r="1.5"/><circle cx="990" cy="10" r="1.5"/><circle cx="1010" cy="10" r="1.5"/><circle cx="1030" cy="10" r="1.5"/><circle cx="1050" cy="10" r="1.5"/><circle cx="1070" cy="10" r="1.5"/><circle cx="1090" cy="10" r="1.5"/><circle cx="1110" cy="10" r="1.5"/><circle cx="1130" cy="10" r="1.5"/><circle cx="1150" cy="10" r="1.5"/><circle cx="1170" cy="10" r="1.5"/><circle cx="1190" cy="10" r="1.5"/><circle cx="1210" cy="10" r="1.5"/><circle cx="1230" cy="10" r="1.5"/><circle cx="1250" cy="10" r="1.5"/><circle cx="1270" cy="10" r="1.5"/>
+    </g>
+  </defs>
+  <rect width="1280" height="800" fill="url(#bg-gradient)" />
+  <use href="#dot-row" x="0" y="0"/>
+  <use href="#dot-row" x="0" y="20"/>
+  <use href="#dot-row" x="0" y="40"/>
+  <use href="#dot-row" x="0" y="60"/>
+  <use href="#dot-row" x="0" y="80"/>
+  <use href="#dot-row" x="0" y="100"/>
+  <use href="#dot-row" x="0" y="120"/>
+  <use href="#dot-row" x="0" y="140"/>
+  <use href="#dot-row" x="0" y="160"/>
+  <use href="#dot-row" x="0" y="180"/>
+  <use href="#dot-row" x="0" y="200"/>
+  <use href="#dot-row" x="0" y="220"/>
+  <use href="#dot-row" x="0" y="240"/>
+  <use href="#dot-row" x="0" y="260"/>
+  <use href="#dot-row" x="0" y="280"/>
+  <use href="#dot-row" x="0" y="300"/>
+  <use href="#dot-row" x="0" y="320"/>
+  <use href="#dot-row" x="0" y="340"/>
+  <use href="#dot-row" x="0" y="360"/>
+  <use href="#dot-row" x="0" y="380"/>
+  <use href="#dot-row" x="0" y="400"/>
+  <use href="#dot-row" x="0" y="420"/>
+  <use href="#dot-row" x="0" y="440"/>
+  <use href="#dot-row" x="0" y="460"/>
+  <use href="#dot-row" x="0" y="480"/>
+  <use href="#dot-row" x="0" y="500"/>
+  <use href="#dot-row" x="0" y="520"/>
+  <use href="#dot-row" x="0" y="540"/>
+  <use href="#dot-row" x="0" y="560"/>
+  <use href="#dot-row" x="0" y="580"/>
+  <use href="#dot-row" x="0" y="600"/>
+  <use href="#dot-row" x="0" y="620"/>
+  <use href="#dot-row" x="0" y="640"/>
+  <use href="#dot-row" x="0" y="660"/>
+  <use href="#dot-row" x="0" y="680"/>
+  <use href="#dot-row" x="0" y="700"/>
+  <use href="#dot-row" x="0" y="720"/>
+  <use href="#dot-row" x="0" y="740"/>
+  <use href="#dot-row" x="0" y="760"/>
+  <use href="#dot-row" x="0" y="780"/>
+  <svg x="512" y="190" width="256" height="256" viewBox="12 12 40 40" preserveAspectRatio="xMidYMid meet">
+    <g stroke="#ffffff" stroke-width="2" opacity="0.6" mask="url(#cut-lines)">
+      <line x1="32" y1="32" x2="32" y2="18" />
+      <line x1="32" y1="32" x2="46" y2="32" />
+      <line x1="32" y1="32" x2="32" y2="46" />
+      <line x1="32" y1="32" x2="18" y2="32" />
+      <line x1="32" y1="32" x2="43.5" y2="20.5" />
+      <line x1="32" y1="32" x2="43.5" y2="43.5" />
+      <line x1="32" y1="32" x2="20.5" y2="43.5" />
+      <line x1="32" y1="32" x2="20.5" y2="20.5" />
+    </g>
+    <g fill="#ffffff" opacity="0.9">
+      <circle cx="32" cy="18" r="3" />
+      <circle cx="46" cy="32" r="3" />
+      <circle cx="32" cy="46" r="3" />
+      <circle cx="18" cy="32" r="3" />
+      <circle cx="43.5" cy="20.5" r="3" />
+      <circle cx="43.5" cy="43.5" r="3" />
+      <circle cx="20.5" cy="43.5" r="3" />
+      <circle cx="20.5" cy="20.5" r="3" />
+    </g>
+    <circle cx="32" cy="32" r="5" fill="#ffffff" />
+  </svg>
+  <text x="640" y="550" style="font-family: 'Space Grotesk', sans-serif;" font-size="80" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="-1">
+    ELO DevTools
+  </text>
+  <text x="640" y="620" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#e2e8f0" text-anchor="middle" letter-spacing="0.5">
+    The ultimate developer toolkit
+  </text>
+</svg>

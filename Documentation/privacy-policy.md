@@ -7,4 +7,3 @@ This extension runs entirely inside the user's browser. All functionality is exe
 No personal information, browsing data, authentication data, or analytics are collected.  
 No data is sent to external servers or third-party services.  
 If this privacy policy changes in the future, updates will be published on this page.  
-

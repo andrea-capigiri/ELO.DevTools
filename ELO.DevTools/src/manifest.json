@@ -5,11 +5,11 @@
   "description": "ELO DevTools is a collection of tools for developers.",
   "version": "1.0.0",
   "icons": {
-    "16": "assets/images/icon-192.png",
-    "48": "assets/images/icon-192.png",
-    "128": "assets/images/icon-512.png",
-    "192": "assets/images/icon-192.png",
-    "512": "assets/images/icon-512.png"
+    "16": "assets/logos/favicon.ico",
+    "48": "assets/logos/icon-192.png",
+    "128": "assets/logos/icon-512.png",
+    "192": "assets/logos/icon-192.png",
+    "512": "assets/logos/icon-512.png"
   },
   "offline_enabled": true,
   "permissions": [
