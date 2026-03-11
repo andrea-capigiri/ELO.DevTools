@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import { SelectButton } from 'primeng/selectbutton';
 import { TooltipModule } from 'primeng/tooltip';
 import { DatePicker } from 'primeng/datepicker';
 import { UtilityService } from '../../_shared/utility.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-timestamp-tool',
@@ -26,22 +27,20 @@ import { UtilityService } from '../../_shared/utility.service';
     FloatLabel,
     SelectButton,
     TooltipModule,
-    DatePicker
+    DatePicker,
+    TranslateModule
   ],
   templateUrl: './timestamp-tool.component.html',
   styleUrls: ['./timestamp-tool.component.scss']
 })
-export class TimestampToolComponent {
+export class TimestampToolComponent implements OnInit {
 
   mode: 'toDate' | 'toTimestamp' = 'toDate';
-  modeOptions = [
-    { label: 'Timestamp → Data', value: 'toDate' },
-    { label: 'Data → Timestamp', value: 'toTimestamp' }
-  ];
+  modeOptions: { label: string; value: string }[] = [];
 
   // Timestamp -> Date
   timestampInput: string = '';
-  detectedUnit: 'secondi' | 'millisecondi' | null = null;
+  detectedUnit: string | null = null;
   convertedDate: Date | null = null;
   resultIso: string = '';
   resultLocale: string = '';
@@ -57,7 +56,14 @@ export class TimestampToolComponent {
   dateResultMilliseconds: string = '';
   dateResultIso: string = '';
 
-  constructor(private utilityService: UtilityService) {}
+  constructor(private utilityService: UtilityService, private translate: TranslateService) {}
+
+  ngOnInit(): void {
+    this.modeOptions = [
+      { label: this.translate.instant('timestamp.toDate'), value: 'toDate' },
+      { label: this.translate.instant('timestamp.toTimestamp'), value: 'toTimestamp' }
+    ];
+  }
 
   onTimestampInputChange(): void {
     this.inputError = '';
@@ -74,22 +80,22 @@ export class TimestampToolComponent {
 
     const num = Number(trimmed);
     if (isNaN(num) || !Number.isFinite(num)) {
-      this.inputError = 'Inserisci un numero valido';
+      this.inputError = this.translate.instant('timestamp.invalidNumber');
       return;
     }
 
     let ms: number;
     if (num < 1e10) {
-      this.detectedUnit = 'secondi';
+      this.detectedUnit = this.translate.instant('timestamp.seconds');
       ms = num * 1000;
     } else {
-      this.detectedUnit = 'millisecondi';
+      this.detectedUnit = this.translate.instant('timestamp.milliseconds');
       ms = num;
     }
 
     const date = this.utilityService.timestampToDate(ms);
     if (isNaN(date.getTime())) {
-      this.inputError = 'Timestamp non valido';
+      this.inputError = this.translate.instant('timestamp.invalidTimestamp');
       return;
     }
 

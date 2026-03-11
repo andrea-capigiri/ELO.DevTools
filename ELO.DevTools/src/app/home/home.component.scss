@@ -118,6 +118,23 @@
         color: var(--gh-accent-fg);
         margin-bottom: 2px;
         font-family: var(--gh-font);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .new-badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 1px 6px;
+        border-radius: 10px;
+        background: var(--gh-success-emphasis, #1a7f37);
+        color: #fff;
+        line-height: 16px;
+        white-space: nowrap;
     }
 
     .tool-desc {

@@ -40,6 +40,11 @@ export const routes: Routes = [
             .then(m => m.FlexPreviewToolComponent)
     },
     {
+        path: 'tools/iban',
+        loadComponent: () => import('./tools/iban-tool/iban-tool.component')
+            .then(m => m.IbanToolComponent)
+    },
+    {
         path: 'settings',
         loadComponent: () => import('./settings/settings.component')
             .then(m => m.SettingsComponent)

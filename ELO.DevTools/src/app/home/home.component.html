@@ -18,7 +18,12 @@
                     <i class="material-icons">{{tool.icon}}</i>
                 </div>
                 <div class="tool-info">
-                    <div class="tool-title">{{tool.titleKey | translate}}</div>
+                    <div class="tool-title">
+                        {{tool.titleKey | translate}}
+                        @if (tool.isNew) {
+                            <span class="new-badge">{{ 'app.new' | translate }}</span>
+                        }
+                    </div>
                     <div class="tool-desc">{{tool.descriptionKey | translate}}</div>
                 </div>
                 <i class="material-icons tool-arrow">chevron_right</i>

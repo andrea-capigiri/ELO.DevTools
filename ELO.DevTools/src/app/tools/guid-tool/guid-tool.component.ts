@@ -6,6 +6,7 @@ import { Card } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SelectButton } from 'primeng/selectbutton';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
@@ -18,7 +19,8 @@ import { UtilityService } from '../../_shared/utility.service';
     Card,
     ButtonModule,
     SelectButton,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   templateUrl: './guid-tool.component.html',
   styleUrls: ['./guid-tool.component.scss']

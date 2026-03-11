@@ -1,0 +1,392 @@
+.tool-container {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.setting {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.setting-label {
+    font-size: 12px;
+    color: var(--gh-fg-muted);
+    font-weight: 500;
+}
+
+.country-select {
+    width: 100%;
+}
+
+.result-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+// IBAN highlight
+.iban-highlight {
+    text-align: center;
+    padding: 20px 16px;
+    background: var(--gh-canvas-subtle);
+    border: 1px solid var(--gh-border-default);
+    border-radius: var(--gh-radius);
+
+    .iban-label {
+        display: block;
+        font-size: 11px;
+        color: var(--gh-fg-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+    }
+
+    .iban-value {
+        display: block;
+        font-family: var(--gh-font-mono);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--gh-fg-default);
+        margin-bottom: 6px;
+    }
+
+    .iban-raw {
+        display: block;
+        font-family: var(--gh-font-mono);
+        font-size: 12px;
+        color: var(--gh-fg-muted);
+        letter-spacing: 1px;
+    }
+
+    &.clickable {
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease;
+
+        &:hover {
+            background: var(--gh-border-muted);
+            border-color: var(--gh-border-default);
+        }
+
+        &:active {
+            background: var(--gh-border-default);
+        }
+    }
+}
+
+// Visual segment breakdown
+.iban-visual {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    .iban-segment {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 6px;
+        cursor: default;
+        min-width: 40px;
+
+        .seg-value {
+            font-family: var(--gh-font-mono);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .seg-label {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+    }
+}
+
+// Segment color palette
+.seg-color-0 {
+    background: rgba(31, 111, 235, 0.12);
+    color: #1f6feb;
+    .seg-value, .seg-label { color: #1f6feb; }
+}
+.seg-color-1 {
+    background: rgba(163, 113, 247, 0.12);
+    color: #a371f7;
+    .seg-value, .seg-label { color: #a371f7; }
+}
+.seg-color-2 {
+    background: rgba(57, 211, 83, 0.12);
+    color: #2ea043;
+    .seg-value, .seg-label { color: #2ea043; }
+}
+.seg-color-3 {
+    background: rgba(219, 171, 9, 0.12);
+    color: #9e6a03;
+    .seg-value, .seg-label { color: #9e6a03; }
+}
+.seg-color-4 {
+    background: rgba(248, 81, 73, 0.12);
+    color: #cf222e;
+    .seg-value, .seg-label { color: #cf222e; }
+}
+.seg-color-5 {
+    background: rgba(219, 109, 40, 0.12);
+    color: #bc4c00;
+    .seg-value, .seg-label { color: #bc4c00; }
+}
+
+// Dark mode overrides for colors
+@media (prefers-color-scheme: dark) {
+    .seg-color-0 {
+        .seg-value, .seg-label { color: #58a6ff; }
+    }
+    .seg-color-1 {
+        .seg-value, .seg-label { color: #bc8cff; }
+    }
+    .seg-color-2 {
+        .seg-value, .seg-label { color: #3fb950; }
+    }
+    .seg-color-3 {
+        .seg-value, .seg-label { color: #d29922; }
+    }
+    .seg-color-4 {
+        .seg-value, .seg-label { color: #f85149; }
+    }
+    .seg-color-5 {
+        .seg-value, .seg-label { color: #db6d28; }
+    }
+}
+
+// Segment details list
+.segment-list {
+    display: flex;
+    flex-direction: column;
+
+    .segment-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 12px;
+        border-bottom: 1px solid var(--gh-border-muted);
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background 0.15s ease;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background: var(--gh-canvas-subtle);
+        }
+
+        .segment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .segment-badge {
+            font-family: var(--gh-font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .segment-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gh-fg-default);
+        }
+
+        .segment-desc {
+            font-size: 12px;
+            color: var(--gh-fg-muted);
+            padding-left: 0;
+        }
+
+        .segment-pos {
+            font-size: 11px;
+            font-family: var(--gh-font-mono);
+            color: var(--gh-fg-muted);
+        }
+    }
+}
+
+// Data grid (reused from generatore-dati pattern)
+.data-grid {
+    display: grid;
+    gap: 0;
+
+    &.two-col {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .data-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--gh-border-muted);
+    }
+
+    &.two-col .data-cell:nth-last-child(-n+2) {
+        border-bottom: none;
+    }
+
+    .data-label {
+        font-size: 11px;
+        color: var(--gh-fg-muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .data-value {
+        font-size: 14px;
+        color: var(--gh-fg-default);
+        font-weight: 600;
+        word-break: break-word;
+
+        &.mono {
+            font-family: var(--gh-font-mono);
+            letter-spacing: 1px;
+        }
+
+        &.clickable {
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 2px 4px;
+            margin: -2px -4px;
+            transition: background 0.15s ease;
+
+            &:hover {
+                background: var(--gh-canvas-subtle);
+            }
+
+            &:active {
+                background: var(--gh-border-muted);
+            }
+        }
+    }
+}
+
+.actions-bar {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding: 8px 0;
+}
+
+// History
+.history-card {
+    .history-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--gh-border-muted);
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background 0.15s ease;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background: var(--gh-canvas-subtle);
+        }
+
+        &.active {
+            background: var(--gh-canvas-subtle);
+            border-left: 3px solid var(--gh-accent-fg);
+        }
+
+        .history-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .history-label {
+            font-size: 13px;
+            font-family: var(--gh-font-mono);
+            font-weight: 600;
+            color: var(--gh-fg-default);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--gh-canvas-subtle);
+            border: 1px solid var(--gh-border-default);
+            color: var(--gh-fg-muted);
+            white-space: nowrap;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-container {
+        padding: 16px;
+    }
+
+    .iban-highlight .iban-value {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .iban-visual {
+        gap: 2px;
+
+        .iban-segment {
+            padding: 6px 6px;
+
+            .seg-value {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+
+            .seg-label {
+                font-size: 8px;
+            }
+        }
+    }
+
+    .data-grid {
+        &.two-col {
+            grid-template-columns: 1fr;
+        }
+
+        .data-cell {
+            border-bottom: 1px solid var(--gh-border-muted);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}

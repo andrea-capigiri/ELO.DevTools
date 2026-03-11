@@ -8,6 +8,7 @@ import { InputText } from 'primeng/inputtext';
 import { Textarea } from 'primeng/textarea';
 import { FloatLabel } from 'primeng/floatlabel';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
@@ -22,7 +23,8 @@ import { UtilityService } from '../../_shared/utility.service';
         InputText,
         Textarea,
         FloatLabel,
-        RouterModule
+        RouterModule,
+        TranslateModule
     ],
     templateUrl: './base64-tool.component.html',
     styleUrls: ['./base64-tool.component.scss']

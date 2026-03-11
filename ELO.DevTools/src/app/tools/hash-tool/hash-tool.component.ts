@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { Textarea } from 'primeng/textarea';
 import { SelectButton } from 'primeng/selectbutton';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from '../../_shared/utility.service';
 
 type HashAlgorithm = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
@@ -22,7 +23,8 @@ type HashAlgorithm = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
         ButtonModule,
         Textarea,
         SelectButton,
-        RouterModule
+        RouterModule,
+        TranslateModule
     ],
     templateUrl: './hash-tool.component.html',
     styleUrls: ['./hash-tool.component.scss']

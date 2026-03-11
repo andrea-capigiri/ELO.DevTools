@@ -3,7 +3,7 @@
         <p-button [text]="true" [rounded]="true" routerLink="/">
             <i class="material-icons">arrow_back</i>
         </p-button>
-        <span class="toolbar-title">Timestamp Converter</span>
+        <span class="toolbar-title">{{ 'tool.timestamp' | translate }}</span>
     </ng-template>
 </p-toolbar>
 
@@ -12,23 +12,23 @@
         <p-selectbutton [options]="modeOptions" [(ngModel)]="mode" optionLabel="label" optionValue="value"></p-selectbutton>
 
         @if (mode === 'toDate') {
-            <p-card header="Inserisci Timestamp">
+            <p-card [header]="'timestamp.enterTimestamp' | translate">
                 <p-floatlabel variant="on" class="w-full">
                     <input pInputText
                            [(ngModel)]="timestampInput"
                            (ngModelChange)="onTimestampInputChange()"
-                           placeholder="es. 1704067200 o 1704067200000"
+                           [placeholder]="'timestamp.timestampPlaceholder' | translate"
                            type="text"
                            inputmode="numeric"
                            id="timestampInput"
                            class="w-full">
-                    <label for="timestampInput">Unix Timestamp</label>
+                    <label for="timestampInput">{{ 'timestamp.unixTimestamp' | translate }}</label>
                 </p-floatlabel>
 
                 @if (detectedUnit) {
                     <div class="detected-unit">
                         <i class="material-icons">info_outline</i>
-                        Rilevato: <strong>{{detectedUnit}}</strong>
+                        {{ 'timestamp.detected' | translate }}: <strong>{{detectedUnit}}</strong>
                     </div>
                 }
 
@@ -39,20 +39,20 @@
                 <ng-template #footer>
                     <div class="card-footer">
                         <p-button (onClick)="onCurrentTimestamp()">
-                            <i class="material-icons">schedule</i> Timestamp corrente
+                            <i class="material-icons">schedule</i> {{ 'timestamp.currentTimestamp' | translate }}
                         </p-button>
-                        <p-button [text]="true" (onClick)="onClearToDate()" [disabled]="!timestampInput" label="Pulisci"></p-button>
+                        <p-button [text]="true" (onClick)="onClearToDate()" [disabled]="!timestampInput" [label]="'common.clear' | translate"></p-button>
                     </div>
                 </ng-template>
             </p-card>
         }
 
         @if (mode === 'toTimestamp') {
-            <p-card header="Inserisci Data">
+            <p-card [header]="'timestamp.enterDate' | translate">
                 <div class="date-time-row">
                     <p-floatlabel variant="on" class="w-full">
                         <p-datepicker [(ngModel)]="dateInputDate" (onSelect)="onDateInputChange()" [showIcon]="true" inputId="dateField" styleClass="w-full"></p-datepicker>
-                        <label for="dateField">Data</label>
+                        <label for="dateField">{{ 'timestamp.date' | translate }}</label>
                     </p-floatlabel>
 
                     <p-floatlabel variant="on" class="w-full">
@@ -63,14 +63,14 @@
                                (ngModelChange)="onDateInputChange()"
                                id="timeField"
                                class="w-full">
-                        <label for="timeField">Ora</label>
+                        <label for="timeField">{{ 'timestamp.time' | translate }}</label>
                     </p-floatlabel>
                 </div>
 
                 <ng-template #footer>
                     <div class="card-footer">
-                        <p-button [text]="true" (onClick)="onCurrentTimestamp()" label="Data corrente"></p-button>
-                        <p-button [text]="true" (onClick)="onClearToTimestamp()" [disabled]="!dateInputDate" label="Pulisci"></p-button>
+                        <p-button [text]="true" (onClick)="onCurrentTimestamp()" [label]="'timestamp.currentDate' | translate"></p-button>
+                        <p-button [text]="true" (onClick)="onClearToTimestamp()" [disabled]="!dateInputDate" [label]="'common.clear' | translate"></p-button>
                     </div>
                 </ng-template>
             </p-card>
@@ -79,50 +79,50 @@
 
     <div class="result-section">
         @if (mode === 'toDate') {
-            <p-card header="Risultati Conversione">
+            <p-card [header]="'timestamp.conversionResults' | translate">
                 @if (hasToDateResult) {
                     <div class="data-grid">
                         <div class="data-row">
-                            <span class="data-label">ISO 8601</span>
+                            <span class="data-label">{{ 'timestamp.iso8601' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value mono">{{resultIso}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultIso)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultIso)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Formato Locale</span>
+                            <span class="data-label">{{ 'timestamp.localeFormat' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value">{{resultLocale}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultLocale)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultLocale)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Formato Italiano</span>
+                            <span class="data-label">{{ 'timestamp.italianFormat' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value">{{resultItalian}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultItalian)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultItalian)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Secondi (s)</span>
+                            <span class="data-label">{{ 'timestamp.secondsUnit' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value mono">{{resultSeconds}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultSeconds)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultSeconds)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Millisecondi (ms)</span>
+                            <span class="data-label">{{ 'timestamp.millisecondsUnit' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value mono">{{resultMilliseconds}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultMilliseconds)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(resultMilliseconds)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
@@ -131,39 +131,39 @@
                 } @else {
                     <div class="empty-state">
                         <i class="material-icons">schedule</i>
-                        <p>Inserisci un timestamp per vedere la conversione</p>
+                        <p>{{ 'timestamp.enterTimestampHint' | translate }}</p>
                     </div>
                 }
             </p-card>
         }
 
         @if (mode === 'toTimestamp') {
-            <p-card header="Risultati Conversione">
+            <p-card [header]="'timestamp.conversionResults' | translate">
                 @if (hasToTimestampResult) {
                     <div class="data-grid">
                         <div class="data-row">
-                            <span class="data-label">Timestamp (secondi)</span>
+                            <span class="data-label">{{ 'timestamp.timestampSeconds' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value mono">{{dateResultSeconds}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultSeconds)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultSeconds)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Timestamp (millisecondi)</span>
+                            <span class="data-label">{{ 'timestamp.timestampMilliseconds' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value mono">{{dateResultMilliseconds}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultMilliseconds)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultMilliseconds)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">ISO 8601</span>
+                            <span class="data-label">{{ 'timestamp.iso8601' | translate }}</span>
                             <div class="data-value-row">
                                 <span class="data-value mono">{{dateResultIso}}</span>
-                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultIso)" pTooltip="Copia">
+                                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(dateResultIso)" [pTooltip]="'common.copy' | translate">
                                     <i class="material-icons">content_copy</i>
                                 </p-button>
                             </div>
@@ -172,7 +172,7 @@
                 } @else {
                     <div class="empty-state">
                         <i class="material-icons">calendar_today</i>
-                        <p>Seleziona una data per vedere la conversione</p>
+                        <p>{{ 'timestamp.selectDateHint' | translate }}</p>
                     </div>
                 }
             </p-card>

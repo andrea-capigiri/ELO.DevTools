@@ -7,6 +7,7 @@ import { Card } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SelectButton } from 'primeng/selectbutton';
 import { TooltipModule } from 'primeng/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface FlexOption {
     label: string;
@@ -26,7 +27,8 @@ interface FlexOption {
         Card,
         ButtonModule,
         SelectButton,
-        TooltipModule
+        TooltipModule,
+        TranslateModule
     ],
     templateUrl: './flex-preview-tool.component.html',
     styleUrls: ['./flex-preview-tool.component.scss']

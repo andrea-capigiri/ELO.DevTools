@@ -10,6 +10,7 @@ import { Textarea } from 'primeng/textarea';
 import { FloatLabel } from 'primeng/floatlabel';
 import { TooltipModule } from 'primeng/tooltip';
 import { Divider } from 'primeng/divider';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UtilityService } from '../../_shared/utility.service';
 
 interface JwtPayload {
@@ -39,7 +40,8 @@ interface DecodedJwt {
         Textarea,
         FloatLabel,
         TooltipModule,
-        Divider
+        Divider,
+        TranslateModule
     ],
     templateUrl: './jwt-tool.component.html',
     styleUrl: './jwt-tool.component.scss'
@@ -49,7 +51,7 @@ export class JwtToolComponent {
     decodedJwt: DecodedJwt | null = null;
     error: string = '';
 
-    constructor(private utilityService: UtilityService) { }
+    constructor(private utilityService: UtilityService, private translate: TranslateService) { }
 
     onDecode(): void {
         this.error = '';
@@ -59,7 +61,7 @@ export class JwtToolComponent {
 
         try {
             const parts = this.inputText.split('.');
-            if (parts.length !== 3) throw new Error('JWT invalido: deve contenere 3 parti');
+            if (parts.length !== 3) throw new Error(this.translate.instant('jwt.invalidJwt'));
 
             const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
             const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
@@ -79,7 +81,7 @@ export class JwtToolComponent {
                 this.decodedJwt.issuedAt = new Date(payload.iat * 1000);
             }
         } catch (e: any) {
-            this.error = e.message || 'Errore nel parsing del JWT';
+            this.error = e.message || this.translate.instant('jwt.parseError');
         }
     }
 

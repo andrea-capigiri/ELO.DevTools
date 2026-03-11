@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import { AutoComplete } from 'primeng/autocomplete';
 import { DatePicker } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TooltipModule } from 'primeng/tooltip';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CodiceFiscaleService } from '../../_shared/codice-fiscale.service';
 import {
     Comune,
@@ -34,12 +35,13 @@ import {
         AutoComplete,
         DatePicker,
         SelectModule,
-        TooltipModule
+        TooltipModule,
+        TranslateModule
     ],
     templateUrl: './codice-fiscale-tool.component.html',
     styleUrls: ['./codice-fiscale-tool.component.scss']
 })
-export class CodiceFiscaleToolComponent {
+export class CodiceFiscaleToolComponent implements OnInit {
     mode: 'calcolo' | 'inverso' = 'calcolo';
 
     // Forward calculation
@@ -56,17 +58,16 @@ export class CodiceFiscaleToolComponent {
     codiceFiscaleInput = '';
     inversoResult: CodiceFiscaleInversoResult | null = null;
 
-    sessoOptions = [
-        { label: 'Maschio', value: 'M' },
-        { label: 'Femmina', value: 'F' }
-    ];
+    sessoOptions: { label: string; value: string }[] = [];
 
-    private readonly MESI = [
-        'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-        'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
-    ];
+    constructor(private cfService: CodiceFiscaleService, private translate: TranslateService) {}
 
-    constructor(private cfService: CodiceFiscaleService) {}
+    ngOnInit(): void {
+        this.sessoOptions = [
+            { label: this.translate.instant('cf.male'), value: 'M' },
+            { label: this.translate.instant('cf.female'), value: 'F' }
+        ];
+    }
 
     searchComune(event: { query: string }): void {
         this.filteredComuni = this.cfService.cercaComune(event.query);
@@ -93,7 +94,7 @@ export class CodiceFiscaleToolComponent {
                 comune: this.selectedComune
             });
         } catch {
-            this.error = 'Errore nel calcolo del codice fiscale';
+            this.error = this.translate.instant('cf.cfError');
         }
     }
 
@@ -124,6 +125,6 @@ export class CodiceFiscaleToolComponent {
 
     getMeseNome(mese: number | null): string {
         if (mese === null || mese < 0 || mese > 11) return '—';
-        return this.MESI[mese];
+        return this.translate.instant('cf.months.' + mese);
     }
 }

@@ -11,6 +11,7 @@ interface ToolCard {
     descriptionKey: string;
     icon: string;
     route: string;
+    isNew?: boolean;
 }
 
 const ALL_TOOLS: ToolCard[] = [
@@ -83,6 +84,14 @@ const ALL_TOOLS: ToolCard[] = [
         descriptionKey: 'tool.generatore-dati.desc',
         icon: 'group_add',
         route: '/tools/generatore-dati'
+    },
+    {
+        id: 'iban',
+        titleKey: 'tool.iban',
+        descriptionKey: 'tool.iban.desc',
+        icon: 'account_balance',
+        route: '/tools/iban',
+        isNew: true
     }
 ];
 

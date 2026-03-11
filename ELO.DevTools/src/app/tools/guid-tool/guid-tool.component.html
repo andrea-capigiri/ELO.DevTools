@@ -3,44 +3,44 @@
         <p-button [text]="true" [rounded]="true" routerLink="/">
             <i class="material-icons">arrow_back</i>
         </p-button>
-        <span class="toolbar-title">UUID Generator</span>
+        <span class="toolbar-title">{{ 'tool.guid' | translate }}</span>
     </ng-template>
 </p-toolbar>
 
 <div class="tool-container">
-    <p-card header="Settings">
+    <p-card [header]="'common.settings' | translate">
         <div class="settings-row">
             <div class="setting">
-                <label class="setting-label">Version</label>
+                <label class="setting-label">{{ 'common.version' | translate }}</label>
                 <p-selectbutton [options]="versionOptions" [(ngModel)]="version" optionLabel="label" optionValue="value"></p-selectbutton>
             </div>
             <div class="setting">
-                <label class="setting-label">Format</label>
+                <label class="setting-label">{{ 'common.format' | translate }}</label>
                 <p-selectbutton [options]="formatOptions" [(ngModel)]="format" optionLabel="label" optionValue="value" (onChange)="onFormatChange()"></p-selectbutton>
             </div>
         </div>
         <ng-template #footer>
             <div class="card-footer">
                 <p-button (onClick)="onGenerate()">
-                    <i class="material-icons">refresh</i> Generate
+                    <i class="material-icons">refresh</i> {{ 'common.generate' | translate }}
                 </p-button>
-                <p-button [text]="true" (onClick)="onClear()" label="Clear" [disabled]="!guidHistory.length"></p-button>
+                <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate" [disabled]="!guidHistory.length"></p-button>
             </div>
         </ng-template>
     </p-card>
 
-    <p-card header="Current GUID" *ngIf="currentGuid">
+    <p-card [header]="'guid.currentGuid' | translate" *ngIf="currentGuid">
         <div class="current-guid">{{currentGuid}}</div>
         <ng-template #footer>
             <div class="card-footer">
                 <p-button [text]="true" (onClick)="onCopy(currentGuid)">
-                    <i class="material-icons">content_copy</i> Copy
+                    <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
                 </p-button>
             </div>
         </ng-template>
     </p-card>
 
-    <p-card header="History ({{guidHistory.length}})" *ngIf="guidHistory.length > 1">
+    <p-card [header]="('common.history' | translate) + ' (' + guidHistory.length + ')'" *ngIf="guidHistory.length > 1">
         <div class="guid-list">
             <div class="guid-item" *ngFor="let guid of guidHistory; let i = index"
                  (click)="onCopy(guid)">
@@ -51,7 +51,7 @@
         <ng-template #footer>
             <div class="card-footer">
                 <p-button [text]="true" (onClick)="onCopyAll()">
-                    <i class="material-icons">content_copy</i> Copy All
+                    <i class="material-icons">content_copy</i> {{ 'common.copyAll' | translate }}
                 </p-button>
             </div>
         </ng-template>

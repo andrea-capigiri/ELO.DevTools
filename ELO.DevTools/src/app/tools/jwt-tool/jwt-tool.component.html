@@ -3,7 +3,7 @@
         <p-button [text]="true" [rounded]="true" routerLink="/">
             <i class="material-icons">arrow_back</i>
         </p-button>
-        <span class="toolbar-title">JWT Inspector</span>
+        <span class="toolbar-title">{{ 'tool.jwt' | translate }}</span>
     </ng-template>
 </p-toolbar>
 
@@ -15,18 +15,18 @@
                   rows="3"
                   id="jwtInput"
                   class="w-full"></textarea>
-        <label for="jwtInput">Incolla qui il tuo JWT token</label>
+        <label for="jwtInput">{{ 'jwt.pasteToken' | translate }}</label>
     </p-floatlabel>
-    <p-button [text]="true" [rounded]="true" (onClick)="pasteFromClipboard()" pTooltip="Incolla token">
+    <p-button [text]="true" [rounded]="true" (onClick)="pasteFromClipboard()" [pTooltip]="'jwt.pasteTooltip' | translate">
         <i class="material-icons">content_paste</i>
     </p-button>
 
     <div class="button-group">
         <p-button (onClick)="onDecode()" [disabled]="!inputText.trim()">
-            <i class="material-icons">code</i> Decodifica
+            <i class="material-icons">code</i> {{ 'jwt.decode' | translate }}
         </p-button>
         <p-button [text]="true" (onClick)="onClear()">
-            <i class="material-icons">clear</i> Pulisci
+            <i class="material-icons">clear</i> {{ 'common.clear' | translate }}
         </p-button>
     </div>
 </div>
@@ -41,9 +41,9 @@
         <div class="card-header-row">
             <div class="card-header-title">
                 <i class="material-icons">data_object</i>
-                Header
+                {{ 'jwt.header' | translate }}
             </div>
-            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.header))" pTooltip="Copia header">
+            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.header))" [pTooltip]="'jwt.copyHeader' | translate">
                 <i class="material-icons">content_copy</i>
             </p-button>
         </div>
@@ -58,9 +58,9 @@
         <div class="card-header-row">
             <div class="card-header-title">
                 <i class="material-icons">dataset</i>
-                Payload
+                {{ 'jwt.payload' | translate }}
             </div>
-            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.payload))" pTooltip="Copia payload">
+            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.payload))" [pTooltip]="'jwt.copyPayload' | translate">
                 <i class="material-icons">content_copy</i>
             </p-button>
         </div>
@@ -75,7 +75,7 @@
             <div *ngIf="decodedJwt.issuedAt" class="time-item">
                 <i class="material-icons">schedule</i>
                 <div>
-                    <strong>Emesso il:</strong>
+                    <strong>{{ 'jwt.issuedAt' | translate }}</strong>
                     <div>{{ decodedJwt.issuedAt | date:'medium' }}</div>
                 </div>
             </div>
@@ -84,10 +84,10 @@
                     {{ decodedJwt.isExpired ? 'error' : 'verified' }}
                 </i>
                 <div>
-                    <strong>Scade il:</strong>
+                    <strong>{{ 'jwt.expiresAt' | translate }}</strong>
                     <div>{{ decodedJwt.expiresAt | date:'medium' }}</div>
                     <span [class.expired]="decodedJwt.isExpired" [class.valid]="!decodedJwt.isExpired">
-                        {{ decodedJwt.isExpired ? 'SCADUTO' : 'VALIDO' }}
+                        {{ decodedJwt.isExpired ? ('jwt.expired' | translate) : ('jwt.valid' | translate) }}
                     </span>
                 </div>
             </div>
@@ -100,15 +100,15 @@
         <div class="card-header-row">
             <div class="card-header-title">
                 <i class="material-icons">fingerprint</i>
-                Signature
+                {{ 'jwt.signature' | translate }}
             </div>
-            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(decodedJwt.signature)" pTooltip="Copia signature">
+            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(decodedJwt.signature)" [pTooltip]="'jwt.copySignature' | translate">
                 <i class="material-icons">content_copy</i>
             </p-button>
         </div>
     </ng-template>
     <div class="signature-container">
         <code class="signature-text">{{ decodedJwt.signature }}</code>
-        <span class="signature-hint">Signature verificata con le chiavi pubbliche del server</span>
+        <span class="signature-hint">{{ 'jwt.signatureHint' | translate }}</span>
     </div>
 </p-card>

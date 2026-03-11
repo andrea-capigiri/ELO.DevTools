@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { SelectButton } from 'primeng/selectbutton';
 import { TooltipModule } from 'primeng/tooltip';
 import { Divider } from 'primeng/divider';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GeneratoreDatiService } from '../../_shared/generatore-dati.service';
 import { TipoGenerazione, PersonaFisica, ImpresaIndividuale, Impresa } from '../../_shared/generatore-dati.models';
 
@@ -30,23 +31,28 @@ interface StoricoEntry {
         ButtonModule,
         SelectButton,
         TooltipModule,
-        Divider
+        Divider,
+        TranslateModule
     ],
     templateUrl: './generatore-dati-tool.component.html',
     styleUrls: ['./generatore-dati-tool.component.scss']
 })
-export class GeneratoreDatiToolComponent {
+export class GeneratoreDatiToolComponent implements OnInit {
     tipo: TipoGenerazione = 'persona_fisica';
     risultato: PersonaFisica | ImpresaIndividuale | Impresa | null = null;
     storico: StoricoEntry[] = [];
 
-    tipoOptions = [
-        { label: 'Persona Fisica', value: 'persona_fisica' },
-        { label: 'Impresa Individuale', value: 'impresa_individuale' },
-        { label: 'Impresa', value: 'impresa' }
-    ];
+    tipoOptions: { label: string; value: string }[] = [];
 
-    constructor(private generatore: GeneratoreDatiService) {}
+    constructor(private generatore: GeneratoreDatiService, private translate: TranslateService) {}
+
+    ngOnInit(): void {
+        this.tipoOptions = [
+            { label: this.translate.instant('generatoreDati.personaFisica'), value: 'persona_fisica' },
+            { label: this.translate.instant('generatoreDati.impresaIndividuale'), value: 'impresa_individuale' },
+            { label: this.translate.instant('generatoreDati.impresa'), value: 'impresa' }
+        ];
+    }
 
     onGenera(): void {
         switch (this.tipo) {
@@ -135,9 +141,9 @@ export class GeneratoreDatiToolComponent {
 
     tipoLabel(tipo: TipoGenerazione): string {
         switch (tipo) {
-            case 'persona_fisica': return 'Persona Fisica';
-            case 'impresa_individuale': return 'Impresa Individuale';
-            case 'impresa': return 'Impresa';
+            case 'persona_fisica': return this.translate.instant('generatoreDati.personaFisica');
+            case 'impresa_individuale': return this.translate.instant('generatoreDati.impresaIndividuale');
+            case 'impresa': return this.translate.instant('generatoreDati.impresa');
         }
     }
 

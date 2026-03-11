@@ -3,7 +3,7 @@
         <p-button [text]="true" [rounded]="true" routerLink="/">
             <i class="material-icons">arrow_back</i>
         </p-button>
-        <span class="toolbar-title">Codice Fiscale</span>
+        <span class="toolbar-title">{{ 'tool.codice-fiscale' | translate }}</span>
     </ng-template>
 </p-toolbar>
 
@@ -13,34 +13,34 @@
         <p-button [text]="true"
                 [class.active]="mode === 'calcolo'"
                 (onClick)="mode = 'calcolo'"
-                label="Calcolo"></p-button>
+                [label]="'cf.calcolo' | translate"></p-button>
         <p-button [text]="true"
                 [class.active]="mode === 'inverso'"
                 (onClick)="mode = 'inverso'"
-                label="Calcolo Inverso"></p-button>
+                [label]="'cf.calcoloInverso' | translate"></p-button>
     </div>
 
     <!-- CALCOLO -->
     @if (mode === 'calcolo') {
-        <p-card header="Dati Personali">
+        <p-card [header]="'cf.personalData' | translate">
             <p-floatlabel variant="on" class="w-full">
-                <input pInputText [(ngModel)]="cognome" placeholder="es. Rossi" id="cognomeField" class="w-full">
-                <label for="cognomeField">Cognome</label>
+                <input pInputText [(ngModel)]="cognome" [placeholder]="'cf.surnamePlaceholder' | translate" id="cognomeField" class="w-full">
+                <label for="cognomeField">{{ 'cf.surname' | translate }}</label>
             </p-floatlabel>
 
             <p-floatlabel variant="on" class="w-full">
-                <input pInputText [(ngModel)]="nome" placeholder="es. Mario" id="nomeField" class="w-full">
-                <label for="nomeField">Nome</label>
+                <input pInputText [(ngModel)]="nome" [placeholder]="'cf.namePlaceholder' | translate" id="nomeField" class="w-full">
+                <label for="nomeField">{{ 'cf.name' | translate }}</label>
             </p-floatlabel>
 
             <p-floatlabel variant="on" class="w-full">
                 <p-datepicker [(ngModel)]="dataNascita" [showIcon]="true" inputId="dataNascitaField" styleClass="w-full"></p-datepicker>
-                <label for="dataNascitaField">Data di Nascita</label>
+                <label for="dataNascitaField">{{ 'cf.birthDate' | translate }}</label>
             </p-floatlabel>
 
             <p-floatlabel variant="on" class="w-full">
                 <p-select [options]="sessoOptions" [(ngModel)]="sesso" optionLabel="label" optionValue="value" inputId="sessoField" styleClass="w-full"></p-select>
-                <label for="sessoField">Sesso</label>
+                <label for="sessoField">{{ 'cf.sex' | translate }}</label>
             </p-floatlabel>
 
             <p-floatlabel variant="on" class="w-full">
@@ -49,15 +49,15 @@
                         {{comune.nome}} ({{comune.provincia}})
                     </ng-template>
                 </p-autocomplete>
-                <label for="comuneField">Comune di Nascita</label>
+                <label for="comuneField">{{ 'cf.birthPlace' | translate }}</label>
             </p-floatlabel>
 
             <ng-template #footer>
                 <div class="card-footer">
                     <p-button (onClick)="onCalcola()" [disabled]="!isCalcoloValid">
-                        <i class="material-icons">calculate</i> Calcola
+                        <i class="material-icons">calculate</i> {{ 'cf.calculate' | translate }}
                     </p-button>
-                    <p-button [text]="true" (onClick)="onClearCalcolo()" label="Pulisci"></p-button>
+                    <p-button [text]="true" (onClick)="onClearCalcolo()" [label]="'common.clear' | translate"></p-button>
                 </div>
             </ng-template>
         </p-card>
@@ -67,30 +67,30 @@
         }
 
         @if (result) {
-            <p-card header="Risultato" class="result-card">
+            <p-card [header]="'common.result' | translate" class="result-card">
                 <div class="cf-result">{{result.codiceFiscale}}</div>
                 <div class="cf-breakdown">
-                    <span class="cf-part cognome" pTooltip="Cognome">{{result.dettagli.cognomeParte}}</span>
-                    <span class="cf-part nome" pTooltip="Nome">{{result.dettagli.nomeParte}}</span>
-                    <span class="cf-part anno" pTooltip="Anno">{{result.dettagli.annoParte}}</span>
-                    <span class="cf-part mese" pTooltip="Mese">{{result.dettagli.meseParte}}</span>
-                    <span class="cf-part giorno" pTooltip="Giorno">{{result.dettagli.giornoParte}}</span>
-                    <span class="cf-part comune" pTooltip="Comune">{{result.dettagli.comuneParte}}</span>
-                    <span class="cf-part controllo" pTooltip="Controllo">{{result.dettagli.controlloParte}}</span>
+                    <span class="cf-part cognome" [pTooltip]="'cf.surnameLabel' | translate">{{result.dettagli.cognomeParte}}</span>
+                    <span class="cf-part nome" [pTooltip]="'cf.nameLabel' | translate">{{result.dettagli.nomeParte}}</span>
+                    <span class="cf-part anno" [pTooltip]="'cf.yearLabel' | translate">{{result.dettagli.annoParte}}</span>
+                    <span class="cf-part mese" [pTooltip]="'cf.monthLabel' | translate">{{result.dettagli.meseParte}}</span>
+                    <span class="cf-part giorno" [pTooltip]="'cf.dayLabel' | translate">{{result.dettagli.giornoParte}}</span>
+                    <span class="cf-part comune" [pTooltip]="'cf.municipalityLabel' | translate">{{result.dettagli.comuneParte}}</span>
+                    <span class="cf-part controllo" [pTooltip]="'cf.checkLabel' | translate">{{result.dettagli.controlloParte}}</span>
                 </div>
                 <div class="cf-legend">
-                    <span class="legend-item"><span class="dot cognome"></span> Cognome</span>
-                    <span class="legend-item"><span class="dot nome"></span> Nome</span>
-                    <span class="legend-item"><span class="dot anno"></span> Anno</span>
-                    <span class="legend-item"><span class="dot mese"></span> Mese</span>
-                    <span class="legend-item"><span class="dot giorno"></span> Giorno</span>
-                    <span class="legend-item"><span class="dot comune"></span> Comune</span>
-                    <span class="legend-item"><span class="dot controllo"></span> Controllo</span>
+                    <span class="legend-item"><span class="dot cognome"></span> {{ 'cf.surnameLabel' | translate }}</span>
+                    <span class="legend-item"><span class="dot nome"></span> {{ 'cf.nameLabel' | translate }}</span>
+                    <span class="legend-item"><span class="dot anno"></span> {{ 'cf.yearLabel' | translate }}</span>
+                    <span class="legend-item"><span class="dot mese"></span> {{ 'cf.monthLabel' | translate }}</span>
+                    <span class="legend-item"><span class="dot giorno"></span> {{ 'cf.dayLabel' | translate }}</span>
+                    <span class="legend-item"><span class="dot comune"></span> {{ 'cf.municipalityLabel' | translate }}</span>
+                    <span class="legend-item"><span class="dot controllo"></span> {{ 'cf.checkLabel' | translate }}</span>
                 </div>
                 <ng-template #footer>
                     <div class="card-footer">
                         <p-button [text]="true" (onClick)="onCopy(result.codiceFiscale)">
-                            <i class="material-icons">content_copy</i> Copia
+                            <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
                         </p-button>
                     </div>
                 </ng-template>
@@ -100,24 +100,24 @@
 
     <!-- INVERSO -->
     @if (mode === 'inverso') {
-        <p-card header="Codice Fiscale">
+        <p-card [header]="'cf.codiceFiscale' | translate">
             <p-floatlabel variant="on" class="w-full">
                 <input pInputText
                        [(ngModel)]="codiceFiscaleInput"
-                       placeholder="es. RSSMRA85M01H501Z"
+                       [placeholder]="'cf.cfPlaceholder' | translate"
                        maxlength="16"
                        style="text-transform: uppercase;"
                        id="cfInversoField"
                        class="w-full">
-                <label for="cfInversoField">Codice Fiscale</label>
+                <label for="cfInversoField">{{ 'cf.codiceFiscale' | translate }}</label>
             </p-floatlabel>
 
             <ng-template #footer>
                 <div class="card-footer">
                     <p-button (onClick)="onInverso()" [disabled]="codiceFiscaleInput.trim().length !== 16">
-                        <i class="material-icons">search</i> Decodifica
+                        <i class="material-icons">search</i> {{ 'cf.decodifica' | translate }}
                     </p-button>
-                    <p-button [text]="true" (onClick)="onClearInverso()" label="Pulisci"></p-button>
+                    <p-button [text]="true" (onClick)="onClearInverso()" [label]="'common.clear' | translate"></p-button>
                 </div>
             </ng-template>
         </p-card>
@@ -126,45 +126,45 @@
             @if (inversoResult.error) {
                 <div class="error-message">{{inversoResult.error}}</div>
             } @else {
-                <p-card header="Dati Estratti" class="result-card">
+                <p-card [header]="'cf.extractedData' | translate" class="result-card">
                     @if (!inversoResult.checkCharacterValid) {
                         <div class="warning-message">
                             <i class="material-icons">warning</i>
-                            Carattere di controllo non valido
+                            {{ 'cf.invalidCheckChar' | translate }}
                         </div>
                     }
                     <div class="data-grid">
                         <div class="data-row">
-                            <span class="data-label">Codice Cognome</span>
+                            <span class="data-label">{{ 'cf.surnameCode' | translate }}</span>
                             <span class="data-value mono">{{inversoResult.cognomeCodice}}</span>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Codice Nome</span>
+                            <span class="data-label">{{ 'cf.nameCode' | translate }}</span>
                             <span class="data-value mono">{{inversoResult.nomeCodice}}</span>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Sesso</span>
-                            <span class="data-value">{{inversoResult.sesso === 'M' ? 'Maschio' : 'Femmina'}}</span>
+                            <span class="data-label">{{ 'cf.sex' | translate }}</span>
+                            <span class="data-value">{{inversoResult.sesso === 'M' ? ('cf.male' | translate) : ('cf.female' | translate)}}</span>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Giorno di Nascita</span>
+                            <span class="data-label">{{ 'cf.birthDay' | translate }}</span>
                             <span class="data-value">{{inversoResult.giornoNascita}}</span>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Mese di Nascita</span>
+                            <span class="data-label">{{ 'cf.birthMonth' | translate }}</span>
                             <span class="data-value">{{getMeseNome(inversoResult.meseNascita)}}</span>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Anno di Nascita</span>
+                            <span class="data-label">{{ 'cf.birthYear' | translate }}</span>
                             <span class="data-value mono">xx{{inversoResult.annoNascita}}</span>
                         </div>
                         <div class="data-row">
-                            <span class="data-label">Comune di Nascita</span>
+                            <span class="data-label">{{ 'cf.birthMunicipality' | translate }}</span>
                             <span class="data-value">
                                 @if (inversoResult.comune) {
                                     {{inversoResult.comune.nome}} ({{inversoResult.comune.provincia}})
                                 } @else {
-                                    <span class="unknown">Codice: {{inversoResult.codiceCatastale}} — Non trovato</span>
+                                    <span class="unknown">{{ 'cf.code' | translate }}: {{inversoResult.codiceCatastale}} — {{ 'cf.notFound' | translate }}</span>
                                 }
                             </span>
                         </div>

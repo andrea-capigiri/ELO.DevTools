@@ -21,6 +21,7 @@ const DEFAULT_TOOLS: ToolSetting[] = [
     { id: 'flex-preview', titleKey: 'tool.flex-preview', icon: 'dashboard', enabled: true },
     { id: 'codice-fiscale', titleKey: 'tool.codice-fiscale', icon: 'badge', enabled: false },
     { id: 'generatore-dati', titleKey: 'tool.generatore-dati', icon: 'group_add', enabled: false },
+    { id: 'iban', titleKey: 'tool.iban', icon: 'account_balance', enabled: true },
 ];
 
 @Injectable({ providedIn: 'root' })

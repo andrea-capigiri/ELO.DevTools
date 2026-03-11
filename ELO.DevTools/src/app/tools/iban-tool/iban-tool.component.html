@@ -1,0 +1,124 @@
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">{{ 'tool.iban' | translate }}</span>
+    </ng-template>
+</p-toolbar>
+
+<div class="tool-container">
+    <!-- Settings -->
+    <p-card [header]="'iban.settings' | translate">
+        <div class="setting">
+            <label class="setting-label">{{ 'iban.country' | translate }}</label>
+            <p-select
+                [options]="countries"
+                [(ngModel)]="selectedCountry"
+                optionLabel="label"
+                optionValue="value"
+                [filter]="true"
+                [filterBy]="'label'"
+                [placeholder]="'iban.selectCountry' | translate"
+                class="country-select">
+            </p-select>
+        </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button (onClick)="onGenerate()">
+                    <i class="material-icons">auto_fix_high</i> {{ 'iban.generate' | translate }}
+                </p-button>
+                <p-button [text]="true" (onClick)="onClear()" [disabled]="!result" [label]="'iban.clear' | translate"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+
+    <!-- Result -->
+    <div class="result-section" *ngIf="result">
+        <!-- IBAN highlight -->
+        <p-card>
+            <div class="iban-highlight clickable" (click)="onCopy(result.iban)" [pTooltip]="'iban.copy' | translate">
+                <span class="iban-label">IBAN</span>
+                <span class="iban-value">{{result.ibanFormatted}}</span>
+                <span class="iban-raw">{{result.iban}}</span>
+            </div>
+        </p-card>
+
+        <!-- Format breakdown -->
+        <p-card [header]="'iban.structure' | translate">
+            <div class="iban-visual">
+                <div class="iban-segment"
+                     *ngFor="let seg of result.segments; let i = index"
+                     [class]="'seg-color-' + (i % 6)"
+                     [pTooltip]="'iban.segmentDesc.' + seg.segment.key | translate">
+                    <span class="seg-value">{{seg.value}}</span>
+                    <span class="seg-label">{{ 'iban.segments.' + seg.segment.key | translate }}</span>
+                </div>
+            </div>
+        </p-card>
+
+        <!-- Segment details -->
+        <p-card [header]="'iban.segmentDetails' | translate">
+            <div class="segment-list">
+                <div class="segment-item" *ngFor="let seg of result.segments; let i = index"
+                     (click)="onCopy(seg.value)" [pTooltip]="'iban.copy' | translate">
+                    <div class="segment-header">
+                        <span class="segment-badge" [class]="'seg-color-' + (i % 6)">{{seg.value}}</span>
+                        <span class="segment-name">{{ 'iban.segments.' + seg.segment.key | translate }}</span>
+                    </div>
+                    <span class="segment-desc">{{ 'iban.segmentDesc.' + seg.segment.key | translate }}</span>
+                    <span class="segment-pos">Pos. {{seg.segment.start + 1}}-{{seg.segment.start + seg.segment.length}} ({{seg.segment.length}} char)</span>
+                </div>
+            </div>
+        </p-card>
+
+        <!-- Country info -->
+        <p-card [header]="'iban.formatInfo' | translate">
+            <div class="data-grid two-col">
+                <div class="data-cell">
+                    <span class="data-label">{{ 'iban.countryLabel' | translate }}</span>
+                    <span class="data-value">{{ 'iban.countries.' + result.country.code | translate }} ({{result.country.code}})</span>
+                </div>
+                <div class="data-cell">
+                    <span class="data-label">{{ 'iban.ibanLength' | translate }}</span>
+                    <span class="data-value mono">{{result.country.ibanLength}} char</span>
+                </div>
+                <div class="data-cell">
+                    <span class="data-label">{{ 'iban.bbanFormat' | translate }}</span>
+                    <span class="data-value mono">{{result.country.bbanFormat}}</span>
+                </div>
+                <div class="data-cell">
+                    <span class="data-label">BBAN</span>
+                    <span class="data-value mono clickable" (click)="onCopy(result.iban.substring(4))" [pTooltip]="'iban.copy' | translate">{{result.iban.substring(4)}}</span>
+                </div>
+            </div>
+        </p-card>
+
+        <!-- Copy All -->
+        <div class="actions-bar">
+            <p-button (onClick)="onCopyAll()">
+                <i class="material-icons">content_copy</i> {{ 'iban.copyAll' | translate }}
+            </p-button>
+            <p-button (onClick)="onGenerate()">
+                <i class="material-icons">auto_fix_high</i> {{ 'iban.regenerate' | translate }}
+            </p-button>
+        </div>
+    </div>
+
+    <!-- History -->
+    <p-card *ngIf="history.length > 1"
+            [header]="('iban.history' | translate) + ' (' + history.length + ')'"
+            class="history-card">
+        <div class="history-list">
+            <div class="history-item"
+                 *ngFor="let entry of history"
+                 [class.active]="entry === result"
+                 (click)="onLoadHistory(entry)">
+                <div class="history-main">
+                    <span class="history-label">{{entry.ibanFormatted}}</span>
+                    <span class="history-badge">{{entry.country.code}}</span>
+                </div>
+            </div>
+        </div>
+    </p-card>
+</div>

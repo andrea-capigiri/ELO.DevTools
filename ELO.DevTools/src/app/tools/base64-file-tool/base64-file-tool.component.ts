@@ -10,6 +10,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { SelectButton } from 'primeng/selectbutton';
 import { SelectModule } from 'primeng/select';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 const MIME_EXTENSIONS: Record<string, string[]> = {
     'image/png': ['png'],
@@ -45,7 +46,8 @@ const MIME_EXTENSIONS: Record<string, string[]> = {
         FloatLabel,
         SelectButton,
         SelectModule,
-        RouterModule
+        RouterModule,
+        TranslateModule
     ],
     templateUrl: './base64-file-tool.component.html',
     styleUrls: ['./base64-file-tool.component.scss']

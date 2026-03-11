@@ -3,21 +3,21 @@
         <p-button [text]="true" [rounded]="true" routerLink="/">
             <i class="material-icons">arrow_back</i>
         </p-button>
-        <span class="toolbar-title">Generatore Dati</span>
+        <span class="toolbar-title">{{ 'tool.generatore-dati' | translate }}</span>
     </ng-template>
 </p-toolbar>
 
 <div class="tool-container">
     <div class="controls-section">
-        <p-card header="Tipo di Generazione">
-            <p-selectbutton [options]="tipoOptions" [(ngModel)]="tipo" (onChange)="onClear()" optionLabel="label" optionValue="value" class="tipo-toggle"></p-selectbutton>
+        <p-card [header]="'generatoreDati.tipoGenerazione' | translate">
+            <p-selectbutton [options]="tipoOptions" [(ngModel)]="tipo" (onChange)="onClear()" optionLabel="label" optionValue="value" class="vertical-select-btn tipo-toggle"></p-selectbutton>
 
             <ng-template #footer>
                 <div class="card-footer">
                     <p-button (onClick)="onGenera()">
-                        <i class="material-icons">auto_fix_high</i> Genera
+                        <i class="material-icons">auto_fix_high</i> {{ 'generatoreDati.genera' | translate }}
                     </p-button>
-                    <p-button [text]="true" (onClick)="onClear()" [disabled]="!risultato" label="Pulisci"></p-button>
+                    <p-button [text]="true" (onClick)="onClear()" [disabled]="!risultato" [label]="'generatoreDati.pulisci' | translate"></p-button>
                 </div>
             </ng-template>
         </p-card>
@@ -26,179 +26,179 @@
     <div class="result-section" *ngIf="risultato">
 
         <!-- PERSONA FISICA / IMPRESA INDIVIDUALE -->
-        <p-card *ngIf="persona" header="Dati Anagrafici">
+        <p-card *ngIf="persona" [header]="'generatoreDati.datiAnagrafici' | translate">
             <!-- CF in evidenza -->
-            <div class="cf-highlight clickable" (click)="onCopy(persona.codiceFiscale)" pTooltip="Copia">
-                <span class="cf-label">Codice Fiscale</span>
+            <div class="cf-highlight clickable" (click)="onCopy(persona.codiceFiscale)" [pTooltip]="'generatoreDati.copia' | translate">
+                <span class="cf-label">{{ 'generatoreDati.codiceFiscale' | translate }}</span>
                 <span class="cf-value">{{persona.codiceFiscale}}</span>
             </div>
 
             <div class="data-grid two-col">
                 <div class="data-cell">
-                    <span class="data-label">Nome</span>
-                    <span class="data-value clickable" (click)="onCopy(persona.nome)" pTooltip="Copia">{{persona.nome}}</span>
+                    <span class="data-label">{{ 'generatoreDati.nome' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(persona.nome)" [pTooltip]="'generatoreDati.copia' | translate">{{persona.nome}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Cognome</span>
-                    <span class="data-value clickable" (click)="onCopy(persona.cognome)" pTooltip="Copia">{{persona.cognome}}</span>
+                    <span class="data-label">{{ 'generatoreDati.cognome' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(persona.cognome)" [pTooltip]="'generatoreDati.copia' | translate">{{persona.cognome}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Sesso</span>
-                    <span class="data-value">{{persona.sesso === 'M' ? 'Maschio' : 'Femmina'}}</span>
+                    <span class="data-label">{{ 'generatoreDati.sesso' | translate }}</span>
+                    <span class="data-value">{{persona.sesso === 'M' ? ('generatoreDati.maschio' | translate) : ('generatoreDati.femmina' | translate)}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Data di Nascita</span>
-                    <span class="data-value clickable" (click)="onCopy(formatDate(persona.dataNascita))" pTooltip="Copia">{{formatDate(persona.dataNascita)}}</span>
+                    <span class="data-label">{{ 'generatoreDati.dataNascita' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(formatDate(persona.dataNascita))" [pTooltip]="'generatoreDati.copia' | translate">{{formatDate(persona.dataNascita)}}</span>
                 </div>
             </div>
             <div class="data-grid one-col">
                 <div class="data-cell">
-                    <span class="data-label">Luogo di Nascita</span>
-                    <span class="data-value clickable" (click)="onCopy(persona.luogoNascita + ' (' + persona.provinciaNascita + ')')" pTooltip="Copia">{{persona.luogoNascita}} ({{persona.provinciaNascita}})</span>
+                    <span class="data-label">{{ 'generatoreDati.luogoNascita' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(persona.luogoNascita + ' (' + persona.provinciaNascita + ')')" [pTooltip]="'generatoreDati.copia' | translate">{{persona.luogoNascita}} ({{persona.provinciaNascita}})</span>
                 </div>
             </div>
         </p-card>
 
         <!-- INDIRIZZO RESIDENZA -->
-        <p-card *ngIf="persona" header="Indirizzo di Residenza">
+        <p-card *ngIf="persona" [header]="'generatoreDati.indirizzo' | translate">
             <div class="data-grid one-col">
                 <div class="data-cell">
-                    <span class="data-label">Via</span>
-                    <span class="data-value clickable" (click)="onCopy(persona.indirizzo.via + ', ' + persona.indirizzo.civico)" pTooltip="Copia">{{persona.indirizzo.via}}, {{persona.indirizzo.civico}}</span>
+                    <span class="data-label">{{ 'generatoreDati.via' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(persona.indirizzo.via + ', ' + persona.indirizzo.civico)" [pTooltip]="'generatoreDati.copia' | translate">{{persona.indirizzo.via}}, {{persona.indirizzo.civico}}</span>
                 </div>
             </div>
             <div class="data-grid two-col">
                 <div class="data-cell">
-                    <span class="data-label">CAP</span>
-                    <span class="data-value mono clickable" (click)="onCopy(persona.indirizzo.cap)" pTooltip="Copia">{{persona.indirizzo.cap}}</span>
+                    <span class="data-label">{{ 'generatoreDati.cap' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(persona.indirizzo.cap)" [pTooltip]="'generatoreDati.copia' | translate">{{persona.indirizzo.cap}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Comune</span>
-                    <span class="data-value clickable" (click)="onCopy(persona.indirizzo.comune)" pTooltip="Copia">{{persona.indirizzo.comune}} ({{persona.indirizzo.provincia}})</span>
+                    <span class="data-label">{{ 'generatoreDati.comune' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(persona.indirizzo.comune)" [pTooltip]="'generatoreDati.copia' | translate">{{persona.indirizzo.comune}} ({{persona.indirizzo.provincia}})</span>
                 </div>
             </div>
         </p-card>
 
         <!-- IMPRESA INDIVIDUALE -->
-        <p-card *ngIf="impresaIndividuale" header="Dati Impresa Individuale">
+        <p-card *ngIf="impresaIndividuale" [header]="'generatoreDati.datiImpresaIndividuale' | translate">
             <div class="data-grid two-col">
                 <div class="data-cell">
-                    <span class="data-label">Partita IVA</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.partitaIva)" pTooltip="Copia">{{impresaIndividuale.partitaIva}}</span>
+                    <span class="data-label">{{ 'generatoreDati.partitaIva' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.partitaIva)" [pTooltip]="'generatoreDati.copia' | translate">{{impresaIndividuale.partitaIva}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">REA</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.cciaa + '-' + impresaIndividuale.rea)" pTooltip="Copia">{{impresaIndividuale.cciaa}}-{{impresaIndividuale.rea}}</span>
+                    <span class="data-label">{{ 'generatoreDati.rea' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.cciaa + '-' + impresaIndividuale.rea)" [pTooltip]="'generatoreDati.copia' | translate">{{impresaIndividuale.cciaa}}-{{impresaIndividuale.rea}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Forma Giuridica</span>
+                    <span class="data-label">{{ 'generatoreDati.formaGiuridica' | translate }}</span>
                     <span class="data-value">{{impresaIndividuale.formaGiuridica.descrizione}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Data Iscrizione</span>
-                    <span class="data-value clickable" (click)="onCopy(formatDate(impresaIndividuale.dataIscrizione))" pTooltip="Copia">{{formatDate(impresaIndividuale.dataIscrizione)}}</span>
+                    <span class="data-label">{{ 'generatoreDati.dataIscrizione' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(formatDate(impresaIndividuale.dataIscrizione))" [pTooltip]="'generatoreDati.copia' | translate">{{formatDate(impresaIndividuale.dataIscrizione)}}</span>
                 </div>
             </div>
             <div class="data-grid one-col">
                 <div class="data-cell">
-                    <span class="data-label">ATECO</span>
-                    <span class="data-value clickable" (click)="onCopy(impresaIndividuale.ateco.codice)" pTooltip="Copia">{{impresaIndividuale.ateco.codice}} - {{impresaIndividuale.ateco.descrizione}}</span>
+                    <span class="data-label">{{ 'generatoreDati.ateco' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresaIndividuale.ateco.codice)" [pTooltip]="'generatoreDati.copia' | translate">{{impresaIndividuale.ateco.codice}} - {{impresaIndividuale.ateco.descrizione}}</span>
                 </div>
             </div>
             <div class="data-grid three-col">
                 <div class="data-cell">
-                    <span class="data-label">NACE</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.ateco.nace)" pTooltip="Copia">{{impresaIndividuale.ateco.nace}}</span>
+                    <span class="data-label">{{ 'generatoreDati.nace' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresaIndividuale.ateco.nace)" [pTooltip]="'generatoreDati.copia' | translate">{{impresaIndividuale.ateco.nace}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">SAE</span>
-                    <span class="data-value clickable" (click)="onCopy(impresaIndividuale.sae.codice)" pTooltip="Copia">{{impresaIndividuale.sae.codice}}</span>
+                    <span class="data-label">{{ 'generatoreDati.sae' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresaIndividuale.sae.codice)" [pTooltip]="'generatoreDati.copia' | translate">{{impresaIndividuale.sae.codice}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">RAE</span>
-                    <span class="data-value clickable" (click)="onCopy(impresaIndividuale.rae.codice)" pTooltip="Copia">{{impresaIndividuale.rae.codice}}</span>
+                    <span class="data-label">{{ 'generatoreDati.rae' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresaIndividuale.rae.codice)" [pTooltip]="'generatoreDati.copia' | translate">{{impresaIndividuale.rae.codice}}</span>
                 </div>
             </div>
         </p-card>
 
         <!-- IMPRESA: Dati Societari -->
-        <p-card *ngIf="impresa" header="Dati Societari">
+        <p-card *ngIf="impresa" [header]="'generatoreDati.datiSocietari' | translate">
             <div class="data-grid one-col">
                 <div class="data-cell">
-                    <span class="data-label">Ragione Sociale</span>
-                    <span class="data-value clickable" (click)="onCopy(impresa.ragioneSociale)" pTooltip="Copia">{{impresa.ragioneSociale}}</span>
+                    <span class="data-label">{{ 'generatoreDati.ragioneSociale' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresa.ragioneSociale)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.ragioneSociale}}</span>
                 </div>
             </div>
             <div class="data-grid two-col">
                 <div class="data-cell">
-                    <span class="data-label">Partita IVA</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresa.partitaIva)" pTooltip="Copia">{{impresa.partitaIva}}</span>
+                    <span class="data-label">{{ 'generatoreDati.partitaIva' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresa.partitaIva)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.partitaIva}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Codice Fiscale</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresa.codiceFiscale)" pTooltip="Copia">{{impresa.codiceFiscale}}</span>
+                    <span class="data-label">{{ 'generatoreDati.codiceFiscale' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresa.codiceFiscale)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.codiceFiscale}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">REA</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresa.cciaa + '-' + impresa.rea)" pTooltip="Copia">{{impresa.cciaa}}-{{impresa.rea}}</span>
+                    <span class="data-label">{{ 'generatoreDati.rea' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresa.cciaa + '-' + impresa.rea)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.cciaa}}-{{impresa.rea}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Forma Giuridica</span>
+                    <span class="data-label">{{ 'generatoreDati.formaGiuridica' | translate }}</span>
                     <span class="data-value">{{impresa.formaGiuridica.descrizione}} ({{impresa.formaGiuridica.sigla}})</span>
                 </div>
             </div>
             <div class="data-grid one-col">
                 <div class="data-cell">
-                    <span class="data-label">ATECO</span>
-                    <span class="data-value clickable" (click)="onCopy(impresa.ateco.codice)" pTooltip="Copia">{{impresa.ateco.codice}} - {{impresa.ateco.descrizione}}</span>
+                    <span class="data-label">{{ 'generatoreDati.ateco' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresa.ateco.codice)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.ateco.codice}} - {{impresa.ateco.descrizione}}</span>
                 </div>
             </div>
             <div class="data-grid three-col">
                 <div class="data-cell">
-                    <span class="data-label">NACE</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresa.ateco.nace)" pTooltip="Copia">{{impresa.ateco.nace}}</span>
+                    <span class="data-label">{{ 'generatoreDati.nace' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresa.ateco.nace)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.ateco.nace}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">SAE</span>
-                    <span class="data-value clickable" (click)="onCopy(impresa.sae.codice)" pTooltip="Copia">{{impresa.sae.codice}}</span>
+                    <span class="data-label">{{ 'generatoreDati.sae' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresa.sae.codice)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.sae.codice}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">RAE</span>
-                    <span class="data-value clickable" (click)="onCopy(impresa.rae.codice)" pTooltip="Copia">{{impresa.rae.codice}}</span>
+                    <span class="data-label">{{ 'generatoreDati.rae' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresa.rae.codice)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.rae.codice}}</span>
                 </div>
             </div>
         </p-card>
 
         <!-- IMPRESA: Sede Legale -->
-        <p-card *ngIf="impresa" header="Sede Legale">
+        <p-card *ngIf="impresa" [header]="'generatoreDati.sedeLegale' | translate">
             <div class="data-grid one-col">
                 <div class="data-cell">
-                    <span class="data-label">Via</span>
-                    <span class="data-value clickable" (click)="onCopy(impresa.sedeLegale.via + ', ' + impresa.sedeLegale.civico)" pTooltip="Copia">{{impresa.sedeLegale.via}}, {{impresa.sedeLegale.civico}}</span>
+                    <span class="data-label">{{ 'generatoreDati.via' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresa.sedeLegale.via + ', ' + impresa.sedeLegale.civico)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.sedeLegale.via}}, {{impresa.sedeLegale.civico}}</span>
                 </div>
             </div>
             <div class="data-grid two-col">
                 <div class="data-cell">
-                    <span class="data-label">CAP</span>
-                    <span class="data-value mono clickable" (click)="onCopy(impresa.sedeLegale.cap)" pTooltip="Copia">{{impresa.sedeLegale.cap}}</span>
+                    <span class="data-label">{{ 'generatoreDati.cap' | translate }}</span>
+                    <span class="data-value mono clickable" (click)="onCopy(impresa.sedeLegale.cap)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.sedeLegale.cap}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Comune</span>
-                    <span class="data-value clickable" (click)="onCopy(impresa.sedeLegale.comune)" pTooltip="Copia">{{impresa.sedeLegale.comune}} ({{impresa.sedeLegale.provincia}})</span>
+                    <span class="data-label">{{ 'generatoreDati.comune' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(impresa.sedeLegale.comune)" [pTooltip]="'generatoreDati.copia' | translate">{{impresa.sedeLegale.comune}} ({{impresa.sedeLegale.provincia}})</span>
                 </div>
             </div>
         </p-card>
 
         <!-- IMPRESA: Dati aggiuntivi -->
-        <p-card *ngIf="impresa" header="Dati Aggiuntivi">
+        <p-card *ngIf="impresa" [header]="'generatoreDati.datiAggiuntivi' | translate">
             <div class="data-grid two-col">
                 <div class="data-cell">
-                    <span class="data-label">Data Costituzione</span>
-                    <span class="data-value clickable" (click)="onCopy(formatDate(impresa.dataCostituzione))" pTooltip="Copia">{{formatDate(impresa.dataCostituzione)}}</span>
+                    <span class="data-label">{{ 'generatoreDati.dataCostituzione' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(formatDate(impresa.dataCostituzione))" [pTooltip]="'generatoreDati.copia' | translate">{{formatDate(impresa.dataCostituzione)}}</span>
                 </div>
                 <div class="data-cell">
-                    <span class="data-label">Capitale Sociale</span>
-                    <span class="data-value clickable" (click)="onCopy(formatCurrency(impresa.capitalesociale))" pTooltip="Copia">{{formatCurrency(impresa.capitalesociale)}}</span>
+                    <span class="data-label">{{ 'generatoreDati.capitaleSociale' | translate }}</span>
+                    <span class="data-value clickable" (click)="onCopy(formatCurrency(impresa.capitalesociale))" [pTooltip]="'generatoreDati.copia' | translate">{{formatCurrency(impresa.capitalesociale)}}</span>
                 </div>
             </div>
         </p-card>
@@ -206,26 +206,23 @@
         <!-- Copy All -->
         <div class="actions-bar">
             <p-button (onClick)="onCopyAll()">
-                <i class="material-icons">content_copy</i> Copia Tutto
+                <i class="material-icons">content_copy</i> {{ 'generatoreDati.copiaTutto' | translate }}
             </p-button>
             <p-button (onClick)="onGenera()">
-                <i class="material-icons">auto_fix_high</i> Rigenera
+                <i class="material-icons">auto_fix_high</i> {{ 'generatoreDati.rigenera' | translate }}
             </p-button>
         </div>
     </div>
 
     <!-- STORICO -->
-    <p-card *ngIf="storico.length > 1" header="Storico ({{storico.length}})" class="history-card">
+    <p-card *ngIf="storico.length > 1" [header]="('generatoreDati.storico' | translate) + ' (' + storico.length + ')'" class="history-card">
         <div class="history-list">
             <div class="history-item"
                  *ngFor="let entry of storico; let i = index"
                  [class.active]="entry.dato === risultato"
                  (click)="onCaricaStorico(entry)">
-                <div class="history-main">
-                    <span class="history-label">{{entry.etichetta}}</span>
-                    <span class="history-badge">{{tipoLabel(entry.tipo)}}</span>
-                </div>
-                <span class="history-time">{{formatDate(entry.timestamp)}}</span>
+                <span class="history-label">{{entry.etichetta}}</span>
+                <span class="history-badge">{{tipoLabel(entry.tipo)}}</span>
             </div>
         </div>
     </p-card>
