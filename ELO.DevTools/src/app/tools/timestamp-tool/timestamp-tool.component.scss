@@ -1,7 +1,10 @@
-.tool-container {
-  padding: 24px;
-  max-width: 1000px;
-  margin: 0 auto;
+@use '../../../styles' as *;
+
+:host {
+    @extend .stack-y;
+}
+
+.container-p tool-container {
   display: grid;
   grid-template-columns: 350px 1fr;
   gap: 24px;
@@ -128,7 +131,7 @@
 }
 
 @media (max-width: 768px) {
-  .tool-container {
+  .container-p tool-container {
     grid-template-columns: 1fr;
   }
 }

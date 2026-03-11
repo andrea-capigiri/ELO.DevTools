@@ -1,10 +1,7 @@
-.tool-container {
-    padding: 24px;
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+@use '../../../styles' as *;
+
+:host {
+    @extend .stack-y;
 }
 
 .mode-selector {
@@ -192,10 +189,6 @@
 }
 
 @media (max-width: 480px) {
-    .tool-container {
-        padding: 16px;
-    }
-
     .result-card .cf-result {
         font-size: 18px;
         letter-spacing: 1px;

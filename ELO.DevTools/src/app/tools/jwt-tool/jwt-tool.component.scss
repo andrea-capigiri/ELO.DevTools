@@ -1,8 +1,7 @@
-.tool-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 16px;
+@use '../../../styles' as *;
+
+:host {
+    @extend .stack-y;
 }
 
 // ─── Input ────────────────────────────────────────────────────────────────────
@@ -36,9 +35,20 @@
         padding: 1px 3px;
     }
 
-    .header-part  { color: #cf222e; background: #ffebe9; }
-    .payload-part { color: #0969da; background: #ddf4ff; }
-    .signature-part { color: #8250df; background: #fbefff; }
+    .header-part {
+        color: #cf222e;
+        background: #ffebe9;
+    }
+
+    .payload-part {
+        color: #0969da;
+        background: #ddf4ff;
+    }
+
+    .signature-part {
+        color: #8250df;
+        background: #fbefff;
+    }
 }
 
 .card-footer {
@@ -110,9 +120,17 @@
     flex-shrink: 0;
 }
 
-.header-dot    { background: #cf222e; }
-.payload-dot   { background: #0969da; }
-.signature-dot { background: #8250df; }
+.header-dot {
+    background: #cf222e;
+}
+
+.payload-dot {
+    background: #0969da;
+}
+
+.signature-dot {
+    background: #8250df;
+}
 
 // ─── JSON container ───────────────────────────────────────────────────────────
 
@@ -136,9 +154,17 @@
 
 // ─── Section card accents ─────────────────────────────────────────────────────
 
-.header-card  { border-top: 3px solid #cf222e !important; }
-.payload-card { border-top: 3px solid #0969da !important; }
-.signature-card { border-top: 3px solid #8250df !important; }
+.header-card {
+    border-top: 3px solid #cf222e !important;
+}
+
+.payload-card {
+    border-top: 3px solid #0969da !important;
+}
+
+.signature-card {
+    border-top: 3px solid #8250df !important;
+}
 
 // ─── Time claims ─────────────────────────────────────────────────────────────
 
@@ -152,7 +178,9 @@
     border-radius: 20px;
     letter-spacing: 0.3px;
 
-    i.material-icons { font-size: 15px; }
+    i.material-icons {
+        font-size: 15px;
+    }
 
     &.valid-badge {
         color: #1a7f37;
@@ -190,22 +218,33 @@
     border-radius: 8px;
     flex-shrink: 0;
 
-    i.material-icons { font-size: 20px; }
+    i.material-icons {
+        font-size: 20px;
+    }
 
     &.iat-icon {
         background: #ddf4ff;
         color: #0969da;
-        i.material-icons { color: #0969da; }
+
+        i.material-icons {
+            color: #0969da;
+        }
     }
 
     &.exp-icon-valid {
         background: #dafbe1;
-        i.material-icons { color: #1a7f37; }
+
+        i.material-icons {
+            color: #1a7f37;
+        }
     }
 
     &.exp-icon-expired {
         background: #ffebe9;
-        i.material-icons { color: #cf222e; }
+
+        i.material-icons {
+            color: #cf222e;
+        }
     }
 }
 
@@ -227,7 +266,9 @@
         color: #1f2328;
         font-weight: 500;
 
-        &.expired { color: #cf222e; }
+        &.expired {
+            color: #cf222e;
+        }
     }
 }
 
@@ -259,7 +300,9 @@
         color: #656d76;
         font-style: italic;
 
-        i.material-icons { font-size: 15px; }
+        i.material-icons {
+            font-size: 15px;
+        }
     }
 }
 
@@ -270,10 +313,24 @@
         background: #161b22;
         border-color: #30363d;
 
-        .jwt-dot { color: #8b949e; }
-        .header-part    { color: #f85149; background: rgba(248,81,73,.15); }
-        .payload-part   { color: #58a6ff; background: rgba(88,166,255,.12); }
-        .signature-part { color: #c084fc; background: rgba(192,132,252,.12); }
+        .jwt-dot {
+            color: #8b949e;
+        }
+
+        .header-part {
+            color: #f85149;
+            background: rgba(248, 81, 73, .15);
+        }
+
+        .payload-part {
+            color: #58a6ff;
+            background: rgba(88, 166, 255, .12);
+        }
+
+        .signature-part {
+            color: #c084fc;
+            background: rgba(192, 132, 252, .12);
+        }
     }
 
     .error-card {
@@ -289,7 +346,10 @@
     .json-container {
         background: #0d1117;
         border-color: #30363d;
-        pre { color: #c9d1d9; }
+
+        pre {
+            color: #c9d1d9;
+        }
     }
 
     .time-item {
@@ -298,27 +358,50 @@
     }
 
     .time-content {
-        .time-value { color: #c9d1d9; }
-        .time-label { color: #8b949e; }
+        .time-value {
+            color: #c9d1d9;
+        }
+
+        .time-label {
+            color: #8b949e;
+        }
     }
 
     .time-icon-wrap {
-        &.iat-icon { background: rgba(88,166,255,.15); }
-        &.exp-icon-valid { background: rgba(63,185,80,.15); }
-        &.exp-icon-expired { background: rgba(248,81,73,.15); }
+        &.iat-icon {
+            background: rgba(88, 166, 255, .15);
+        }
+
+        &.exp-icon-valid {
+            background: rgba(63, 185, 80, .15);
+        }
+
+        &.exp-icon-expired {
+            background: rgba(248, 81, 73, .15);
+        }
     }
 
     .expiry-badge {
-        &.valid-badge { background: rgba(63,185,80,.15); color: #3fb950; }
-        &.expired-badge { background: rgba(248,81,73,.15); color: #f85149; }
+        &.valid-badge {
+            background: rgba(63, 185, 80, .15);
+            color: #3fb950;
+        }
+
+        &.expired-badge {
+            background: rgba(248, 81, 73, .15);
+            color: #f85149;
+        }
     }
 
     .signature-content {
         .signature-text {
-            background: rgba(192,132,252,.1);
+            background: rgba(192, 132, 252, .1);
             border-color: #6e40c9;
             color: #c084fc;
         }
-        .signature-hint { color: #8b949e; }
+
+        .signature-hint {
+            color: #8b949e;
+        }
     }
 }

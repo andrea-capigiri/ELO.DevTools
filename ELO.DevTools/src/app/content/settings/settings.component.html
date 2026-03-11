@@ -1,0 +1,43 @@
+<p-card>
+    <p-floatlabel variant="on">
+        <p-select [options]="languages" [(ngModel)]="currentLanguage" optionLabel="label" optionValue="value" (onChange)="onLanguageChange($event.value)" styleClass="w-full" inputId="langSelect"></p-select>
+        <label for="langSelect">{{'settings.language' | translate}}</label>
+    </p-floatlabel>
+</p-card>
+
+<p-card [header]="'settings.enabledTools' | translate">
+    <p class="settings-hint">{{'settings.chooseTools' | translate}}</p>
+    
+    <div class="my-2 card-footer">
+        <p-button [text]="true" label="{{'settings.enableAll' | translate}}" (onClick)="onEnableAll()"></p-button>
+        <p-button [text]="true" label="{{'settings.disableAll' | translate}}" (onClick)="onDisableAll()"></p-button>
+        <p-button [text]="true" label="{{'settings.resetDefaults' | translate}}" (onClick)="onResetDefaults()"></p-button>
+    </div>
+        
+    <div class="tool-toggles">
+        @for (tool of tools; track tool.id) {
+            <div class="tool-toggle-row">
+                <div class="tool-toggle-info">
+                    <i class="material-icons tool-toggle-icon">{{tool.icon}}</i>
+                    <span class="tool-toggle-title">{{tool.titleKey | translate}}</span>
+                </div>
+                <p-toggleswitch
+                    [(ngModel)]="tool.enabled"
+                    (onChange)="onToggle(tool.id, $event.checked)">
+                </p-toggleswitch>
+            </div>
+        }
+    </div>
+</p-card>
+
+<p-card [header]="'settings.cache' | translate">
+    <p-button [text]="true" label="{{'settings.clearCache' | translate}}" (onClick)="clearCache()"></p-button>
+</p-card>
+
+<p-card [header]="'settings.info' | translate">
+    <h3 class="text-center">{{ this.manifest.short_name }}</h3>
+    <p class="text-center">&copy; 2026 - v{{ this.manifest.version }}</p>
+    
+    <h4>{{'settings.contributors' | translate}}</h4>
+    <p>{{'settings.contributeMessage' | translate}}</p>
+</p-card>

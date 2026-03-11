@@ -1,16 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
-import { Textarea } from 'primeng/textarea';
-import { FloatLabel } from 'primeng/floatlabel';
-import { TooltipModule } from 'primeng/tooltip';
-import { Divider } from 'primeng/divider';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Textarea } from 'primeng/textarea';
+import { TooltipModule } from 'primeng/tooltip';
 import { UtilityService } from '../../_shared/utility.service';
 
 interface JwtPayload {
@@ -32,15 +27,10 @@ interface DecodedJwt {
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule,
-        Toolbar,
         Card,
         ButtonModule,
-        InputText,
         Textarea,
-        FloatLabel,
         TooltipModule,
-        Divider,
         TranslateModule
     ],
     templateUrl: './jwt-tool.component.html',

@@ -1,160 +1,147 @@
-<p-toolbar>
-    <ng-template #start>
-        <p-button [text]="true" [rounded]="true" routerLink="/">
-            <i class="material-icons">arrow_back</i>
-        </p-button>
-        <span class="toolbar-title">{{ 'tool.jwt' | translate }}</span>
+<!-- Input Card -->
+<p-card>
+    <ng-template #header>
+        <div class="card-header-row">
+            <div class="card-header-title">
+                <i class="material-icons">key</i>
+                {{ 'jwt.pasteToken' | translate }}
+            </div>
+            <p-button [text]="true" [rounded]="true" (onClick)="pasteFromClipboard()" [pTooltip]="'jwt.pasteTooltip' | translate">
+                <i class="material-icons">content_paste</i>
+            </p-button>
+        </div>
     </ng-template>
-</p-toolbar>
 
-<div class="tool-container">
+    <textarea pTextarea
+                [(ngModel)]="inputText"
+                (ngModelChange)="onInputChange()"
+                placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                rows="3"
+                id="jwtInput"
+                class="w-full jwt-textarea"></textarea>
 
-    <!-- Input Card -->
-    <p-card>
-        <ng-template #header>
-            <div class="card-header-row">
-                <div class="card-header-title">
-                    <i class="material-icons">key</i>
-                    {{ 'jwt.pasteToken' | translate }}
-                </div>
-                <p-button [text]="true" [rounded]="true" (onClick)="pasteFromClipboard()" [pTooltip]="'jwt.pasteTooltip' | translate">
-                    <i class="material-icons">content_paste</i>
-                </p-button>
-            </div>
-        </ng-template>
-
-        <textarea pTextarea
-                  [(ngModel)]="inputText"
-                  (ngModelChange)="onInputChange()"
-                  placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-                  rows="3"
-                  id="jwtInput"
-                  class="w-full jwt-textarea"></textarea>
-
-        <!-- JWT colored preview -->
-        <div class="jwt-preview" *ngIf="inputText.trim()">
-            <span class="jwt-part header-part">{{ jwtParts[0] }}</span>
-            <span class="jwt-dot">.</span>
-            <span class="jwt-part payload-part">{{ jwtParts[1] }}</span>
-            <span class="jwt-dot">.</span>
-            <span class="jwt-part signature-part">{{ jwtParts[2] }}</span>
-        </div>
-
-        <ng-template #footer>
-            <div class="card-footer">
-                <p-button (onClick)="onDecode()" [disabled]="!inputText.trim()">
-                    <i class="material-icons">lock_open</i> {{ 'jwt.decode' | translate }}
-                </p-button>
-                <p-button [text]="true" (onClick)="onClear()" [disabled]="!inputText.trim()">
-                    <i class="material-icons">clear</i> {{ 'common.clear' | translate }}
-                </p-button>
-            </div>
-        </ng-template>
-    </p-card>
-
-    <!-- Error -->
-    <div class="error-card" *ngIf="error">
-        <i class="material-icons">error_outline</i>
-        <span>{{ error }}</span>
+    <!-- JWT colored preview -->
+    <div class="jwt-preview" *ngIf="inputText.trim()">
+        <span class="jwt-part header-part">{{ jwtParts[0] }}</span>
+        <span class="jwt-dot">.</span>
+        <span class="jwt-part payload-part">{{ jwtParts[1] }}</span>
+        <span class="jwt-dot">.</span>
+        <span class="jwt-part signature-part">{{ jwtParts[2] }}</span>
     </div>
 
-    <!-- Decoded sections -->
-    <div class="decoded-grid" *ngIf="decodedJwt">
-
-        <!-- Header -->
-        <p-card class="jwt-section-card header-card">
-            <ng-template #header>
-                <div class="card-header-row">
-                    <div class="card-header-title">
-                        <span class="section-dot header-dot"></span>
-                        {{ 'jwt.header' | translate }}
-                    </div>
-                    <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.header))" [pTooltip]="'jwt.copyHeader' | translate">
-                        <i class="material-icons">content_copy</i>
-                    </p-button>
-                </div>
-            </ng-template>
-            <div class="json-container">
-                <pre>{{ formatJson(decodedJwt.header) }}</pre>
-            </div>
-        </p-card>
-
-        <!-- Payload -->
-        <p-card class="jwt-section-card payload-card">
-            <ng-template #header>
-                <div class="card-header-row">
-                    <div class="card-header-title">
-                        <span class="section-dot payload-dot"></span>
-                        {{ 'jwt.payload' | translate }}
-                    </div>
-                    <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.payload))" [pTooltip]="'jwt.copyPayload' | translate">
-                        <i class="material-icons">content_copy</i>
-                    </p-button>
-                </div>
-            </ng-template>
-            <div class="json-container">
-                <pre>{{ formatJson(decodedJwt.payload) }}</pre>
-            </div>
-        </p-card>
-
-    </div>
-
-    <!-- Time Info -->
-    <p-card *ngIf="decodedJwt && (decodedJwt.issuedAt || decodedJwt.expiresAt)" class="time-card">
-        <ng-template #header>
-            <div class="card-header-row">
-                <div class="card-header-title">
-                    <i class="material-icons">access_time</i>
-                    {{ 'jwt.claims' | translate }}
-                </div>
-                <span class="expiry-badge" [class.expired-badge]="decodedJwt.isExpired" [class.valid-badge]="!decodedJwt.isExpired" *ngIf="decodedJwt.expiresAt">
-                    <i class="material-icons">{{ decodedJwt.isExpired ? 'cancel' : 'check_circle' }}</i>
-                    {{ decodedJwt.isExpired ? ('jwt.expired' | translate) : ('jwt.valid' | translate) }}
-                </span>
-            </div>
-        </ng-template>
-        <div class="time-grid">
-            <div *ngIf="decodedJwt.issuedAt" class="time-item">
-                <div class="time-icon-wrap iat-icon">
-                    <i class="material-icons">login</i>
-                </div>
-                <div class="time-content">
-                    <div class="time-label">{{ 'jwt.issuedAt' | translate }}</div>
-                    <div class="time-value">{{ decodedJwt.issuedAt | date:'medium' }}</div>
-                </div>
-            </div>
-            <div *ngIf="decodedJwt.expiresAt" class="time-item">
-                <div class="time-icon-wrap" [class.exp-icon-expired]="decodedJwt.isExpired" [class.exp-icon-valid]="!decodedJwt.isExpired">
-                    <i class="material-icons">{{ decodedJwt.isExpired ? 'timer_off' : 'timer' }}</i>
-                </div>
-                <div class="time-content">
-                    <div class="time-label">{{ 'jwt.expiresAt' | translate }}</div>
-                    <div class="time-value" [class.expired]="decodedJwt.isExpired">{{ decodedJwt.expiresAt | date:'medium' }}</div>
-                </div>
-            </div>
+    <ng-template #footer>
+        <div class="card-footer">
+            <p-button (onClick)="onDecode()" [disabled]="!inputText.trim()">
+                <i class="material-icons">lock_open</i> {{ 'jwt.decode' | translate }}
+            </p-button>
+            <p-button [text]="true" (onClick)="onClear()" [disabled]="!inputText.trim()">
+                <i class="material-icons">clear</i> {{ 'common.clear' | translate }}
+            </p-button>
         </div>
-    </p-card>
+    </ng-template>
+</p-card>
 
-    <!-- Signature -->
-    <p-card *ngIf="decodedJwt" class="jwt-section-card signature-card">
+<!-- Error -->
+<div class="error-card" *ngIf="error">
+    <i class="material-icons">error_outline</i>
+    <span>{{ error }}</span>
+</div>
+
+<!-- Decoded sections -->
+<div class="decoded-grid" *ngIf="decodedJwt">
+
+    <!-- Header -->
+    <p-card class="jwt-section-card header-card">
         <ng-template #header>
             <div class="card-header-row">
                 <div class="card-header-title">
-                    <span class="section-dot signature-dot"></span>
-                    {{ 'jwt.signature' | translate }}
+                    <span class="section-dot header-dot"></span>
+                    {{ 'jwt.header' | translate }}
                 </div>
-                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(decodedJwt.signature)" [pTooltip]="'jwt.copySignature' | translate">
+                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.header))" [pTooltip]="'jwt.copyHeader' | translate">
                     <i class="material-icons">content_copy</i>
                 </p-button>
             </div>
         </ng-template>
-        <div class="signature-content">
-            <code class="signature-text">{{ decodedJwt.signature }}</code>
-            <div class="signature-hint">
-                <i class="material-icons">info_outline</i>
-                {{ 'jwt.signatureHint' | translate }}
+        <div class="json-container">
+            <pre>{{ formatJson(decodedJwt.header) }}</pre>
+        </div>
+    </p-card>
+
+    <!-- Payload -->
+    <p-card class="jwt-section-card payload-card">
+        <ng-template #header>
+            <div class="card-header-row">
+                <div class="card-header-title">
+                    <span class="section-dot payload-dot"></span>
+                    {{ 'jwt.payload' | translate }}
+                </div>
+                <p-button [text]="true" [rounded]="true" (onClick)="onCopy(formatJson(decodedJwt.payload))" [pTooltip]="'jwt.copyPayload' | translate">
+                    <i class="material-icons">content_copy</i>
+                </p-button>
             </div>
+        </ng-template>
+        <div class="json-container">
+            <pre>{{ formatJson(decodedJwt.payload) }}</pre>
         </div>
     </p-card>
 
 </div>
+
+<!-- Time Info -->
+<p-card *ngIf="decodedJwt && (decodedJwt.issuedAt || decodedJwt.expiresAt)" class="time-card">
+    <ng-template #header>
+        <div class="card-header-row">
+            <div class="card-header-title">
+                <i class="material-icons">access_time</i>
+                {{ 'jwt.claims' | translate }}
+            </div>
+            <span class="expiry-badge" [class.expired-badge]="decodedJwt.isExpired" [class.valid-badge]="!decodedJwt.isExpired" *ngIf="decodedJwt.expiresAt">
+                <i class="material-icons">{{ decodedJwt.isExpired ? 'cancel' : 'check_circle' }}</i>
+                {{ decodedJwt.isExpired ? ('jwt.expired' | translate) : ('jwt.valid' | translate) }}
+            </span>
+        </div>
+    </ng-template>
+    <div class="time-grid">
+        <div *ngIf="decodedJwt.issuedAt" class="time-item">
+            <div class="time-icon-wrap iat-icon">
+                <i class="material-icons">login</i>
+            </div>
+            <div class="time-content">
+                <div class="time-label">{{ 'jwt.issuedAt' | translate }}</div>
+                <div class="time-value">{{ decodedJwt.issuedAt | date:'medium' }}</div>
+            </div>
+        </div>
+        <div *ngIf="decodedJwt.expiresAt" class="time-item">
+            <div class="time-icon-wrap" [class.exp-icon-expired]="decodedJwt.isExpired" [class.exp-icon-valid]="!decodedJwt.isExpired">
+                <i class="material-icons">{{ decodedJwt.isExpired ? 'timer_off' : 'timer' }}</i>
+            </div>
+            <div class="time-content">
+                <div class="time-label">{{ 'jwt.expiresAt' | translate }}</div>
+                <div class="time-value" [class.expired]="decodedJwt.isExpired">{{ decodedJwt.expiresAt | date:'medium' }}</div>
+            </div>
+        </div>
+    </div>
+</p-card>
+
+<!-- Signature -->
+<p-card *ngIf="decodedJwt" class="jwt-section-card signature-card">
+    <ng-template #header>
+        <div class="card-header-row">
+            <div class="card-header-title">
+                <span class="section-dot signature-dot"></span>
+                {{ 'jwt.signature' | translate }}
+            </div>
+            <p-button [text]="true" [rounded]="true" (onClick)="onCopy(decodedJwt.signature)" [pTooltip]="'jwt.copySignature' | translate">
+                <i class="material-icons">content_copy</i>
+            </p-button>
+        </div>
+    </ng-template>
+    <div class="signature-content">
+        <code class="signature-text">{{ decodedJwt.signature }}</code>
+        <div class="signature-hint">
+            <i class="material-icons">info_outline</i>
+            {{ 'jwt.signatureHint' | translate }}
+        </div>
+    </div>
+</p-card>

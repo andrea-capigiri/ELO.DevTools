@@ -16,21 +16,23 @@ export interface ToolSetting {
 const STORAGE_KEY = 'elo-devtools-settings';
 
 export const ALL_TOOLS: ToolSetting[] = [
-    { id: 'base64',          titleKey: 'tool.base64',          descriptionKey: 'tool.base64.desc',          icon: 'code',              route: '/tools/base64',          order: 1,  defaultEnabled: true  , enabled: true  },
-    { id: 'base64-file',     titleKey: 'tool.base64-file',     descriptionKey: 'tool.base64-file.desc',     icon: 'insert_drive_file', route: '/tools/base64-file',     order: 2,  defaultEnabled: true  , enabled: true  },
-    { id: 'url',             titleKey: 'tool.url',             descriptionKey: 'tool.url.desc',             icon: 'link',              route: '/tools/url',             order: 3,  defaultEnabled: true  , enabled: true  },
-    { id: 'guid',            titleKey: 'tool.guid',            descriptionKey: 'tool.guid.desc',            icon: 'fingerprint',       route: '/tools/guid',            order: 4,  defaultEnabled: true  , enabled: true  },
-    { id: 'hash',            titleKey: 'tool.hash',            descriptionKey: 'tool.hash.desc',            icon: 'security',          route: '/tools/hash',            order: 5,  defaultEnabled: true  , enabled: true  },
-    { id: 'timestamp',       titleKey: 'tool.timestamp',       descriptionKey: 'tool.timestamp.desc',       icon: 'schedule',          route: '/tools/timestamp',       order: 6,  defaultEnabled: true  , enabled: true  },
-    { id: 'jwt',             titleKey: 'tool.jwt',             descriptionKey: 'tool.jwt.desc',             icon: 'schedule',          route: '/tools/jwt',             order: 7,  defaultEnabled: true  , enabled: true  },
-    { id: 'flex-preview',    titleKey: 'tool.flex-preview',    descriptionKey: 'tool.flex-preview.desc',    icon: 'dashboard',         route: '/tools/flex-preview',    order: 8,  defaultEnabled: true  , enabled: true  },
-    { id: 'iban',            titleKey: 'tool.iban',            descriptionKey: 'tool.iban.desc',            icon: 'account_balance',   route: '/tools/iban',            order: 9,  defaultEnabled: true  , enabled: true,  isNew: true },
-    { id: 'codice-fiscale',  titleKey: 'tool.codice-fiscale',  descriptionKey: 'tool.codice-fiscale.desc',  icon: 'badge',             route: '/tools/codice-fiscale',  order: 10, defaultEnabled: false , enabled: false },
-    { id: 'generatore-dati', titleKey: 'tool.generatore-dati', descriptionKey: 'tool.generatore-dati.desc', icon: 'group_add',         route: '/tools/generatore-dati', order: 11, defaultEnabled: false , enabled: false },
+    { id: 'base64', titleKey: 'tool.base64', descriptionKey: 'tool.base64.desc', icon: 'code', route: '/tools/base64', order: 1, defaultEnabled: true, enabled: true },
+    { id: 'base64-file', titleKey: 'tool.base64-file', descriptionKey: 'tool.base64-file.desc', icon: 'insert_drive_file', route: '/tools/base64-file', order: 2, defaultEnabled: true, enabled: true },
+    { id: 'url', titleKey: 'tool.url', descriptionKey: 'tool.url.desc', icon: 'link', route: '/tools/url', order: 3, defaultEnabled: true, enabled: true },
+    { id: 'guid', titleKey: 'tool.guid', descriptionKey: 'tool.guid.desc', icon: 'fingerprint', route: '/tools/guid', order: 4, defaultEnabled: true, enabled: true },
+    { id: 'hash', titleKey: 'tool.hash', descriptionKey: 'tool.hash.desc', icon: 'security', route: '/tools/hash', order: 5, defaultEnabled: true, enabled: true },
+    { id: 'timestamp', titleKey: 'tool.timestamp', descriptionKey: 'tool.timestamp.desc', icon: 'schedule', route: '/tools/timestamp', order: 6, defaultEnabled: true, enabled: true },
+    { id: 'jwt', titleKey: 'tool.jwt', descriptionKey: 'tool.jwt.desc', icon: 'schedule', route: '/tools/jwt', order: 7, defaultEnabled: true, enabled: true },
+    { id: 'flex-preview', titleKey: 'tool.flex-preview', descriptionKey: 'tool.flex-preview.desc', icon: 'dashboard', route: '/tools/flex-preview', order: 8, defaultEnabled: true, enabled: true },
+    { id: 'iban', titleKey: 'tool.iban', descriptionKey: 'tool.iban.desc', icon: 'account_balance', route: '/tools/iban', order: 9, defaultEnabled: true, enabled: true, isNew: true },
+    { id: 'codice-fiscale', titleKey: 'tool.codice-fiscale', descriptionKey: 'tool.codice-fiscale.desc', icon: 'badge', route: '/tools/codice-fiscale', order: 10, defaultEnabled: false, enabled: false },
+    { id: 'generatore-dati', titleKey: 'tool.generatore-dati', descriptionKey: 'tool.generatore-dati.desc', icon: 'group_add', route: '/tools/generatore-dati', order: 11, defaultEnabled: false, enabled: false },
 ];
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
+
+    public toolTitle: string = null!;
     private toolsSubject = new BehaviorSubject<ToolSetting[]>(ALL_TOOLS);
     tools$: Observable<ToolSetting[]> = this.toolsSubject.asObservable();
 

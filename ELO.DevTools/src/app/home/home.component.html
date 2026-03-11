@@ -1,15 +1,15 @@
-<header class="home-header">
-    <div class="header-row">
+<p-toolbar>
+    <div class="container-p header-row">
         <div>
-            <h1 class="home-title">{{'app.title' | translate}}</h1>
-            <p class="home-subtitle">Strumenti per sviluppatori</p>
+            <h1 class="home-title">{{ this.title | translate}}</h1>
+            <p class="home-subtitle">{{ this.subtitle | translate}}</p>
         </div>
         <a class="settings-btn" routerLink="/settings">
             <i class="material-icons">settings</i>
         </a>
     </div>
-</header>
-<div class="home-container">
+</p-toolbar>
+<div class="container-p home-container">
     <div class="tools-list">
         @for (tool of tools; track tool.route) {
             <a class="tool-card" [routerLink]="tool.route">
@@ -20,7 +20,7 @@
                     <div class="tool-title">
                         {{tool.titleKey | translate}}
                         @if (tool.isNew) {
-                            <span class="new-badge">{{ 'app.new' | translate }}</span>
+                            <span class="new-badge">{{ 'common.new' | translate }}</span>
                         }
                     </div>
                     <div class="tool-desc">{{tool.descriptionKey | translate}}</div>

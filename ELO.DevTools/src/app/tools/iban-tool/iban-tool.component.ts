@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { SelectModule } from 'primeng/select';
-import { TooltipModule } from 'primeng/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { IbanService, GeneratedIban } from '../../_shared/iban.service';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { FloatLabel } from 'primeng/floatlabel';
+import { SelectModule } from 'primeng/select';
+import { Toolbar } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
+import { GeneratedIban, IbanService } from '../../_shared/iban.service';
 
 @Component({
     selector: 'app-iban-tool',
@@ -19,6 +20,7 @@ import { IbanService, GeneratedIban } from '../../_shared/iban.service';
         RouterModule,
         Toolbar,
         Card,
+        FloatLabel,
         ButtonModule,
         SelectModule,
         TooltipModule,

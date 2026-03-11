@@ -1,44 +1,33 @@
-<p-toolbar>
-    <ng-template #start>
-        <p-button [text]="true" [rounded]="true" routerLink="/">
-            <i class="material-icons">arrow_back</i>
-        </p-button>
-        <span class="toolbar-title">{{ 'tool.base64' | translate }}</span>
+<p-card [header]="'common.input' | translate">
+    <textarea pTextarea
+                [placeholder]="'base64.enterText' | translate"
+                [(ngModel)]="inputText"
+                rows="8"
+                class="w-full"></textarea>
+    <ng-template #footer>
+        <div class="card-footer">
+            <p-button (onClick)="onEncode()" [disabled]="!inputText.trim()">
+                <i class="material-icons">lock</i> {{ 'common.encode' | translate }}
+            </p-button>
+            <p-button (onClick)="onDecode()" [disabled]="!inputText.trim()">
+                <i class="material-icons">lock_open</i> {{ 'common.decode' | translate }}
+            </p-button>
+            <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate" [disabled]="!inputText.trim() && !outputText.trim()"></p-button>
+        </div>
     </ng-template>
-</p-toolbar>
+</p-card>
 
-<div class="tool-container">
-    <p-card [header]="'common.input' | translate">
-        <textarea pTextarea
-                  [placeholder]="'base64.enterText' | translate"
-                  [(ngModel)]="inputText"
-                  rows="8"
-                  class="w-full"></textarea>
-        <ng-template #footer>
-            <div class="card-footer">
-                <p-button (onClick)="onEncode()" [disabled]="!inputText.trim()">
-                    <i class="material-icons">lock</i> {{ 'common.encode' | translate }}
-                </p-button>
-                <p-button (onClick)="onDecode()" [disabled]="!inputText.trim()">
-                    <i class="material-icons">lock_open</i> {{ 'common.decode' | translate }}
-                </p-button>
-                <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate" [disabled]="!inputText.trim() && !outputText.trim()"></p-button>
-            </div>
-        </ng-template>
-    </p-card>
-
-    <p-card [header]="'common.output' | translate" *ngIf="outputText">
-        <textarea pTextarea
-                  [readonly]="true"
-                  [value]="outputText"
-                  rows="8"
-                  class="w-full"></textarea>
-        <ng-template #footer>
-            <div class="card-footer">
-                <p-button [text]="true" (onClick)="onCopy()">
-                    <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
-                </p-button>
-            </div>
-        </ng-template>
-    </p-card>
-</div>
+<p-card [header]="'common.output' | translate" *ngIf="outputText">
+    <textarea pTextarea
+                [readonly]="true"
+                [value]="outputText"
+                rows="8"
+                class="w-full"></textarea>
+    <ng-template #footer>
+        <div class="card-footer">
+            <p-button [text]="true" (onClick)="onCopy()">
+                <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
+            </p-button>
+        </div>
+    </ng-template>
+</p-card>

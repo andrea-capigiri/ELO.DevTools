@@ -8,9 +8,10 @@ import { ButtonModule } from 'primeng/button';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { SelectModule } from 'primeng/select';
 import { FloatLabel } from 'primeng/floatlabel';
-import { SettingsService, ToolSetting } from '../_shared/settings.service';
+import { SettingsService, ToolSetting } from '../../_shared/settings.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import manifest from '../../../manifest.json';
 
 export type Language = 'en' | 'it';
 
@@ -35,6 +36,7 @@ export type Language = 'en' | 'it';
 export class SettingsComponent implements OnDestroy {
     tools: ToolSetting[] = [];
     currentLanguage: Language = 'en';
+    manifest = manifest;
     languages: { value: Language; label: string }[] = [
         { value: 'en', label: 'English' },
         { value: 'it', label: 'Italiano' }
@@ -48,7 +50,7 @@ export class SettingsComponent implements OnDestroy {
         this.sub = this.settingsService.tools$.subscribe(tools => {
             this.tools = tools;
         });
-        this.currentLanguage = this.translate.currentLang as Language || 'en';
+        this.currentLanguage = this.translate.getCurrentLang() as Language || 'en';
     }
 
     onToggle(toolId: string, enabled: boolean): void {
@@ -79,6 +81,18 @@ export class SettingsComponent implements OnDestroy {
                 chrome.storage.local.set({ 'elo-devtools-language': lang });
             } else {
                 localStorage.setItem('elo-devtools-language', lang);
+            }
+        } catch {
+            // Silently fail
+        }
+    }
+
+    clearCache(): void {
+        try {
+            if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+                chrome.storage.local.clear();
+            } else {
+                localStorage.clear();
             }
         } catch {
             // Silently fail

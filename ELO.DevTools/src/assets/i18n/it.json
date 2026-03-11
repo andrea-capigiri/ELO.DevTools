@@ -1,9 +1,4 @@
 {
-    "app": {
-        "title": "ELO DevTools",
-        "new": "Novità",
-        "devTools": "Strumenti per sviluppatori"
-    },
     "common": {
         "input": "Input",
         "output": "Output",
@@ -24,7 +19,8 @@
         "algorithm": "Algoritmo",
         "preview": "Anteprima",
         "detectedType": "Tipo rilevato",
-        "size": "Dimensione"
+        "size": "Dimensione",
+        "new": "Novità"
     },
     "settings": {
         "title": "Impostazioni",
@@ -32,7 +28,7 @@
         "chooseTools": "Scegli quali strumenti mostrare nella pagina home.",
         "enableAll": "Attiva Tutti",
         "disableAll": "Disattiva Tutti",
-        "resetDefaults": "Ripristina Predefiniti",
+        "resetDefaults": "Predefiniti",
         "language": "Lingua",
         "english": "Inglese",
         "italian": "Italiano"

@@ -1,9 +1,4 @@
 {
-    "app": {
-        "title": "ELO DevTools",
-        "new": "New",
-        "devTools": "Developer Tools"
-    },
     "common": {
         "input": "Input",
         "output": "Output",
@@ -24,7 +19,8 @@
         "algorithm": "Algorithm",
         "preview": "Preview",
         "detectedType": "Detected type",
-        "size": "Size"
+        "size": "Size",
+        "new": "New"
     },
     "settings": {
         "title": "Settings",
@@ -32,7 +28,7 @@
         "chooseTools": "Choose which tools to show on the home page.",
         "enableAll": "Enable All",
         "disableAll": "Disable All",
-        "resetDefaults": "Reset Defaults",
+        "resetDefaults": "Defaults",
         "language": "Language",
         "english": "English",
         "italian": "Italian"
@@ -170,9 +166,18 @@
         "municipalityLabel": "Municipality",
         "checkLabel": "Check",
         "months": {
-            "0": "January", "1": "February", "2": "March", "3": "April",
-            "4": "May", "5": "June", "6": "July", "7": "August",
-            "8": "September", "9": "October", "10": "November", "11": "December"
+            "0": "January",
+            "1": "February",
+            "2": "March",
+            "3": "April",
+            "4": "May",
+            "5": "June",
+            "6": "July",
+            "7": "August",
+            "8": "September",
+            "9": "October",
+            "10": "November",
+            "11": "December"
         }
     },
     "generatoreDati": {
@@ -245,18 +250,39 @@
         "copy": "Copy",
         "formatted": "formatted",
         "countries": {
-            "IT": "Italy", "DE": "Germany", "FR": "France", "ES": "Spain",
-            "GB": "United Kingdom", "CH": "Switzerland", "AT": "Austria", "PT": "Portugal",
-            "NL": "Netherlands", "BE": "Belgium", "PL": "Poland", "SE": "Sweden",
-            "NO": "Norway", "DK": "Denmark", "IE": "Ireland", "GR": "Greece",
-            "RO": "Romania", "CZ": "Czech Republic", "HU": "Hungary", "LU": "Luxembourg"
+            "IT": "Italy",
+            "DE": "Germany",
+            "FR": "France",
+            "ES": "Spain",
+            "GB": "United Kingdom",
+            "CH": "Switzerland",
+            "AT": "Austria",
+            "PT": "Portugal",
+            "NL": "Netherlands",
+            "BE": "Belgium",
+            "PL": "Poland",
+            "SE": "Sweden",
+            "NO": "Norway",
+            "DK": "Denmark",
+            "IE": "Ireland",
+            "GR": "Greece",
+            "RO": "Romania",
+            "CZ": "Czech Republic",
+            "HU": "Hungary",
+            "LU": "Luxembourg"
         },
         "segments": {
-            "countryCode": "Country Code", "checkDigits": "Check Digits",
-            "cin": "CIN", "abi": "ABI", "cab": "CAB",
-            "bankCode": "Bank Code", "branchCode": "Branch Code",
-            "accountNumber": "Account Number", "sortCode": "Sort Code",
-            "nationalCheck": "National Check", "accountPrefix": "Account Prefix"
+            "countryCode": "Country Code",
+            "checkDigits": "Check Digits",
+            "cin": "CIN",
+            "abi": "ABI",
+            "cab": "CAB",
+            "bankCode": "Bank Code",
+            "branchCode": "Branch Code",
+            "accountNumber": "Account Number",
+            "sortCode": "Sort Code",
+            "nationalCheck": "National Check",
+            "accountPrefix": "Account Prefix"
         },
         "segmentDesc": {
             "countryCode": "ISO 3166-1 alpha-2 country code",
@@ -264,9 +290,12 @@
             "cin": "Check character (Control Internal Number)",
             "abi": "Bank identifier (Associazione Bancaria Italiana)",
             "cab": "Branch identifier (Codice di Avviamento Bancario)",
-            "bankCode": "Bank code", "branchCode": "Branch code",
-            "accountNumber": "Bank account number", "sortCode": "Sort code",
-            "nationalCheck": "National check digits", "accountPrefix": "Account prefix"
+            "bankCode": "Bank code",
+            "branchCode": "Branch code",
+            "accountNumber": "Bank account number",
+            "sortCode": "Sort code",
+            "nationalCheck": "National check digits",
+            "accountPrefix": "Account prefix"
         }
     }
 }

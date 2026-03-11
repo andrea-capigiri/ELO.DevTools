@@ -1,0 +1,12 @@
+<p-toolbar>
+    <ng-template #start>
+        <p-button [text]="true" [rounded]="true" routerLink="/">
+            <i class="material-icons">arrow_back</i>
+        </p-button>
+        <span class="toolbar-title">{{ this.settingsService.toolTitle | translate }}</span>
+    </ng-template>
+</p-toolbar>
+
+<div class="container-p tool-container">
+    <router-outlet></router-outlet>
+</div>

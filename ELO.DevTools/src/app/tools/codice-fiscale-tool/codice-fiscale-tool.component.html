@@ -1,176 +1,164 @@
-<p-toolbar>
-    <ng-template #start>
-        <p-button [text]="true" [rounded]="true" routerLink="/">
-            <i class="material-icons">arrow_back</i>
-        </p-button>
-        <span class="toolbar-title">{{ 'tool.codice-fiscale' | translate }}</span>
-    </ng-template>
-</p-toolbar>
+<div class="mode-selector">
+    <p-button [text]="true"
+            [class.active]="mode === 'calcolo'"
+            (onClick)="mode = 'calcolo'"
+            [label]="'cf.calcolo' | translate"></p-button>
+    <p-button [text]="true"
+            [class.active]="mode === 'inverso'"
+            (onClick)="mode = 'inverso'"
+            [label]="'cf.calcoloInverso' | translate"></p-button>
+</div>
 
-<div class="tool-container">
+<!-- CALCOLO -->
+@if (mode === 'calcolo') {
+    <p-card [header]="'cf.personalData' | translate">
+        <p-floatlabel variant="on" class="w-full">
+            <input pInputText [(ngModel)]="cognome" [placeholder]="'cf.surnamePlaceholder' | translate" id="cognomeField" class="w-full">
+            <label for="cognomeField">{{ 'cf.surname' | translate }}</label>
+        </p-floatlabel>
 
-    <div class="mode-selector">
-        <p-button [text]="true"
-                [class.active]="mode === 'calcolo'"
-                (onClick)="mode = 'calcolo'"
-                [label]="'cf.calcolo' | translate"></p-button>
-        <p-button [text]="true"
-                [class.active]="mode === 'inverso'"
-                (onClick)="mode = 'inverso'"
-                [label]="'cf.calcoloInverso' | translate"></p-button>
-    </div>
+        <p-floatlabel variant="on" class="w-full">
+            <input pInputText [(ngModel)]="nome" [placeholder]="'cf.namePlaceholder' | translate" id="nomeField" class="w-full">
+            <label for="nomeField">{{ 'cf.name' | translate }}</label>
+        </p-floatlabel>
 
-    <!-- CALCOLO -->
-    @if (mode === 'calcolo') {
-        <p-card [header]="'cf.personalData' | translate">
-            <p-floatlabel variant="on" class="w-full">
-                <input pInputText [(ngModel)]="cognome" [placeholder]="'cf.surnamePlaceholder' | translate" id="cognomeField" class="w-full">
-                <label for="cognomeField">{{ 'cf.surname' | translate }}</label>
-            </p-floatlabel>
+        <p-floatlabel variant="on" class="w-full">
+            <p-datepicker [(ngModel)]="dataNascita" [showIcon]="true" inputId="dataNascitaField" styleClass="w-full"></p-datepicker>
+            <label for="dataNascitaField">{{ 'cf.birthDate' | translate }}</label>
+        </p-floatlabel>
 
-            <p-floatlabel variant="on" class="w-full">
-                <input pInputText [(ngModel)]="nome" [placeholder]="'cf.namePlaceholder' | translate" id="nomeField" class="w-full">
-                <label for="nomeField">{{ 'cf.name' | translate }}</label>
-            </p-floatlabel>
+        <p-floatlabel variant="on" class="w-full">
+            <p-select [options]="sessoOptions" [(ngModel)]="sesso" optionLabel="label" optionValue="value" inputId="sessoField" styleClass="w-full"></p-select>
+            <label for="sessoField">{{ 'cf.sex' | translate }}</label>
+        </p-floatlabel>
 
-            <p-floatlabel variant="on" class="w-full">
-                <p-datepicker [(ngModel)]="dataNascita" [showIcon]="true" inputId="dataNascitaField" styleClass="w-full"></p-datepicker>
-                <label for="dataNascitaField">{{ 'cf.birthDate' | translate }}</label>
-            </p-floatlabel>
+        <p-floatlabel variant="on" class="w-full">
+            <p-autocomplete [(ngModel)]="selectedComune" [suggestions]="filteredComuni" (completeMethod)="searchComune($event)" field="nome" [forceSelection]="true" (onSelect)="onComuneSelected($event)" inputId="comuneField" styleClass="w-full">
+                <ng-template #item let-comune>
+                    {{comune.nome}} ({{comune.provincia}})
+                </ng-template>
+            </p-autocomplete>
+            <label for="comuneField">{{ 'cf.birthPlace' | translate }}</label>
+        </p-floatlabel>
 
-            <p-floatlabel variant="on" class="w-full">
-                <p-select [options]="sessoOptions" [(ngModel)]="sesso" optionLabel="label" optionValue="value" inputId="sessoField" styleClass="w-full"></p-select>
-                <label for="sessoField">{{ 'cf.sex' | translate }}</label>
-            </p-floatlabel>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button (onClick)="onCalcola()" [disabled]="!isCalcoloValid">
+                    <i class="material-icons">calculate</i> {{ 'cf.calculate' | translate }}
+                </p-button>
+                <p-button [text]="true" (onClick)="onClearCalcolo()" [label]="'common.clear' | translate"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
 
-            <p-floatlabel variant="on" class="w-full">
-                <p-autocomplete [(ngModel)]="selectedComune" [suggestions]="filteredComuni" (completeMethod)="searchComune($event)" field="nome" [forceSelection]="true" (onSelect)="onComuneSelected($event)" inputId="comuneField" styleClass="w-full">
-                    <ng-template #item let-comune>
-                        {{comune.nome}} ({{comune.provincia}})
-                    </ng-template>
-                </p-autocomplete>
-                <label for="comuneField">{{ 'cf.birthPlace' | translate }}</label>
-            </p-floatlabel>
+    @if (error) {
+        <div class="error-message">{{error}}</div>
+    }
 
+    @if (result) {
+        <p-card [header]="'common.result' | translate" class="result-card">
+            <div class="cf-result">{{result.codiceFiscale}}</div>
+            <div class="cf-breakdown">
+                <span class="cf-part cognome" [pTooltip]="'cf.surnameLabel' | translate">{{result.dettagli.cognomeParte}}</span>
+                <span class="cf-part nome" [pTooltip]="'cf.nameLabel' | translate">{{result.dettagli.nomeParte}}</span>
+                <span class="cf-part anno" [pTooltip]="'cf.yearLabel' | translate">{{result.dettagli.annoParte}}</span>
+                <span class="cf-part mese" [pTooltip]="'cf.monthLabel' | translate">{{result.dettagli.meseParte}}</span>
+                <span class="cf-part giorno" [pTooltip]="'cf.dayLabel' | translate">{{result.dettagli.giornoParte}}</span>
+                <span class="cf-part comune" [pTooltip]="'cf.municipalityLabel' | translate">{{result.dettagli.comuneParte}}</span>
+                <span class="cf-part controllo" [pTooltip]="'cf.checkLabel' | translate">{{result.dettagli.controlloParte}}</span>
+            </div>
+            <div class="cf-legend">
+                <span class="legend-item"><span class="dot cognome"></span> {{ 'cf.surnameLabel' | translate }}</span>
+                <span class="legend-item"><span class="dot nome"></span> {{ 'cf.nameLabel' | translate }}</span>
+                <span class="legend-item"><span class="dot anno"></span> {{ 'cf.yearLabel' | translate }}</span>
+                <span class="legend-item"><span class="dot mese"></span> {{ 'cf.monthLabel' | translate }}</span>
+                <span class="legend-item"><span class="dot giorno"></span> {{ 'cf.dayLabel' | translate }}</span>
+                <span class="legend-item"><span class="dot comune"></span> {{ 'cf.municipalityLabel' | translate }}</span>
+                <span class="legend-item"><span class="dot controllo"></span> {{ 'cf.checkLabel' | translate }}</span>
+            </div>
             <ng-template #footer>
                 <div class="card-footer">
-                    <p-button (onClick)="onCalcola()" [disabled]="!isCalcoloValid">
-                        <i class="material-icons">calculate</i> {{ 'cf.calculate' | translate }}
+                    <p-button [text]="true" (onClick)="onCopy(result.codiceFiscale)">
+                        <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
                     </p-button>
-                    <p-button [text]="true" (onClick)="onClearCalcolo()" [label]="'common.clear' | translate"></p-button>
                 </div>
             </ng-template>
         </p-card>
+    }
+}
 
-        @if (error) {
-            <div class="error-message">{{error}}</div>
-        }
+<!-- INVERSO -->
+@if (mode === 'inverso') {
+    <p-card [header]="'cf.codiceFiscale' | translate">
+        <p-floatlabel variant="on" class="w-full">
+            <input pInputText
+                    [(ngModel)]="codiceFiscaleInput"
+                    [placeholder]="'cf.cfPlaceholder' | translate"
+                    maxlength="16"
+                    style="text-transform: uppercase;"
+                    id="cfInversoField"
+                    class="w-full">
+            <label for="cfInversoField">{{ 'cf.codiceFiscale' | translate }}</label>
+        </p-floatlabel>
 
-        @if (result) {
-            <p-card [header]="'common.result' | translate" class="result-card">
-                <div class="cf-result">{{result.codiceFiscale}}</div>
-                <div class="cf-breakdown">
-                    <span class="cf-part cognome" [pTooltip]="'cf.surnameLabel' | translate">{{result.dettagli.cognomeParte}}</span>
-                    <span class="cf-part nome" [pTooltip]="'cf.nameLabel' | translate">{{result.dettagli.nomeParte}}</span>
-                    <span class="cf-part anno" [pTooltip]="'cf.yearLabel' | translate">{{result.dettagli.annoParte}}</span>
-                    <span class="cf-part mese" [pTooltip]="'cf.monthLabel' | translate">{{result.dettagli.meseParte}}</span>
-                    <span class="cf-part giorno" [pTooltip]="'cf.dayLabel' | translate">{{result.dettagli.giornoParte}}</span>
-                    <span class="cf-part comune" [pTooltip]="'cf.municipalityLabel' | translate">{{result.dettagli.comuneParte}}</span>
-                    <span class="cf-part controllo" [pTooltip]="'cf.checkLabel' | translate">{{result.dettagli.controlloParte}}</span>
-                </div>
-                <div class="cf-legend">
-                    <span class="legend-item"><span class="dot cognome"></span> {{ 'cf.surnameLabel' | translate }}</span>
-                    <span class="legend-item"><span class="dot nome"></span> {{ 'cf.nameLabel' | translate }}</span>
-                    <span class="legend-item"><span class="dot anno"></span> {{ 'cf.yearLabel' | translate }}</span>
-                    <span class="legend-item"><span class="dot mese"></span> {{ 'cf.monthLabel' | translate }}</span>
-                    <span class="legend-item"><span class="dot giorno"></span> {{ 'cf.dayLabel' | translate }}</span>
-                    <span class="legend-item"><span class="dot comune"></span> {{ 'cf.municipalityLabel' | translate }}</span>
-                    <span class="legend-item"><span class="dot controllo"></span> {{ 'cf.checkLabel' | translate }}</span>
-                </div>
-                <ng-template #footer>
-                    <div class="card-footer">
-                        <p-button [text]="true" (onClick)="onCopy(result.codiceFiscale)">
-                            <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
-                        </p-button>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button (onClick)="onInverso()" [disabled]="codiceFiscaleInput.trim().length !== 16">
+                    <i class="material-icons">search</i> {{ 'cf.decodifica' | translate }}
+                </p-button>
+                <p-button [text]="true" (onClick)="onClearInverso()" [label]="'common.clear' | translate"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+
+    @if (inversoResult) {
+        @if (inversoResult.error) {
+            <div class="error-message">{{inversoResult.error}}</div>
+        } @else {
+            <p-card [header]="'cf.extractedData' | translate" class="result-card">
+                @if (!inversoResult.checkCharacterValid) {
+                    <div class="warning-message">
+                        <i class="material-icons">warning</i>
+                        {{ 'cf.invalidCheckChar' | translate }}
                     </div>
-                </ng-template>
+                }
+                <div class="data-grid">
+                    <div class="data-row">
+                        <span class="data-label">{{ 'cf.surnameCode' | translate }}</span>
+                        <span class="data-value mono">{{inversoResult.cognomeCodice}}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">{{ 'cf.nameCode' | translate }}</span>
+                        <span class="data-value mono">{{inversoResult.nomeCodice}}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">{{ 'cf.sex' | translate }}</span>
+                        <span class="data-value">{{inversoResult.sesso === 'M' ? ('cf.male' | translate) : ('cf.female' | translate)}}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">{{ 'cf.birthDay' | translate }}</span>
+                        <span class="data-value">{{inversoResult.giornoNascita}}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">{{ 'cf.birthMonth' | translate }}</span>
+                        <span class="data-value">{{getMeseNome(inversoResult.meseNascita)}}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">{{ 'cf.birthYear' | translate }}</span>
+                        <span class="data-value mono">xx{{inversoResult.annoNascita}}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">{{ 'cf.birthMunicipality' | translate }}</span>
+                        <span class="data-value">
+                            @if (inversoResult.comune) {
+                                {{inversoResult.comune.nome}} ({{inversoResult.comune.provincia}})
+                            } @else {
+                                <span class="unknown">{{ 'cf.code' | translate }}: {{inversoResult.codiceCatastale}} — {{ 'cf.notFound' | translate }}</span>
+                            }
+                        </span>
+                    </div>
+                </div>
             </p-card>
         }
     }
-
-    <!-- INVERSO -->
-    @if (mode === 'inverso') {
-        <p-card [header]="'cf.codiceFiscale' | translate">
-            <p-floatlabel variant="on" class="w-full">
-                <input pInputText
-                       [(ngModel)]="codiceFiscaleInput"
-                       [placeholder]="'cf.cfPlaceholder' | translate"
-                       maxlength="16"
-                       style="text-transform: uppercase;"
-                       id="cfInversoField"
-                       class="w-full">
-                <label for="cfInversoField">{{ 'cf.codiceFiscale' | translate }}</label>
-            </p-floatlabel>
-
-            <ng-template #footer>
-                <div class="card-footer">
-                    <p-button (onClick)="onInverso()" [disabled]="codiceFiscaleInput.trim().length !== 16">
-                        <i class="material-icons">search</i> {{ 'cf.decodifica' | translate }}
-                    </p-button>
-                    <p-button [text]="true" (onClick)="onClearInverso()" [label]="'common.clear' | translate"></p-button>
-                </div>
-            </ng-template>
-        </p-card>
-
-        @if (inversoResult) {
-            @if (inversoResult.error) {
-                <div class="error-message">{{inversoResult.error}}</div>
-            } @else {
-                <p-card [header]="'cf.extractedData' | translate" class="result-card">
-                    @if (!inversoResult.checkCharacterValid) {
-                        <div class="warning-message">
-                            <i class="material-icons">warning</i>
-                            {{ 'cf.invalidCheckChar' | translate }}
-                        </div>
-                    }
-                    <div class="data-grid">
-                        <div class="data-row">
-                            <span class="data-label">{{ 'cf.surnameCode' | translate }}</span>
-                            <span class="data-value mono">{{inversoResult.cognomeCodice}}</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">{{ 'cf.nameCode' | translate }}</span>
-                            <span class="data-value mono">{{inversoResult.nomeCodice}}</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">{{ 'cf.sex' | translate }}</span>
-                            <span class="data-value">{{inversoResult.sesso === 'M' ? ('cf.male' | translate) : ('cf.female' | translate)}}</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">{{ 'cf.birthDay' | translate }}</span>
-                            <span class="data-value">{{inversoResult.giornoNascita}}</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">{{ 'cf.birthMonth' | translate }}</span>
-                            <span class="data-value">{{getMeseNome(inversoResult.meseNascita)}}</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">{{ 'cf.birthYear' | translate }}</span>
-                            <span class="data-value mono">xx{{inversoResult.annoNascita}}</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">{{ 'cf.birthMunicipality' | translate }}</span>
-                            <span class="data-value">
-                                @if (inversoResult.comune) {
-                                    {{inversoResult.comune.nome}} ({{inversoResult.comune.provincia}})
-                                } @else {
-                                    <span class="unknown">{{ 'cf.code' | translate }}: {{inversoResult.codiceCatastale}} — {{ 'cf.notFound' | translate }}</span>
-                                }
-                            </span>
-                        </div>
-                    </div>
-                </p-card>
-            }
-        }
-    }
-</div>
+}

@@ -1,50 +1,39 @@
-<p-toolbar>
-    <ng-template #start>
-        <p-button [text]="true" [rounded]="true" routerLink="/">
-            <i class="material-icons">arrow_back</i>
-        </p-button>
-        <span class="toolbar-title">{{ 'tool.hash' | translate }}</span>
-    </ng-template>
-</p-toolbar>
-
-<div class="tool-container">
-    <p-card [header]="'common.input' | translate">
-        <textarea pTextarea
-                  [placeholder]="'hash.enterText' | translate"
-                  [(ngModel)]="inputText"
-                  rows="6"
-                  class="w-full"></textarea>
-        <!-- <div class="algorithm-section">
-            <label class="setting-label">{{ 'common.algorithm' | translate }}</label>
-            <p-selectbutton [options]="algorithmOptions" [(ngModel)]="algorithm" optionLabel="label" optionValue="value"></p-selectbutton>
-        </div> -->
-        <ng-template #footer>
-            <div class="card-footer">
-                <!-- <p-button (onClick)="onGenerate()" [disabled]="!inputText.trim()">
-                    <i class="material-icons">tag</i> {{ 'hash.hash' | translate }}
-                </p-button> -->
-                <p-button (onClick)="onGenerateAll()" [disabled]="!inputText.trim()">
-                    <i class="material-icons">layers</i> {{ 'hash.hashAll' | translate }}
-                </p-button>
-                <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate" [disabled]="!inputText.trim() && !results.length"></p-button>
-            </div>
-        </ng-template>
-    </p-card>
-
-    <p-card [header]="'common.output' | translate" *ngIf="results.length">
-        <div class="hash-list">
-            <div class="hash-item" *ngFor="let r of results" (click)="onCopy(r.hash)">
-                <span class="hash-algo">{{r.algorithm}}</span>
-                <span class="hash-value">{{r.hash}}</span>
-                <i class="material-icons copy-icon">content_copy</i>
-            </div>
+<p-card [header]="'common.input' | translate">
+    <textarea pTextarea
+                [placeholder]="'hash.enterText' | translate"
+                [(ngModel)]="inputText"
+                rows="6"
+                class="w-full"></textarea>
+    <!-- <div class="algorithm-section">
+        <label class="setting-label">{{ 'common.algorithm' | translate }}</label>
+        <p-selectbutton [options]="algorithmOptions" [(ngModel)]="algorithm" optionLabel="label" optionValue="value"></p-selectbutton>
+    </div> -->
+    <ng-template #footer>
+        <div class="card-footer">
+            <!-- <p-button (onClick)="onGenerate()" [disabled]="!inputText.trim()">
+                <i class="material-icons">tag</i> {{ 'hash.hash' | translate }}
+            </p-button> -->
+            <p-button (onClick)="onGenerateAll()" [disabled]="!inputText.trim()">
+                <i class="material-icons">layers</i> {{ 'hash.hashAll' | translate }}
+            </p-button>
+            <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate" [disabled]="!inputText.trim() && !results.length"></p-button>
         </div>
-        <ng-template #footer *ngIf="results.length > 1">
-            <div class="card-footer">
-                <p-button [text]="true" (onClick)="onCopyAll()">
-                    <i class="material-icons">content_copy</i> {{ 'common.copyAll' | translate }}
-                </p-button>
-            </div>
-        </ng-template>
-    </p-card>
-</div>
+    </ng-template>
+</p-card>
+
+<p-card [header]="'common.output' | translate" *ngIf="results.length">
+    <div class="hash-list">
+        <div class="hash-item" *ngFor="let r of results" (click)="onCopy(r.hash)">
+            <span class="hash-algo">{{r.algorithm}}</span>
+            <span class="hash-value">{{r.hash}}</span>
+            <i class="material-icons copy-icon">content_copy</i>
+        </div>
+    </div>
+    <ng-template #footer *ngIf="results.length > 1">
+        <div class="card-footer">
+            <p-button [text]="true" (onClick)="onCopyAll()">
+                <i class="material-icons">content_copy</i> {{ 'common.copyAll' | translate }}
+            </p-button>
+        </div>
+    </ng-template>
+</p-card>

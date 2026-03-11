@@ -10,7 +10,9 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { SelectButton } from 'primeng/selectbutton';
 import { SelectModule } from 'primeng/select';
 import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SettingsComponent } from '../../content/settings/settings.component';
+import { SettingsService } from '../../_shared/settings.service';
 
 const MIME_EXTENSIONS: Record<string, string[]> = {
     'image/png': ['png'],
@@ -62,7 +64,13 @@ export class Base64FileToolComponent {
         { label: 'Decode', value: 'decode' }
     ];
 
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor(
+        private cdr: ChangeDetectorRef,
+        private translateService: TranslateService,
+        private settingsService: SettingsService,
+    ) {
+        this.settingsService.toolTitle = translateService.instant('base64-file');
+    }
 
     // Encode
     selectedFile: File | null = null;

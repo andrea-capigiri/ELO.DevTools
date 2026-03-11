@@ -1,96 +1,85 @@
-<p-toolbar>
-    <ng-template #start>
-        <p-button [text]="true" [rounded]="true" routerLink="/">
-            <i class="material-icons">arrow_back</i>
-        </p-button>
-        <span class="toolbar-title">{{ 'tool.flex-preview' | translate }}</span>
+<!-- Controls -->
+<p-card>
+    <div class="controls">
+        <div class="control-group">
+            <label class="control-label">{{ 'flex.direction' | translate }}</label>
+            <p-selectbutton [options]="directions" [(ngModel)]="direction" optionLabel="label" optionValue="value"></p-selectbutton>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">{{ 'flex.wrap' | translate }}</label>
+            <p-selectbutton [options]="wraps" [(ngModel)]="wrap" optionLabel="label" optionValue="value"></p-selectbutton>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">{{ 'flex.justifyContent' | translate }}</label>
+            <p-selectbutton [options]="justifyOptions" [(ngModel)]="justify" optionValue="value">
+                <ng-template #item let-item>
+                    <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
+                </ng-template>
+            </p-selectbutton>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">{{ 'flex.alignItems' | translate }}</label>
+            <p-selectbutton [options]="alignOptions" [(ngModel)]="align" optionValue="value">
+                <ng-template #item let-item>
+                    <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
+                </ng-template>
+            </p-selectbutton>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">{{ 'flex.gap' | translate }}</label>
+            <p-selectbutton [options]="gapOptions" [(ngModel)]="gap" optionLabel="label" optionValue="value"></p-selectbutton>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">{{ 'flex.items' | translate }} ({{itemCount}})</label>
+            <div class="item-count-controls">
+                <p-button [text]="true" [rounded]="true" (onClick)="removeItem()" [disabled]="itemCount <= 1">
+                    <i class="material-icons">remove</i>
+                </p-button>
+                <p-button [text]="true" [rounded]="true" (onClick)="addItem()" [disabled]="itemCount >= 12">
+                    <i class="material-icons">add</i>
+                </p-button>
+            </div>
+        </div>
+    </div>
+</p-card>
+
+<!-- Preview -->
+<p-card [header]="'common.preview' | translate" class="preview-area-card">
+    <div class="preview-area" [ngStyle]="previewStyle">
+        @for (item of items; track item) {
+            <div class="preview-box" [class.tall]="item % 3 === 0" [class.short]="item % 3 === 1">
+                {{item}}
+            </div>
+        }
+    </div>
+</p-card>
+
+<!-- Output classes -->
+<p-card [header]="'flex.bootstrapClasses' | translate">
+    <div class="code-block">
+        <code>{{bootstrapClasses}}</code>
+    </div>
+    <ng-template #footer>
+        <div class="card-footer">
+            <p-button [text]="true" (onClick)="onCopy(bootstrapClasses)">
+                <i class="material-icons">content_copy</i> {{ 'flex.copyClasses' | translate }}
+            </p-button>
+        </div>
     </ng-template>
-</p-toolbar>
+</p-card>
 
-<div class="tool-container">
-    <!-- Controls -->
-    <p-card>
-        <div class="controls">
-            <div class="control-group">
-                <label class="control-label">{{ 'flex.direction' | translate }}</label>
-                <p-selectbutton [options]="directions" [(ngModel)]="direction" optionLabel="label" optionValue="value"></p-selectbutton>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ 'flex.wrap' | translate }}</label>
-                <p-selectbutton [options]="wraps" [(ngModel)]="wrap" optionLabel="label" optionValue="value"></p-selectbutton>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ 'flex.justifyContent' | translate }}</label>
-                <p-selectbutton [options]="justifyOptions" [(ngModel)]="justify" optionValue="value">
-                    <ng-template #item let-item>
-                        <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
-                    </ng-template>
-                </p-selectbutton>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ 'flex.alignItems' | translate }}</label>
-                <p-selectbutton [options]="alignOptions" [(ngModel)]="align" optionValue="value">
-                    <ng-template #item let-item>
-                        <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
-                    </ng-template>
-                </p-selectbutton>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ 'flex.gap' | translate }}</label>
-                <p-selectbutton [options]="gapOptions" [(ngModel)]="gap" optionLabel="label" optionValue="value"></p-selectbutton>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">{{ 'flex.items' | translate }} ({{itemCount}})</label>
-                <div class="item-count-controls">
-                    <p-button [text]="true" [rounded]="true" (onClick)="removeItem()" [disabled]="itemCount <= 1">
-                        <i class="material-icons">remove</i>
-                    </p-button>
-                    <p-button [text]="true" [rounded]="true" (onClick)="addItem()" [disabled]="itemCount >= 12">
-                        <i class="material-icons">add</i>
-                    </p-button>
-                </div>
-            </div>
+<p-card [header]="'flex.css' | translate">
+    <pre class="code-block"><code>{{cssCode}}</code></pre>
+    <ng-template #footer>
+        <div class="card-footer">
+            <p-button [text]="true" (onClick)="onCopy(cssCode)">
+                <i class="material-icons">content_copy</i> {{ 'flex.copyCss' | translate }}
+            </p-button>
         </div>
-    </p-card>
-
-    <!-- Preview -->
-    <p-card [header]="'common.preview' | translate" class="preview-area-card">
-        <div class="preview-area" [ngStyle]="previewStyle">
-            @for (item of items; track item) {
-                <div class="preview-box" [class.tall]="item % 3 === 0" [class.short]="item % 3 === 1">
-                    {{item}}
-                </div>
-            }
-        </div>
-    </p-card>
-
-    <!-- Output classes -->
-    <p-card [header]="'flex.bootstrapClasses' | translate">
-        <div class="code-block">
-            <code>{{bootstrapClasses}}</code>
-        </div>
-        <ng-template #footer>
-            <div class="card-footer">
-                <p-button [text]="true" (onClick)="onCopy(bootstrapClasses)">
-                    <i class="material-icons">content_copy</i> {{ 'flex.copyClasses' | translate }}
-                </p-button>
-            </div>
-        </ng-template>
-    </p-card>
-
-    <p-card [header]="'flex.css' | translate">
-        <pre class="code-block"><code>{{cssCode}}</code></pre>
-        <ng-template #footer>
-            <div class="card-footer">
-                <p-button [text]="true" (onClick)="onCopy(cssCode)">
-                    <i class="material-icons">content_copy</i> {{ 'flex.copyCss' | translate }}
-                </p-button>
-            </div>
-        </ng-template>
-    </p-card>
-</div>
+    </ng-template>
+</p-card>

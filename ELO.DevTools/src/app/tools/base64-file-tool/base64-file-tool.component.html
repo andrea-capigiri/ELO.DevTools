@@ -1,134 +1,123 @@
-<p-toolbar>
-    <ng-template #start>
-        <p-button [text]="true" [rounded]="true" routerLink="/">
-            <i class="material-icons">arrow_back</i>
-        </p-button>
-        <span class="toolbar-title">{{ 'tool.base64-file' | translate }}</span>
-    </ng-template>
-</p-toolbar>
+<!-- Mode toggle at top -->
+<p-card>
+    <div class="mode-row">
+        <p-selectbutton [options]="modeOptions" [(ngModel)]="mode" optionLabel="label" optionValue="value" (onChange)="onClear()"></p-selectbutton>
+    </div>
+</p-card>
 
-<div class="tool-container">
-    <!-- Mode toggle at top -->
-    <p-card>
-        <div class="mode-row">
-            <p-selectbutton [options]="modeOptions" [(ngModel)]="mode" optionLabel="label" optionValue="value" (onChange)="onClear()"></p-selectbutton>
+<!-- ENCODE MODE -->
+<ng-container *ngIf="mode === 'encode'">
+    <p-card [header]="'base64file.file' | translate">
+        <div class="file-drop-zone"
+                [class.drag-over]="dragOver"
+                (dragover)="onDragOver($event)"
+                (dragleave)="onDragLeave($event)"
+                (drop)="onDrop($event)">
+            <input type="file"
+                    id="file-input"
+                    (change)="onFileSelected($event)"
+                    class="file-input">
+            <div class="drop-zone-content" *ngIf="!selectedFile">
+                <i class="material-icons">cloud_upload</i>
+                <p>{{ 'base64file.dragDrop' | translate }}</p>
+            </div>
+            <div class="selected-file" *ngIf="selectedFile">
+                <i class="material-icons">insert_drive_file</i>
+                <span>{{selectedFile.name}}</span>
+                <span class="file-size">({{selectedFile.size | number}} bytes)</span>
+            </div>
         </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button (onClick)="onEncodeFile()"
+                            [disabled]="!selectedFile || isProcessing">
+                    <i class="material-icons">lock</i>
+                    {{isProcessing ? ('base64.encoding' | translate) : ('common.encode' | translate)}}
+                </p-button>
+                <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate"
+                            [disabled]="!selectedFile && !base64Output"></p-button>
+            </div>
+        </ng-template>
     </p-card>
 
-    <!-- ENCODE MODE -->
-    <ng-container *ngIf="mode === 'encode'">
-        <p-card [header]="'base64file.file' | translate">
-            <div class="file-drop-zone"
-                 [class.drag-over]="dragOver"
-                 (dragover)="onDragOver($event)"
-                 (dragleave)="onDragLeave($event)"
-                 (drop)="onDrop($event)">
-                <input type="file"
-                       id="file-input"
-                       (change)="onFileSelected($event)"
-                       class="file-input">
-                <div class="drop-zone-content" *ngIf="!selectedFile">
-                    <i class="material-icons">cloud_upload</i>
-                    <p>{{ 'base64file.dragDrop' | translate }}</p>
-                </div>
-                <div class="selected-file" *ngIf="selectedFile">
-                    <i class="material-icons">insert_drive_file</i>
-                    <span>{{selectedFile.name}}</span>
-                    <span class="file-size">({{selectedFile.size | number}} bytes)</span>
-                </div>
+    <p-card [header]="'base64file.base64Output' | translate" *ngIf="base64Output">
+        <textarea pTextarea
+                    [readonly]="true"
+                    [value]="base64Output"
+                    rows="10"
+                    class="w-full"></textarea>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button [text]="true" (onClick)="onCopyBase64()">
+                    <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
+                </p-button>
             </div>
-            <ng-template #footer>
-                <div class="card-footer">
-                    <p-button (onClick)="onEncodeFile()"
-                              [disabled]="!selectedFile || isProcessing">
-                        <i class="material-icons">lock</i>
-                        {{isProcessing ? ('base64.encoding' | translate) : ('common.encode' | translate)}}
-                    </p-button>
-                    <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate"
-                              [disabled]="!selectedFile && !base64Output"></p-button>
-                </div>
-            </ng-template>
-        </p-card>
+        </ng-template>
+    </p-card>
+</ng-container>
 
-        <p-card [header]="'base64file.base64Output' | translate" *ngIf="base64Output">
-            <textarea pTextarea
-                      [readonly]="true"
-                      [value]="base64Output"
-                      rows="10"
-                      class="w-full"></textarea>
-            <ng-template #footer>
-                <div class="card-footer">
-                    <p-button [text]="true" (onClick)="onCopyBase64()">
-                        <i class="material-icons">content_copy</i> {{ 'common.copy' | translate }}
-                    </p-button>
-                </div>
-            </ng-template>
-        </p-card>
-    </ng-container>
-
-    <!-- DECODE MODE -->
-    <ng-container *ngIf="mode === 'decode'">
-        <p-card [header]="'base64file.base64Input' | translate">
-            <textarea pTextarea
-                      [placeholder]="'base64file.pasteBase64' | translate"
-                      [(ngModel)]="base64Input"
-                      rows="10"
-                      class="w-full"></textarea>
-            <ng-template #footer>
-                <div class="card-footer">
-                    <p-button (onClick)="onDecodeBase64()"
-                              [disabled]="!base64Input.trim() || isProcessing">
-                        <i class="material-icons">lock_open</i>
-                        {{isProcessing ? ('base64.decoding' | translate) : ('common.decode' | translate)}}
-                    </p-button>
-                    <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate"
-                              [disabled]="!base64Input.trim() && !decodedContent"></p-button>
-                </div>
-            </ng-template>
-        </p-card>
-
-        <p-card [header]="'base64file.decodedOutput' | translate" *ngIf="decodedContent">
-            <div class="decoded-info">
-                <span><strong>{{ 'common.detectedType' | translate }}:</strong> {{decodedFileType}}</span>
-                <span><strong>{{ 'common.size' | translate }}:</strong> {{decodedSize | number}} bytes</span>
+<!-- DECODE MODE -->
+<ng-container *ngIf="mode === 'decode'">
+    <p-card [header]="'base64file.base64Input' | translate">
+        <textarea pTextarea
+                    [placeholder]="'base64file.pasteBase64' | translate"
+                    [(ngModel)]="base64Input"
+                    rows="10"
+                    class="w-full"></textarea>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button (onClick)="onDecodeBase64()"
+                            [disabled]="!base64Input.trim() || isProcessing">
+                    <i class="material-icons">lock_open</i>
+                    {{isProcessing ? ('base64.decoding' | translate) : ('common.decode' | translate)}}
+                </p-button>
+                <p-button [text]="true" (onClick)="onClear()" [label]="'common.clear' | translate"
+                            [disabled]="!base64Input.trim() && !decodedContent"></p-button>
             </div>
+        </ng-template>
+    </p-card>
 
-            <!-- Preview for images -->
-            <div class="image-preview" *ngIf="isImage">
-                <img [src]="decodedDataUrl" alt="Preview">
+    <p-card [header]="'base64file.decodedOutput' | translate" *ngIf="decodedContent">
+        <div class="decoded-info">
+            <span><strong>{{ 'common.detectedType' | translate }}:</strong> {{decodedFileType}}</span>
+            <span><strong>{{ 'common.size' | translate }}:</strong> {{decodedSize | number}} bytes</span>
+        </div>
+
+        <!-- Preview for images -->
+        <div class="image-preview" *ngIf="isImage">
+            <img [src]="decodedDataUrl" alt="Preview">
+        </div>
+
+        <!-- Preview for text -->
+        <textarea pTextarea *ngIf="isText"
+                    [readonly]="true"
+                    [value]="decodedContent"
+                    rows="10"
+                    class="w-full"></textarea>
+
+        <div class="download-section">
+            <label class="setting-label">{{ 'common.download' | translate }}</label>
+            <div class="download-row">
+                <p-floatlabel variant="on" class="filename-field">
+                    <input pInputText [(ngModel)]="downloadFilename" id="downloadFilename" class="w-full">
+                    <label for="downloadFilename">{{ 'base64file.fileName' | translate }}</label>
+                </p-floatlabel>
+                <p-select *ngIf="!isCustomExtension" [options]="availableExtensions" [(ngModel)]="downloadExtension" class="format-field"></p-select>
+                <p-floatlabel variant="on" class="format-field" *ngIf="isCustomExtension">
+                    <input pInputText [(ngModel)]="downloadExtension" id="downloadExtension" [placeholder]="'base64file.extensionPlaceholder' | translate" class="w-full">
+                    <label for="downloadExtension">{{ 'base64file.extension' | translate }}</label>
+                </p-floatlabel>
+                <p-button (onClick)="downloadDecodedFile()">
+                    <i class="material-icons">download</i> {{ 'common.download' | translate }}
+                </p-button>
             </div>
-
-            <!-- Preview for text -->
-            <textarea pTextarea *ngIf="isText"
-                      [readonly]="true"
-                      [value]="decodedContent"
-                      rows="10"
-                      class="w-full"></textarea>
-
-            <div class="download-section">
-                <label class="setting-label">{{ 'common.download' | translate }}</label>
-                <div class="download-row">
-                    <p-floatlabel variant="on" class="filename-field">
-                        <input pInputText [(ngModel)]="downloadFilename" id="downloadFilename" class="w-full">
-                        <label for="downloadFilename">{{ 'base64file.fileName' | translate }}</label>
-                    </p-floatlabel>
-                    <p-select *ngIf="!isCustomExtension" [options]="availableExtensions" [(ngModel)]="downloadExtension" class="format-field"></p-select>
-                    <p-floatlabel variant="on" class="format-field" *ngIf="isCustomExtension">
-                        <input pInputText [(ngModel)]="downloadExtension" id="downloadExtension" [placeholder]="'base64file.extensionPlaceholder' | translate" class="w-full">
-                        <label for="downloadExtension">{{ 'base64file.extension' | translate }}</label>
-                    </p-floatlabel>
-                    <p-button (onClick)="downloadDecodedFile()">
-                        <i class="material-icons">download</i> {{ 'common.download' | translate }}
-                    </p-button>
-                </div>
+        </div>
+        <ng-template #footer>
+            <div class="card-footer">
+                <p-button [text]="true" (onClick)="onCopyDecoded()" *ngIf="isText">
+                    <i class="material-icons">content_copy</i> {{ 'common.copyText' | translate }}
+                </p-button>
             </div>
-            <ng-template #footer>
-                <div class="card-footer">
-                    <p-button [text]="true" (onClick)="onCopyDecoded()" *ngIf="isText">
-                        <i class="material-icons">content_copy</i> {{ 'common.copyText' | translate }}
-                    </p-button>
-                </div>
-            </ng-template>
-        </p-card>
-    </ng-container>
-</div>
+        </ng-template>
+    </p-card>
+</ng-container>
