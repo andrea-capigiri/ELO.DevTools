@@ -1,16 +1,15 @@
 :host {
     display: block;
 
-    .home-container {
-        max-width: 800px;
-        margin: 0 auto;
+    .home-header {
         padding: 32px 16px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--gh-border-default);
     }
 
-    .home-header {
-        margin-bottom: 24px;
-        padding-bottom: 16px;
-        border-bottom: 1px solid var(--gh-border-default);
+    .home-container {
+        margin: 0 auto;
+        padding: 32px 16px;
     }
 
     .header-row {
@@ -28,6 +27,7 @@
         border-radius: var(--gh-radius);
         color: var(--gh-fg-muted);
         transition: all 0.15s;
+        text-decoration: none;
 
         &:hover {
             background-color: var(--gh-canvas-subtle);

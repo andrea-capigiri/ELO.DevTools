@@ -1,16 +1,15 @@
-<div class="home-container">
-    <header class="home-header">
-        <div class="header-row">
-            <div>
-                <h1 class="home-title">{{'app.title' | translate}}</h1>
-                <p class="home-subtitle">Strumenti per sviluppatori</p>
-            </div>
-            <a class="settings-btn" routerLink="/settings">
-                <i class="material-icons">settings</i>
-            </a>
+<header class="home-header">
+    <div class="header-row">
+        <div>
+            <h1 class="home-title">{{'app.title' | translate}}</h1>
+            <p class="home-subtitle">Strumenti per sviluppatori</p>
         </div>
-    </header>
-
+        <a class="settings-btn" routerLink="/settings">
+            <i class="material-icons">settings</i>
+        </a>
+    </div>
+</header>
+<div class="home-container">
     <div class="tools-list">
         @for (tool of tools; track tool.route) {
             <a class="tool-card" [routerLink]="tool.route">

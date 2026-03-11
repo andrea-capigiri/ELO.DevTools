@@ -4,29 +4,34 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export interface ToolSetting {
     id: string;
     titleKey: string;
+    descriptionKey: string;
     icon: string;
+    route: string;
+    order: number;
+    defaultEnabled: boolean;
     enabled: boolean;
+    isNew?: boolean;
 }
 
 const STORAGE_KEY = 'elo-devtools-settings';
 
-const DEFAULT_TOOLS: ToolSetting[] = [
-    { id: 'base64', titleKey: 'tool.base64', icon: 'code', enabled: true },
-    { id: 'base64-file', titleKey: 'tool.base64-file', icon: 'insert_drive_file', enabled: true },
-    { id: 'url', titleKey: 'tool.url', icon: 'link', enabled: true },
-    { id: 'guid', titleKey: 'tool.guid', icon: 'fingerprint', enabled: true },
-    { id: 'hash', titleKey: 'tool.hash', icon: 'security', enabled: true },
-    { id: 'timestamp', titleKey: 'tool.timestamp', icon: 'schedule', enabled: true },
-    { id: 'jwt', titleKey: 'tool.jwt', icon: 'schedule', enabled: true },
-    { id: 'flex-preview', titleKey: 'tool.flex-preview', icon: 'dashboard', enabled: true },
-    { id: 'codice-fiscale', titleKey: 'tool.codice-fiscale', icon: 'badge', enabled: false },
-    { id: 'generatore-dati', titleKey: 'tool.generatore-dati', icon: 'group_add', enabled: false },
-    { id: 'iban', titleKey: 'tool.iban', icon: 'account_balance', enabled: true },
+export const ALL_TOOLS: ToolSetting[] = [
+    { id: 'base64',          titleKey: 'tool.base64',          descriptionKey: 'tool.base64.desc',          icon: 'code',              route: '/tools/base64',          order: 1,  defaultEnabled: true  , enabled: true  },
+    { id: 'base64-file',     titleKey: 'tool.base64-file',     descriptionKey: 'tool.base64-file.desc',     icon: 'insert_drive_file', route: '/tools/base64-file',     order: 2,  defaultEnabled: true  , enabled: true  },
+    { id: 'url',             titleKey: 'tool.url',             descriptionKey: 'tool.url.desc',             icon: 'link',              route: '/tools/url',             order: 3,  defaultEnabled: true  , enabled: true  },
+    { id: 'guid',            titleKey: 'tool.guid',            descriptionKey: 'tool.guid.desc',            icon: 'fingerprint',       route: '/tools/guid',            order: 4,  defaultEnabled: true  , enabled: true  },
+    { id: 'hash',            titleKey: 'tool.hash',            descriptionKey: 'tool.hash.desc',            icon: 'security',          route: '/tools/hash',            order: 5,  defaultEnabled: true  , enabled: true  },
+    { id: 'timestamp',       titleKey: 'tool.timestamp',       descriptionKey: 'tool.timestamp.desc',       icon: 'schedule',          route: '/tools/timestamp',       order: 6,  defaultEnabled: true  , enabled: true  },
+    { id: 'jwt',             titleKey: 'tool.jwt',             descriptionKey: 'tool.jwt.desc',             icon: 'schedule',          route: '/tools/jwt',             order: 7,  defaultEnabled: true  , enabled: true  },
+    { id: 'flex-preview',    titleKey: 'tool.flex-preview',    descriptionKey: 'tool.flex-preview.desc',    icon: 'dashboard',         route: '/tools/flex-preview',    order: 8,  defaultEnabled: true  , enabled: true  },
+    { id: 'iban',            titleKey: 'tool.iban',            descriptionKey: 'tool.iban.desc',            icon: 'account_balance',   route: '/tools/iban',            order: 9,  defaultEnabled: true  , enabled: true,  isNew: true },
+    { id: 'codice-fiscale',  titleKey: 'tool.codice-fiscale',  descriptionKey: 'tool.codice-fiscale.desc',  icon: 'badge',             route: '/tools/codice-fiscale',  order: 10, defaultEnabled: false , enabled: false },
+    { id: 'generatore-dati', titleKey: 'tool.generatore-dati', descriptionKey: 'tool.generatore-dati.desc', icon: 'group_add',         route: '/tools/generatore-dati', order: 11, defaultEnabled: false , enabled: false },
 ];
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-    private toolsSubject = new BehaviorSubject<ToolSetting[]>(DEFAULT_TOOLS);
+    private toolsSubject = new BehaviorSubject<ToolSetting[]>(ALL_TOOLS);
     tools$: Observable<ToolSetting[]> = this.toolsSubject.asObservable();
 
     constructor() {
@@ -53,9 +58,9 @@ export class SettingsService {
 
     private mergeSettings(saved: Partial<ToolSetting>[]): void {
         const savedMap = new Map(saved.map(s => [s.id, s.enabled]));
-        const merged = DEFAULT_TOOLS.map(tool => ({
+        const merged = ALL_TOOLS.map((tool: ToolSetting) => ({
             ...tool,
-            enabled: savedMap.has(tool.id) ? savedMap.get(tool.id)! : tool.enabled
+            enabled: savedMap.has(tool.id) ? savedMap.get(tool.id)! : tool.defaultEnabled
         }));
         this.toolsSubject.next(merged);
     }
@@ -107,7 +112,8 @@ export class SettingsService {
     }
 
     resetDefaults(): void {
-        this.toolsSubject.next([...DEFAULT_TOOLS]);
-        this.save(DEFAULT_TOOLS);
+        const defaults = ALL_TOOLS.map(t => ({ ...t, enabled: t.defaultEnabled }));
+        this.toolsSubject.next(defaults);
+        this.save(defaults);
     }
 }

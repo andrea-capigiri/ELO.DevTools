@@ -77,8 +77,8 @@ export class FlexPreviewToolComponent {
     wrap = 'nowrap';
     justify = 'flex-start';
     align = 'stretch';
-    gap = '1rem';
-    itemCount = 5;
+    gap = '0.25rem';
+    itemCount = 3;
 
     get previewStyle(): Record<string, string> {
         return {

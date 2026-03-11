@@ -102,6 +102,8 @@
         "expired": "EXPIRED",
         "valid": "VALID",
         "signatureHint": "Signature verified with the server's public keys",
+        "decode": "Decode",
+        "claims": "Claims",
         "invalidJwt": "Invalid JWT: must contain 3 parts",
         "parseError": "Error parsing JWT"
     },
@@ -176,7 +178,7 @@
     "generatoreDati": {
         "tipoGenerazione": "Generation Type",
         "personaFisica": "Individual",
-        "impresaIndividuale": "Sole Proprietorship",
+        "impresaIndividuale": "Individual Entrepreneurship",
         "impresa": "Company",
         "genera": "Generate",
         "rigenera": "Regenerate",
@@ -195,7 +197,7 @@
         "via": "Street",
         "cap": "Postal Code",
         "comune": "Municipality",
-        "datiImpresaIndividuale": "Sole Proprietorship Data",
+        "datiImpresaIndividuale": "Individual Entrepreneurship Data",
         "partitaIva": "VAT Number",
         "rea": "REA",
         "formaGiuridica": "Legal Form",

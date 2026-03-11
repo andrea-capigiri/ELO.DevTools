@@ -7,7 +7,6 @@ import { JwtToolComponent } from './tools/jwt-tool/jwt-tool.component';
 import { UrlToolComponent } from './tools/url-tool/url-tool.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'tools/base64', component: Base64ToolComponent },
     { path: 'tools/base64-file', component: Base64FileToolComponent },
@@ -17,37 +16,38 @@ export const routes: Routes = [
     {
         path: 'tools/codice-fiscale',
         loadComponent: () => import('./tools/codice-fiscale-tool/codice-fiscale-tool.component')
-            .then(m => m.CodiceFiscaleToolComponent)
+        .then(m => m.CodiceFiscaleToolComponent)
     },
     {
         path: 'tools/timestamp',
         loadComponent: () => import('./tools/timestamp-tool/timestamp-tool.component')
-            .then(m => m.TimestampToolComponent)
+        .then(m => m.TimestampToolComponent)
     },
     {
         path: 'tools/generatore-dati',
         loadComponent: () => import('./tools/generatore-dati-tool/generatore-dati-tool.component')
-            .then(m => m.GeneratoreDatiToolComponent)
+        .then(m => m.GeneratoreDatiToolComponent)
     },
     {
         path: 'tools/hash',
         loadComponent: () => import('./tools/hash-tool/hash-tool.component')
-            .then(m => m.HashToolComponent)
+        .then(m => m.HashToolComponent)
     },
     {
         path: 'tools/flex-preview',
         loadComponent: () => import('./tools/flex-preview-tool/flex-preview-tool.component')
-            .then(m => m.FlexPreviewToolComponent)
+        .then(m => m.FlexPreviewToolComponent)
     },
     {
         path: 'tools/iban',
         loadComponent: () => import('./tools/iban-tool/iban-tool.component')
-            .then(m => m.IbanToolComponent)
+        .then(m => m.IbanToolComponent)
     },
     {
         path: 'settings',
         loadComponent: () => import('./settings/settings.component')
-            .then(m => m.SettingsComponent)
+        .then(m => m.SettingsComponent)
     },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', redirectTo: '/home' }
 ];

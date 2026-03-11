@@ -1,0 +1,23 @@
+:host {
+    .footer-container {
+        text-align: center;
+        padding: 14px;
+        color: var(--gh-fg-muted);
+        font-size: 13px;
+        text-decoration: none;
+
+        a {
+            font-size: 0.75rem;
+            padding: 0 4px;
+            color: #b3b3b3;
+            text-decoration: none;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+
+            &:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+        }
+    }
+}

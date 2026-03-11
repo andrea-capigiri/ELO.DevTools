@@ -102,6 +102,8 @@
         "expired": "SCADUTO",
         "valid": "VALIDO",
         "signatureHint": "Signature verificata con le chiavi pubbliche del server",
+        "decode": "Decodifica",
+        "claims": "Claim",
         "invalidJwt": "JWT invalido: deve contenere 3 parti",
         "parseError": "Errore nel parsing del JWT"
     },

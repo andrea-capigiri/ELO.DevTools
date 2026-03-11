@@ -50,8 +50,14 @@ export class JwtToolComponent {
     inputText: string = '';
     decodedJwt: DecodedJwt | null = null;
     error: string = '';
+    jwtParts: string[] = ['', '', ''];
 
     constructor(private utilityService: UtilityService, private translate: TranslateService) { }
+
+    onInputChange(): void {
+        const parts = this.inputText.split('.');
+        this.jwtParts = [parts[0] ?? '', parts[1] ?? '', parts[2] ?? ''];
+    }
 
     onDecode(): void {
         this.error = '';
@@ -98,6 +104,7 @@ export class JwtToolComponent {
         this.inputText = '';
         this.decodedJwt = null;
         this.error = '';
+        this.jwtParts = ['', '', ''];
     }
 
     onCopy(text: string): void {
