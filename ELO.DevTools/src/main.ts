@@ -11,45 +11,45 @@ import { routes } from './app/app.routes';
 
 const LANGUAGE_KEY = 'elo-devtools-language';
 
-function getSavedLanguage(): string {
-    try {
-        if (typeof chrome !== 'undefined' && chrome.storage?.local) {
-            chrome.storage.local.get(LANGUAGE_KEY, (result) => {
-                if (result[LANGUAGE_KEY]) {
-                    return result[LANGUAGE_KEY];
-                }
-            });
-        } else {
-            const stored = localStorage.getItem(LANGUAGE_KEY);
-            if (stored === 'en' || stored === 'it') {
-                return stored;
+function getSavedLanguage(): Promise<string> {
+    return new Promise((resolve) => {
+        try {
+            if (typeof chrome !== 'undefined' && chrome.storage?.local) {
+                chrome.storage.local.get(LANGUAGE_KEY, (result) => {
+                    const lang = result[LANGUAGE_KEY];
+                    resolve(lang === 'en' || lang === 'it' ? lang : 'en');
+                });
+            } else {
+                const stored = localStorage.getItem(LANGUAGE_KEY);
+                resolve(stored === 'en' || stored === 'it' ? stored : 'en');
             }
+        } catch {
+            resolve('en');
         }
-    } catch {
-        // Use default
-    }
-    return 'en';
+    });
 }
 
-bootstrapApplication(AppComponent, {
-    providers: [
-        provideAnimationsAsync(),
-        providePrimeNG({
-            theme: {
-                preset: Aura
-            },
-            ripple: false
-        }),
-        provideRouter(routes),
-        provideHttpClient(),
-        provideTranslateService({
-            lang: getSavedLanguage(),
-            fallbackLang: 'en'
-        }),
-        provideTranslateHttpLoader({
-            prefix: './assets/i18n/',
-            suffix: '.json'
-        })
-    ]
-})
-    .catch((err) => console.error(err));
+getSavedLanguage().then((lang) => {
+    bootstrapApplication(AppComponent, {
+        providers: [
+            provideAnimationsAsync(),
+            providePrimeNG({
+                theme: {
+                    preset: Aura
+                },
+                ripple: false
+            }),
+            provideRouter(routes),
+            provideHttpClient(),
+            provideTranslateService({
+                lang,
+                fallbackLang: 'en'
+            }),
+            provideTranslateHttpLoader({
+                prefix: './assets/i18n/',
+                suffix: '.json'
+            })
+        ]
+    })
+        .catch((err) => console.error(err));
+});

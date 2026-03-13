@@ -14,7 +14,8 @@
   "offline_enabled": true,
   "permissions": [
     "sidePanel",
-    "storage"
+    "storage",
+    "tabs"
   ],
   "side_panel": {
     "default_path": "index.html"

@@ -11,6 +11,9 @@ import { Divider } from 'primeng/divider';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GeneratoreDatiService } from '../../_shared/generatore-dati.service';
 import { TipoGenerazione, PersonaFisica, ImpresaIndividuale, Impresa } from '../../_shared/generatore-dati.models';
+import { HistoryService } from '../../_shared/history.service';
+
+const TOOL_ID = 'generatore-dati';
 
 interface StoricoEntry {
     tipo: TipoGenerazione;
@@ -44,9 +47,17 @@ export class GeneratoreDatiToolComponent implements OnInit {
 
     tipoOptions: { label: string; value: string }[] = [];
 
-    constructor(private generatore: GeneratoreDatiService, private translate: TranslateService) {}
+    constructor(
+        private generatore: GeneratoreDatiService,
+        private translate: TranslateService,
+        private historyService: HistoryService
+    ) {}
 
     ngOnInit(): void {
+        this.storico = this.historyService.load<StoricoEntry>(TOOL_ID).map(e => ({
+            ...e,
+            timestamp: new Date(e.timestamp)
+        }));
         this.tipoOptions = [
             { label: this.translate.instant('generatoreDati.personaFisica'), value: 'persona_fisica' },
             { label: this.translate.instant('generatoreDati.impresaIndividuale'), value: 'impresa_individuale' },
@@ -67,15 +78,13 @@ export class GeneratoreDatiToolComponent implements OnInit {
                 break;
         }
         if (this.risultato) {
-            this.storico.unshift({
+            const entry: StoricoEntry = {
                 tipo: this.tipo,
                 dato: this.risultato,
                 etichetta: this.buildEtichetta(this.tipo, this.risultato),
                 timestamp: new Date()
-            });
-            if (this.storico.length > 5) {
-                this.storico = this.storico.slice(0, 5);
-            }
+            };
+            this.storico = this.historyService.push(TOOL_ID, entry);
         }
     }
 

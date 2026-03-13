@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Toolbar } from 'primeng/toolbar';
@@ -8,6 +8,9 @@ import { SelectButton } from 'primeng/selectbutton';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from '../../_shared/utility.service';
+import { HistoryService } from '../../_shared/history.service';
+
+const TOOL_ID = 'guid';
 
 @Component({
   selector: 'app-guid-tool',
@@ -25,7 +28,7 @@ import { UtilityService } from '../../_shared/utility.service';
   templateUrl: './guid-tool.component.html',
   styleUrls: ['./guid-tool.component.scss']
 })
-export class GuidToolComponent {
+export class GuidToolComponent implements OnInit {
   currentGuid: string = '';
   guidHistory: string[] = [];
   format: 'uppercase' | 'lowercase' = 'uppercase';
@@ -41,16 +44,16 @@ export class GuidToolComponent {
     { label: 'lowercase', value: 'lowercase' }
   ];
 
-  constructor(private utilityService: UtilityService) {}
+  constructor(private utilityService: UtilityService, private historyService: HistoryService) {}
+
+  ngOnInit(): void {
+    this.guidHistory = this.historyService.load<string>(TOOL_ID);
+  }
 
   onGenerate(): void {
     const guid = this.utilityService.generateMultipleGuids(1, this.version)[0];
     this.currentGuid = this.format === 'uppercase' ? guid.toUpperCase() : guid.toLowerCase();
-    this.guidHistory.unshift(this.currentGuid);
-
-    if (this.guidHistory.length > 50) {
-      this.guidHistory = this.guidHistory.slice(0, 50);
-    }
+    this.guidHistory = this.historyService.push(TOOL_ID, this.currentGuid);
   }
 
   onCopy(guid: string): void {
@@ -73,10 +76,6 @@ export class GuidToolComponent {
         this.currentGuid.toUpperCase() :
         this.currentGuid.toLowerCase();
     }
-
-    this.guidHistory = this.guidHistory.map(guid =>
-      this.format === 'uppercase' ? guid.toUpperCase() : guid.toLowerCase()
-    );
   }
 
 }

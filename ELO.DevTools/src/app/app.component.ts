@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { Title } from '@angular/platform-browser';
+import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 import manifest from '../manifest.json';
 
 @Component({
@@ -11,8 +13,10 @@ import manifest from '../manifest.json';
     imports: [
         CommonModule,
         FooterComponent,
-        RouterOutlet
+        RouterOutlet,
+        Toast
     ],
+    providers: [MessageService],
     templateUrl: 'app.component.html',
     styleUrls: ['./app.component.scss'],
     animations: []

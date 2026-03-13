@@ -9,7 +9,9 @@ import { ToggleSwitch } from 'primeng/toggleswitch';
 import { SelectModule } from 'primeng/select';
 import { FloatLabel } from 'primeng/floatlabel';
 import { SettingsService, ToolSetting } from '../../_shared/settings.service';
+import { HistoryService } from '../../_shared/history.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import manifest from '../../../manifest.json';
 
@@ -45,7 +47,9 @@ export class SettingsComponent implements OnDestroy {
 
     constructor(
         private settingsService: SettingsService,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private historyService: HistoryService,
+        private messageService: MessageService
     ) {
         this.sub = this.settingsService.tools$.subscribe(tools => {
             this.tools = tools;
@@ -87,16 +91,32 @@ export class SettingsComponent implements OnDestroy {
         }
     }
 
-    clearCache(): void {
-        try {
-            if (typeof chrome !== 'undefined' && chrome.storage?.local) {
-                chrome.storage.local.clear();
-            } else {
-                localStorage.clear();
-            }
-        } catch {
-            // Silently fail
+    openGithub(): void {
+        const url = 'https://github.com/andrea-capigiri/ELO.DevTools';
+        if (typeof chrome !== 'undefined' && chrome.tabs?.create) {
+            chrome.tabs.create({ url });
+        } else {
+            window.open(url, '_blank');
         }
+    }
+
+    openDonate(): void {
+        const url = 'https://www.buymeacoffee.com/andrea.capigiri';
+        if (typeof chrome !== 'undefined' && chrome.tabs?.create) {
+            chrome.tabs.create({ url });
+        } else {
+            window.open(url, '_blank');
+        }
+    }
+
+    clearCache(): void {
+        this.historyService.clearAll();
+        this.messageService.add({
+            severity: 'success',
+            summary: this.translate.instant('settings.clearCache'),
+            detail: this.translate.instant('settings.clearCacheSuccess'),
+            life: 3000
+        });
     }
 
     ngOnDestroy(): void {

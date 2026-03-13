@@ -10,6 +10,9 @@ import { SelectModule } from 'primeng/select';
 import { Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { GeneratedIban, IbanService } from '../../_shared/iban.service';
+import { HistoryService } from '../../_shared/history.service';
+
+const TOOL_ID = 'iban';
 
 @Component({
     selector: 'app-iban-tool',
@@ -37,10 +40,12 @@ export class IbanToolComponent implements OnInit {
 
     constructor(
         private ibanService: IbanService,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private historyService: HistoryService
     ) {}
 
     ngOnInit(): void {
+        this.history = this.historyService.load<GeneratedIban>(TOOL_ID);
         this.buildCountryOptions();
 
         if (this.translate.currentLang === 'it') {
@@ -64,10 +69,7 @@ export class IbanToolComponent implements OnInit {
         const generated = this.ibanService.generate(this.selectedCountry);
         if (generated) {
             this.result = generated;
-            this.history.unshift(generated);
-            if (this.history.length > 10) {
-                this.history = this.history.slice(0, 10);
-            }
+            this.history = this.historyService.push(TOOL_ID, generated);
         }
     }
 
