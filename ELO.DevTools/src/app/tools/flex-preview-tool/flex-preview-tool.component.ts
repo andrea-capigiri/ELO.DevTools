@@ -6,7 +6,6 @@ import { Toolbar } from 'primeng/toolbar';
 import { Card } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SelectButton } from 'primeng/selectbutton';
-import { TooltipModule } from 'primeng/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 
 interface FlexOption {
@@ -27,7 +26,6 @@ interface FlexOption {
         Card,
         ButtonModule,
         SelectButton,
-        TooltipModule,
         TranslateModule
     ],
     templateUrl: './flex-preview-tool.component.html',
@@ -75,8 +73,8 @@ export class FlexPreviewToolComponent {
 
     direction = 'row';
     wrap = 'nowrap';
-    justify = 'flex-start';
-    align = 'stretch';
+    justify = 'center';
+    align = 'center';
     gap = '0.25rem';
     itemCount = 3;
 
@@ -100,8 +98,8 @@ export class FlexPreviewToolComponent {
         const find = (opts: FlexOption[], val: string) => opts.find(o => o.value === val)?.bsClass ?? '';
         classes.push(find(this.directions, this.direction));
         if (this.wrap !== 'nowrap') classes.push(find(this.wraps, this.wrap));
-        if (this.justify !== 'flex-start') classes.push(find(this.justifyOptions, this.justify));
-        if (this.align !== 'stretch') classes.push(find(this.alignOptions, this.align));
+        if (this.justify !== 'center') classes.push(find(this.justifyOptions, this.justify));
+        if (this.align !== 'center') classes.push(find(this.alignOptions, this.align));
         classes.push(find(this.gapOptions, this.gap));
         return classes.filter(Boolean).join(' ');
     }
@@ -110,8 +108,8 @@ export class FlexPreviewToolComponent {
         const lines = ['display: flex;'];
         if (this.direction !== 'row') lines.push(`flex-direction: ${this.direction};`);
         if (this.wrap !== 'nowrap') lines.push(`flex-wrap: ${this.wrap};`);
-        if (this.justify !== 'flex-start') lines.push(`justify-content: ${this.justify};`);
-        if (this.align !== 'stretch') lines.push(`align-items: ${this.align};`);
+        if (this.justify !== 'center') lines.push(`justify-content: ${this.justify};`);
+        if (this.align !== 'center') lines.push(`align-items: ${this.align};`);
         if (this.gap !== '0') lines.push(`gap: ${this.gap};`);
         return lines.join('\n');
     }

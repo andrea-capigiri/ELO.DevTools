@@ -3,7 +3,7 @@ export const environment = {
     destBrowser: 'Google Chrome',
     favoriteEditorPath: 'chrome://bookmarks/',
 
-    appName: 'ELO DevTools',
+    appName: 'ELO.DevTools',
     authorName: 'andreacapigiri.com',
     authorWebsite: 'https://andreacapigiri.com',
     links: {

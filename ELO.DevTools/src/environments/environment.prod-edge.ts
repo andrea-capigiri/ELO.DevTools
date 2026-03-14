@@ -3,7 +3,7 @@ export const environment = {
     destBrowser: 'Microsoft Edge',
     favoriteEditorPath: 'edge://favorites/',
 
-    appName: 'ELO DevTools',
+    appName: 'ELO.DevTools',
     authorName: 'andreacapigiri.com',
     authorWebsite: 'https://andreacapigiri.com',
     links: {

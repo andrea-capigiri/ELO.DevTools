@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "ELO DevTools - Tools for developers",
-  "short_name": "ELO DevTools",
-  "description": "ELO DevTools is a collection of tools for developers.",
-  "version": "1.0.0",
+  "name": "ELO.DevTools - Built for those who build",
+  "short_name": "ELO.DevTools",
+  "description": "Built for those who build",
+  "version": "1.1.0",
   "icons": {
     "16": "assets/logos/favicon.ico",
     "48": "assets/logos/icon-192.png",

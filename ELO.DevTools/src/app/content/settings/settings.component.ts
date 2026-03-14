@@ -39,6 +39,7 @@ export class SettingsComponent implements OnDestroy {
     tools: ToolSetting[] = [];
     currentLanguage: Language = 'en';
     manifest = manifest;
+    year = new Date().getFullYear();
     languages: { value: Language; label: string }[] = [
         { value: 'en', label: 'English' },
         { value: 'it', label: 'Italiano' }

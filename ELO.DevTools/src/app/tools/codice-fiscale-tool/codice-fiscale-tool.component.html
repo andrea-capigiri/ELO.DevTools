@@ -12,34 +12,36 @@
 <!-- CALCOLO -->
 @if (mode === 'calcolo') {
     <p-card [header]="'cf.personalData' | translate">
-        <p-floatlabel variant="on" class="w-full">
-            <input pInputText [(ngModel)]="cognome" [placeholder]="'cf.surnamePlaceholder' | translate" id="cognomeField" class="w-full">
-            <label for="cognomeField">{{ 'cf.surname' | translate }}</label>
-        </p-floatlabel>
+        <div class="form-fields">
+            <p-floatlabel variant="on" class="w-full">
+                <input pInputText [(ngModel)]="cognome" [placeholder]="'cf.surnamePlaceholder' | translate" id="cognomeField" class="w-full">
+                <label for="cognomeField">{{ 'cf.surname' | translate }}</label>
+            </p-floatlabel>
 
-        <p-floatlabel variant="on" class="w-full">
-            <input pInputText [(ngModel)]="nome" [placeholder]="'cf.namePlaceholder' | translate" id="nomeField" class="w-full">
-            <label for="nomeField">{{ 'cf.name' | translate }}</label>
-        </p-floatlabel>
+            <p-floatlabel variant="on" class="w-full">
+                <input pInputText [(ngModel)]="nome" [placeholder]="'cf.namePlaceholder' | translate" id="nomeField" class="w-full">
+                <label for="nomeField">{{ 'cf.name' | translate }}</label>
+            </p-floatlabel>
 
-        <p-floatlabel variant="on" class="w-full">
-            <p-datepicker [(ngModel)]="dataNascita" [showIcon]="true" inputId="dataNascitaField" styleClass="w-full"></p-datepicker>
-            <label for="dataNascitaField">{{ 'cf.birthDate' | translate }}</label>
-        </p-floatlabel>
+            <p-floatlabel variant="on" class="w-full">
+                <p-datepicker [(ngModel)]="dataNascita" [showIcon]="true" inputId="dataNascitaField" styleClass="w-full"></p-datepicker>
+                <label for="dataNascitaField">{{ 'cf.birthDate' | translate }}</label>
+            </p-floatlabel>
 
-        <p-floatlabel variant="on" class="w-full">
-            <p-select [options]="sessoOptions" [(ngModel)]="sesso" optionLabel="label" optionValue="value" inputId="sessoField" styleClass="w-full"></p-select>
-            <label for="sessoField">{{ 'cf.sex' | translate }}</label>
-        </p-floatlabel>
+            <p-floatlabel variant="on" class="w-full">
+                <p-select [options]="sessoOptions" [(ngModel)]="sesso" optionLabel="label" optionValue="value" inputId="sessoField" styleClass="w-full"></p-select>
+                <label for="sessoField">{{ 'cf.sex' | translate }}</label>
+            </p-floatlabel>
 
-        <p-floatlabel variant="on" class="w-full">
-            <p-autocomplete [(ngModel)]="selectedComune" [suggestions]="filteredComuni" (completeMethod)="searchComune($event)" field="nome" [forceSelection]="true" (onSelect)="onComuneSelected($event)" inputId="comuneField" styleClass="w-full">
-                <ng-template #item let-comune>
-                    {{comune.nome}} ({{comune.provincia}})
-                </ng-template>
-            </p-autocomplete>
-            <label for="comuneField">{{ 'cf.birthPlace' | translate }}</label>
-        </p-floatlabel>
+            <p-floatlabel variant="on" class="w-full">
+                <p-autocomplete [(ngModel)]="selectedComune" [suggestions]="filteredComuni" (completeMethod)="searchComune($event)" field="nome" [forceSelection]="true" (onSelect)="onComuneSelected($event)" inputId="comuneField" styleClass="w-full">
+                    <ng-template #item let-comune>
+                        {{comune.nome}} ({{comune.provincia}})
+                    </ng-template>
+                </p-autocomplete>
+                <label for="comuneField">{{ 'cf.birthPlace' | translate }}</label>
+            </p-floatlabel>
+        </div>
 
         <ng-template #footer>
             <div class="card-footer">

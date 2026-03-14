@@ -36,9 +36,9 @@
         "clearCache": "Clear All History",
         "clearCacheSuccess": "History cleared successfully.",
         "contributors": "Contributors",
-        "contributeMessage": "Using ELO DevTools every day and wondering how you ever survived without it? Then you already know its value. Join the community and help make it even better: a new tool, a bug fix, a wild idea at 11pm — every contribution counts. Check out the project on GitHub and leave your mark.",
+        "contributeMessage": "Using ELO.DevTools every day and wondering how you ever survived without it? Then you already know its value. Join the community and help make it even better: a new tool, a bug fix, a wild idea at 11pm — every contribution counts. Check out the project on GitHub and leave your mark.",
         "donateTitle": "Support the project",
-        "donateMessage": "ELO DevTools is free, open source, and built with passion and industrial amounts of coffee. If it has ever saved you from one of those terrible days, consider giving something back. It does not take much: even the price of a single espresso helps keep the project alive, up to date, and ad-free.",
+        "donateMessage": "ELO.DevTools is free, open source, and built with passion and industrial amounts of coffee. If it has ever saved you from one of those terrible days, consider giving something back. It does not take much: even the price of a single espresso helps keep the project alive and up to date.",
         "githubStar": "Star on GitHub",
         "buyMeCoffee": "Buy me a coffee"
     },
@@ -65,6 +65,14 @@
         "generatore-dati.desc": "Generate individuals, businesses and companies data compliant with Italian standards",
         "iban": "IBAN Generator",
         "iban.desc": "Generate valid IBANs with structure and segment details"
+    },
+    "promoBanner": {
+        "dismiss": "Dismiss"
+    },
+    "quinkBanner": {
+        "eyebrow": "New Chrome Extension",
+        "title": "ELO.Quink — Open a tab: you're already there",
+        "description": "Tired of opening a new tab just to stare at existential void? Quink replaces it with your favorite bookmarks. Revolutionary, we know."
     },
     "base64": {
         "enterText": "Enter text here...",

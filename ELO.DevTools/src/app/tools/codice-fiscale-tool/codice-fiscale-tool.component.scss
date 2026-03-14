@@ -6,25 +6,32 @@
 
 .mode-selector {
     display: flex;
-    gap: 8px;
+    gap: 4px;
     align-self: center;
     background: var(--gh-canvas-subtle);
     border: 1px solid var(--gh-border-default);
-    padding: 6px;
+    padding: 4px;
     border-radius: var(--gh-radius);
 
-    button {
+    ::ng-deep p-button button {
         min-width: 120px;
         border-radius: 4px;
         font-weight: 500;
         transition: all 0.15s ease;
-
-        &.active {
-            background: var(--gh-canvas-default);
-            box-shadow: var(--gh-shadow-small);
-            color: var(--gh-fg-default);
-        }
     }
+
+    ::ng-deep p-button.active button {
+        background: var(--gh-canvas-default);
+        box-shadow: var(--gh-shadow-small);
+        color: var(--gh-fg-default);
+    }
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 8px;
 }
 
 .error-message {

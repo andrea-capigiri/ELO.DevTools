@@ -36,9 +36,9 @@
         "clearCache": "Cancella tutte le history",
         "clearCacheSuccess": "Storico cancellato con successo.",
         "contributors": "Contributori",
-        "contributeMessage": "Stai usando ELO DevTools ogni giorno e ti sta salvando la vita (o almeno qualche ora)? Allora sai già quanto vale. Unisciti alla community e aiutaci a renderlo ancora migliore: un nuovo tool, un bug fix, un'idea folle alle 11 di sera — ogni contributo conta. Dai un'occhiata al progetto su GitHub e lascia il tuo segno.",
+        "contributeMessage": "Stai usando ELO.DevTools ogni giorno e ti sta salvando la vita (o almeno qualche ora)? Allora sai già quanto vale. Unisciti alla community e aiutaci a renderlo ancora migliore: un nuovo tool, un bug fix, un'idea folle alle 11 di sera — ogni contributo conta. Dai un'occhiata al progetto su GitHub e lascia il tuo segno.",
         "donateTitle": "Supporta il progetto",
-        "donateMessage": "ELO DevTools è gratuito, open source e realizzato con passione e quantità industriali di caffè. Se ti ha salvato da una di quelle giornate storte, considera di ricambiare il favore. Non serve molto: anche il prezzo di un espresso aiuta a tenere il progetto vivo, aggiornato e senza pubblicità fastidiose.",
+        "donateMessage": "ELO.DevTools è gratuito, open source e realizzato con passione e quantità industriali di caffè. Se ti ha salvato da una di quelle giornate storte, considera di ricambiare il favore. Non serve molto: anche il prezzo di un espresso aiuta a tenere il progetto vivo e aggiornato.",
         "githubStar": "Metti una stella su GitHub",
         "buyMeCoffee": "Offrimi un caffè"
     },
@@ -65,6 +65,14 @@
         "generatore-dati.desc": "Genera persone fisiche, imprese individuali e società",
         "iban": "Generatore IBAN",
         "iban.desc": "Genera IBAN validi con dettaglio struttura e segmenti"
+    },
+    "promoBanner": {
+        "dismiss": "Ignora"
+    },
+    "quinkBanner": {
+        "eyebrow": "Nuova estensione Chrome",
+        "title": "ELO.Quink — Apri una tab: sei già arrivato",
+        "description": "Stanco di aprire un nuovo tab e fissare il vuoto cosmico? Quink lo sostituisce con i tuoi bookmark preferiti. Rivoluzionario, lo sappiamo."
     },
     "base64": {
         "enterText": "Inserisci il testo qui...",

@@ -10,6 +10,23 @@
     </div>
 </p-toolbar>
 <div class="container-p home-container">
+    @if (activeBanner) {
+        <div class="promo-card" (click)="openBannerUrl()">
+            <div class="promo-inner">
+                <div class="promo-logo">
+                    <img [src]="iconPath(activeBanner.iconFile)" [alt]="activeBanner.id" />
+                </div>
+                <div class="promo-info">
+                    <div class="promo-eyebrow">{{ activeBanner.eyebrowKey | translate }}</div>
+                    <div class="promo-title">{{ activeBanner.titleKey | translate }}</div>
+                    <div class="promo-desc">{{ activeBanner.descriptionKey | translate }}</div>
+                </div>
+                <button class="promo-dismiss" (click)="$event.stopPropagation(); dismissBanner()" [title]="'promoBanner.dismiss' | translate">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+        </div>
+    }
     <div class="tools-list">
         @for (tool of tools; track tool.route) {
             <a class="tool-card" [routerLink]="tool.route">

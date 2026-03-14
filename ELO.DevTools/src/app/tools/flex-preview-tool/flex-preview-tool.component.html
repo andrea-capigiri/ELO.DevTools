@@ -13,20 +13,12 @@
 
         <div class="control-group">
             <label class="control-label">{{ 'flex.justifyContent' | translate }}</label>
-            <p-selectbutton [options]="justifyOptions" [(ngModel)]="justify" optionValue="value">
-                <ng-template #item let-item>
-                    <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
-                </ng-template>
-            </p-selectbutton>
+            <p-selectbutton [options]="justifyOptions" [(ngModel)]="justify" optionLabel="label" optionValue="value"></p-selectbutton>
         </div>
 
         <div class="control-group">
             <label class="control-label">{{ 'flex.alignItems' | translate }}</label>
-            <p-selectbutton [options]="alignOptions" [(ngModel)]="align" optionValue="value">
-                <ng-template #item let-item>
-                    <i class="material-icons icon-btn" [pTooltip]="item.label" tooltipPosition="top">{{item.icon}}</i>
-                </ng-template>
-            </p-selectbutton>
+            <p-selectbutton [options]="alignOptions" [(ngModel)]="align" optionLabel="label" optionValue="value"></p-selectbutton>
         </div>
 
         <div class="control-group">
