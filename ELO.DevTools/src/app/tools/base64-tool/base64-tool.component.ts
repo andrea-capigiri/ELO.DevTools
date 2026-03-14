@@ -1,14 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
-import { Textarea } from 'primeng/textarea';
-import { FloatLabel } from 'primeng/floatlabel';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Textarea } from 'primeng/textarea';
 import { UtilityService } from '../../_shared/utility.service';
 
 @Component({
@@ -17,12 +14,9 @@ import { UtilityService } from '../../_shared/utility.service';
     imports: [
         CommonModule,
         FormsModule,
-        Toolbar,
         Card,
         ButtonModule,
-        InputText,
         Textarea,
-        FloatLabel,
         RouterModule,
         TranslateModule
     ],
@@ -33,7 +27,7 @@ export class Base64ToolComponent {
     inputText: string = '';
     outputText: string = '';
 
-    constructor(private utilityService: UtilityService) {}
+    constructor(private utilityService: UtilityService) { }
 
     onEncode(): void {
         if (this.inputText.trim()) {

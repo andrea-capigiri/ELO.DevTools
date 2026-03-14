@@ -1,19 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { ToggleSwitch } from 'primeng/toggleswitch';
-import { SelectModule } from 'primeng/select';
-import { FloatLabel } from 'primeng/floatlabel';
-import { SettingsService, ToolSetting } from '../../_shared/settings.service';
-import { HistoryService } from '../../_shared/history.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { FloatLabel } from 'primeng/floatlabel';
+import { SelectModule } from 'primeng/select';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 import { Subscription } from 'rxjs';
 import manifest from '../../../manifest.json';
+import { HistoryService } from '../../_shared/history.service';
+import { SettingsService, ToolSetting } from '../../_shared/settings.service';
 
 export type Language = 'en' | 'it';
 
@@ -23,7 +22,6 @@ export type Language = 'en' | 'it';
     imports: [
         CommonModule,
         FormsModule,
-        Toolbar,
         Card,
         ButtonModule,
         ToggleSwitch,

@@ -1,17 +1,15 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
-import { Textarea } from 'primeng/textarea';
-import { FloatLabel } from 'primeng/floatlabel';
-import { SelectButton } from 'primeng/selectbutton';
-import { SelectModule } from 'primeng/select';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SettingsComponent } from '../../content/settings/settings.component';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { FloatLabel } from 'primeng/floatlabel';
+import { InputText } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { SelectButton } from 'primeng/selectbutton';
+import { Textarea } from 'primeng/textarea';
 import { SettingsService } from '../../_shared/settings.service';
 
 const MIME_EXTENSIONS: Record<string, string[]> = {
@@ -39,8 +37,7 @@ const MIME_EXTENSIONS: Record<string, string[]> = {
     standalone: true,
     imports: [
         CommonModule,
-        FormsModule,
-        Toolbar,
+        FormsModule, 
         Card,
         ButtonModule,
         InputText,

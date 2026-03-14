@@ -1,13 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { Textarea } from 'primeng/textarea';
-import { SelectButton } from 'primeng/selectbutton';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Textarea } from 'primeng/textarea';
 import { UtilityService } from '../../_shared/utility.service';
 
 type HashAlgorithm = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
@@ -17,12 +15,10 @@ type HashAlgorithm = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
     standalone: true,
     imports: [
         CommonModule,
-        FormsModule,
-        Toolbar,
+        FormsModule, 
         Card,
         ButtonModule,
-        Textarea,
-        SelectButton,
+        Textarea, 
         RouterModule,
         TranslateModule
     ],

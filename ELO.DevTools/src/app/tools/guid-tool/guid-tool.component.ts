@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { SelectButton } from 'primeng/selectbutton';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { UtilityService } from '../../_shared/utility.service';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { SelectButton } from 'primeng/selectbutton';
 import { HistoryService } from '../../_shared/history.service';
+import { UtilityService } from '../../_shared/utility.service';
 
 const TOOL_ID = 'guid';
 
@@ -18,7 +17,6 @@ const TOOL_ID = 'guid';
   imports: [
     CommonModule,
     FormsModule,
-    Toolbar,
     Card,
     ButtonModule,
     SelectButton,
@@ -44,7 +42,7 @@ export class GuidToolComponent implements OnInit {
     { label: 'lowercase', value: 'lowercase' }
   ];
 
-  constructor(private utilityService: UtilityService, private historyService: HistoryService) {}
+  constructor(private utilityService: UtilityService, private historyService: HistoryService) { }
 
   ngOnInit(): void {
     this.guidHistory = this.historyService.load<string>(TOOL_ID);

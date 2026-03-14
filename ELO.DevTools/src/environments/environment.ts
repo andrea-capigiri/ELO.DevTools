@@ -1,7 +1,5 @@
 export const environment = {
     production: false,
-    destBrowser: 'Google Chrome',
-    favoriteEditorPath: 'chrome://bookmarks/',
 
     appName: 'ELO.DevTools',
     authorName: 'andreacapigiri.com',

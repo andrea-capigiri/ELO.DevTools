@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
+import { Card } from 'primeng/card';
+import { DatePicker } from 'primeng/datepicker';
 import { FloatLabel } from 'primeng/floatlabel';
+import { InputText } from 'primeng/inputtext';
 import { SelectButton } from 'primeng/selectbutton';
 import { TooltipModule } from 'primeng/tooltip';
-import { DatePicker } from 'primeng/datepicker';
 import { UtilityService } from '../../_shared/utility.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-timestamp-tool',
@@ -20,7 +19,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     RouterModule,
-    Toolbar,
     Card,
     ButtonModule,
     InputText,
@@ -56,7 +54,7 @@ export class TimestampToolComponent implements OnInit {
   dateResultMilliseconds: string = '';
   dateResultIso: string = '';
 
-  constructor(private utilityService: UtilityService, private translate: TranslateService) {}
+  constructor(private utilityService: UtilityService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.modeOptions = [

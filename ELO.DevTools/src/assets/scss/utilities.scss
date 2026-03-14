@@ -1,0 +1,25 @@
+// UTILITIES ======================================================================================
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.container-p {
+    @extend .container;
+    padding: 32px 16px;
+}
+
+.stack-y {
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.w-full,
+.full-width {
+    width: 100%;
+}

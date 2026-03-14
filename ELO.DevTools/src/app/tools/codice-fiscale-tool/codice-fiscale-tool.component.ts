@@ -1,24 +1,18 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
-import { FloatLabel } from 'primeng/floatlabel';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AutoComplete } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
 import { DatePicker } from 'primeng/datepicker';
+import { FloatLabel } from 'primeng/floatlabel';
+import { InputText } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TooltipModule } from 'primeng/tooltip';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CodiceFiscaleInversoResult, CodiceFiscaleResult, Comune, Sesso } from '../../_shared/codice-fiscale.models';
 import { CodiceFiscaleService } from '../../_shared/codice-fiscale.service';
-import {
-    Comune,
-    Sesso,
-    CodiceFiscaleResult,
-    CodiceFiscaleInversoResult
-} from '../../_shared/codice-fiscale.models';
 
 @Component({
     selector: 'app-codice-fiscale-tool',
@@ -27,7 +21,6 @@ import {
         CommonModule,
         FormsModule,
         RouterModule,
-        Toolbar,
         Card,
         ButtonModule,
         InputText,
@@ -60,7 +53,7 @@ export class CodiceFiscaleToolComponent implements OnInit {
 
     sessoOptions: { label: string; value: string }[] = [];
 
-    constructor(private cfService: CodiceFiscaleService, private translate: TranslateService) {}
+    constructor(private cfService: CodiceFiscaleService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.sessoOptions = [

@@ -1,0 +1,283 @@
+// PRIMENG OVERRIDES ==============================================================================
+
+/* Toolbar */
+.p-toolbar {
+    background-color: var(--gh-canvas-subtle) !important;
+    border-bottom: 1px solid var(--gh-border-default) !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    color: var(--gh-fg-default) !important;
+    font-family: var(--gh-font) !important;
+    min-height: 48px !important;
+    padding: 0 16px !important;
+
+    .toolbar-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: 8px;
+    }
+}
+
+/* Cards */
+.p-card {
+    background-color: var(--gh-canvas-default) !important;
+    border: 1px solid var(--gh-border-default) !important;
+    border-radius: var(--gh-radius) !important;
+    box-shadow: none !important;
+    color: var(--gh-fg-default) !important;
+    font-family: var(--gh-font) !important;
+}
+
+.p-card-title {
+    font-family: var(--gh-font) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--gh-fg-default) !important;
+}
+
+.p-card-subtitle {
+    color: var(--gh-fg-muted) !important;
+    font-family: var(--gh-font) !important;
+}
+
+.p-card-body {
+    color: var(--gh-fg-default) !important;
+}
+
+.card-footer {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 24px !important;
+}
+
+/* Buttons */
+.p-button {
+    font-family: var(--gh-font) !important;
+    font-size: 14px !important;
+    border-radius: var(--gh-radius) !important;
+}
+
+.p-button:not(.p-button-text):not(.p-button-outlined):not(.p-button-link) {
+    background-color: var(--gh-btn-primary-bg) !important;
+    color: var(--gh-btn-primary-text) !important;
+    border: 1px solid var(--gh-border-default) !important;
+    box-shadow: none !important;
+
+    &:hover:not(:disabled) {
+        background-color: var(--gh-btn-primary-hover-bg) !important;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+    }
+}
+
+.p-button-text {
+    color: var(--gh-btn-text) !important;
+
+    &:hover:not(:disabled) {
+        background-color: var(--gh-canvas-subtle) !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .p-selectbutton {
+        flex-direction: column;
+    }
+}
+
+/* Form fields */
+.p-inputtext,
+.p-textarea {
+    font-family: var(--gh-font) !important;
+    color: var(--gh-fg-default) !important;
+    border-color: var(--gh-border-default) !important;
+    border-radius: var(--gh-radius) !important;
+    background-color: var(--gh-canvas-default) !important;
+
+    &:focus {
+        border-color: var(--gh-accent-fg) !important;
+        box-shadow: 0 0 0 1px var(--gh-accent-fg) !important;
+    }
+}
+
+textarea.p-textarea {
+    font-family: var(--gh-font-mono) !important;
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+}
+
+/* FloatLabel */
+.p-floatlabel label {
+    font-family: var(--gh-font) !important;
+    color: var(--gh-fg-muted) !important;
+}
+
+/* Select */
+.p-select {
+    border-color: var(--gh-border-default) !important;
+    border-radius: var(--gh-radius) !important;
+    background-color: var(--gh-canvas-default) !important;
+    font-family: var(--gh-font) !important;
+    color: var(--gh-fg-default) !important;
+
+    &:focus,
+    &.p-focus {
+        border-color: var(--gh-accent-fg) !important;
+        box-shadow: 0 0 0 1px var(--gh-accent-fg) !important;
+    }
+}
+
+.p-select-overlay {
+    background-color: var(--gh-canvas-default) !important;
+    border: 1px solid var(--gh-border-default) !important;
+    border-radius: var(--gh-radius) !important;
+    box-shadow: var(--gh-shadow-medium) !important;
+}
+
+.p-select-option {
+    font-family: var(--gh-font) !important;
+    color: var(--gh-fg-default) !important;
+
+    &:hover,
+    &.p-highlight {
+        background-color: var(--gh-canvas-subtle) !important;
+    }
+}
+
+/* SelectButton (replaces ButtonToggle) */
+.p-selectbutton {
+    border: 1px solid var(--gh-border-default) !important;
+    border-radius: var(--gh-radius) !important;
+    overflow: hidden;
+    display: flex !important;
+    width: 100%;
+
+    .p-togglebutton {
+        background-color: var(--gh-canvas-default) !important;
+        color: var(--gh-fg-muted) !important;
+        font-family: var(--gh-font) !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        border: none !important;
+        border-left: 1px solid var(--gh-border-default) !important;
+        border-radius: 0 !important;
+        flex: 1;
+
+        &:first-child {
+            border-left: none !important;
+        }
+
+        &:hover:not(.p-highlight) {
+            background-color: var(--gh-canvas-subtle) !important;
+        }
+
+        &.p-highlight {
+            background-color: var(--gh-canvas-subtle) !important;
+            color: var(--gh-fg-default) !important;
+            font-weight: 600 !important;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+    }
+}
+
+/* FloatLabel full width */
+.p-floatlabel {
+    display: block;
+    width: 100%;
+
+    &.w-full>.p-inputtext,
+    &.w-full>.p-textarea,
+    &.w-full>.p-select,
+    &.w-full>.p-autocomplete,
+    &.w-full>.p-datepicker {
+        width: 100%;
+    }
+}
+
+/* Ensure PrimeNG components respect w-full */
+.p-select.w-full,
+p-select.w-full .p-select,
+.p-autocomplete.w-full,
+p-autocomplete.w-full .p-autocomplete,
+.p-datepicker.w-full,
+p-datepicker.w-full .p-datepicker {
+    width: 100% !important;
+}
+
+.p-datepicker.w-full .p-inputtext,
+p-datepicker.w-full .p-inputtext {
+    width: 100% !important;
+}
+
+.p-autocomplete.w-full .p-autocomplete-input,
+p-autocomplete.w-full .p-autocomplete-input {
+    width: 100% !important;
+}
+
+/* RadioButton */
+.p-radiobutton {
+    .p-radiobutton-box {
+        border-color: var(--gh-border-default) !important;
+    }
+
+    &.p-radiobutton-checked .p-radiobutton-box {
+        border-color: var(--gh-accent-fg) !important;
+        background-color: var(--gh-accent-fg) !important;
+    }
+}
+
+.p-radiobutton-label {
+    color: var(--gh-fg-default) !important;
+    font-family: var(--gh-font) !important;
+}
+
+/* ToggleSwitch */
+.p-toggleswitch {
+    .p-toggleswitch-slider {
+        background-color: var(--gh-border-default) !important;
+    }
+
+    &.p-toggleswitch-checked .p-toggleswitch-slider {
+        background-color: var(--gh-accent-emphasis) !important;
+    }
+}
+
+/* Divider */
+.p-divider-horizontal {
+    border-top-color: var(--gh-border-default) !important;
+}
+
+/* Tooltip */
+.p-tooltip {
+    font-family: var(--gh-font) !important;
+    font-size: 12px !important;
+}
+
+/* AutoComplete */
+.p-autocomplete-input {
+    font-family: var(--gh-font) !important;
+    color: var(--gh-fg-default) !important;
+    border-color: var(--gh-border-default) !important;
+}
+
+.p-autocomplete-overlay {
+    background-color: var(--gh-canvas-default) !important;
+    border: 1px solid var(--gh-border-default) !important;
+    border-radius: var(--gh-radius) !important;
+    box-shadow: var(--gh-shadow-medium) !important;
+}
+
+/* DatePicker */
+.p-datepicker {
+    font-family: var(--gh-font) !important;
+}
+
+/* Material Icons inline helper */
+i.material-icons {
+    font-size: 20px;
+    vertical-align: middle;
+    line-height: 1;
+}

@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
 import { SelectButton } from 'primeng/selectbutton';
 import { TooltipModule } from 'primeng/tooltip';
-import { Divider } from 'primeng/divider';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Impresa, ImpresaIndividuale, PersonaFisica, TipoGenerazione } from '../../_shared/generatore-dati.models';
 import { GeneratoreDatiService } from '../../_shared/generatore-dati.service';
-import { TipoGenerazione, PersonaFisica, ImpresaIndividuale, Impresa } from '../../_shared/generatore-dati.models';
 import { HistoryService } from '../../_shared/history.service';
 
 const TOOL_ID = 'generatore-dati';
@@ -28,13 +26,11 @@ interface StoricoEntry {
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule,
-        Toolbar,
+        RouterModule, 
         Card,
         ButtonModule,
         SelectButton,
-        TooltipModule,
-        Divider,
+        TooltipModule, 
         TranslateModule
     ],
     templateUrl: './generatore-dati-tool.component.html',

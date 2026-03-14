@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Toolbar } from 'primeng/toolbar';
-import { Card } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { SelectButton } from 'primeng/selectbutton';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { SelectButton } from 'primeng/selectbutton';
 
 interface FlexOption {
     label: string;
@@ -22,7 +21,6 @@ interface FlexOption {
         CommonModule,
         FormsModule,
         RouterModule,
-        Toolbar,
         Card,
         ButtonModule,
         SelectButton,

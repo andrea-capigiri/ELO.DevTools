@@ -7,10 +7,9 @@ import { ButtonModule } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { FloatLabel } from 'primeng/floatlabel';
 import { SelectModule } from 'primeng/select';
-import { Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { GeneratedIban, IbanService } from '../../_shared/iban.service';
 import { HistoryService } from '../../_shared/history.service';
+import { GeneratedIban, IbanService } from '../../_shared/iban.service';
 
 const TOOL_ID = 'iban';
 
@@ -21,7 +20,6 @@ const TOOL_ID = 'iban';
         CommonModule,
         FormsModule,
         RouterModule,
-        Toolbar,
         Card,
         FloatLabel,
         ButtonModule,
@@ -42,7 +40,7 @@ export class IbanToolComponent implements OnInit {
         private ibanService: IbanService,
         private translate: TranslateService,
         private historyService: HistoryService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.history = this.historyService.load<GeneratedIban>(TOOL_ID);
